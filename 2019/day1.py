@@ -10,10 +10,10 @@ puzzle = Puzzle(year=2019, day=day)
 input_data = puzzle.input_data
 
 def solve_a(inp=input_data):
-	return None
+    return None
 
 def solve_b(inp=input_data):
-	return None
+    return None
 
 a = solve_a()
 print("Part 1: {a}")
