@@ -10,19 +10,12 @@ int get_fuel(int mass) {
 int main(int argc, char const *argv[])
 {
     FILE *inp = fopen("C:\\testing\\input", "r");
-    int total= 0, add = 0;
-    while (fscanf(inp, "%d", &add) > 0) {
-        total += add/3 - 2;
-    };
-    printf("Part1: %d\n", total);
-    rewind(inp);
-
-    total = 0; add = 0;
-    int mass = 0;
+    int total1= 0, total2= 0, add = 0, mass = 0;
     while (fscanf(inp, "%d", &add) > 0) {
         mass = add/3 - 2;
-        total += mass + get_fuel(mass);
+        total1 += mass;
+        total2 += mass + get_fuel(mass);
     };
-    printf("Part2: %d\n", total);
+    printf("Part1: %d\nPart2: %d\n", total1, total2);
     return 0;
 }
