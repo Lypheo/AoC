@@ -18,19 +18,18 @@ def solve_a(inp=input_data):
     return total
 
 def solve_b(inp=input_data):
+    def calc_fuel(fuel):
+        a = fuel // 3 - 2
+        if a < 1:
+            return 0
+        else: 
+            return a + calc_fuel(a)
+
     masses = [int(i) for i in inp.split("\n")]
     total = 0
-    for i in masses:
-        fuel = (i//3) - 2
-        diff = fuel
-        while True:
-            diff = ((diff)//3) - 2
-            if diff > 0:
-                fuel += diff
-            else: 
-                break
-                
-        total += fuel
+    for mass in masses:
+        fuel = mass // 3 - 2
+        total += fuel + calc_fuel(fuel)
 
     return total
 
