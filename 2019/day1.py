@@ -7,27 +7,15 @@ puzzle = Puzzle(year=2019, day=day)
 input_data = puzzle.input_data
 
 def solve_a(inp=input_data):
-    masses = [int(i) for i in inp.split("\n")]
-    total = 0
-    for i in masses:
-        total += i // 3 -2
-    return total
+    return sum([int(i) // 3 - 2 for i in inp.split("\n")])
 
 def solve_b(inp=input_data):
-    def calc_fuel(fuel):
-        a = fuel // 3 - 2
-        if a < 1:
-            return 0
-        else: 
-            return a + calc_fuel(a)
-
-    masses = [int(i) for i in inp.split("\n")]
-    total = 0
-    for mass in masses:
+    def get_fuel(mass):
         fuel = mass // 3 - 2
-        total += fuel + calc_fuel(fuel)
+        return 0 if fuel < 1 else fuel + get_fuel(fuel)
 
-    return total
+    masses = [int(i) // 3 - 2 for i in inp.split("\n")]
+    return sum([get_fuel(mass) + mass for mass in masses])
 
 a = solve_a()
 print(f"Part 1: {a}")
