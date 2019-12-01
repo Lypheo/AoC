@@ -1,4 +1,4 @@
-input_data = open("bigboyinput", "r").read()[:-1]
+input_data = open(r"C:\testing\bigboyinput", "r").read()[:-1]
 
 def solve(inp=input_data):
     def get_fuel(mass):
