@@ -1,20 +1,16 @@
 from datetime import datetime
-import time
-import functools, itertools, collections, re, math
-import numpy as np
 from aocd.models import Puzzle
 from aocd import submit
 
 day = datetime.today().day
 puzzle = Puzzle(year=2019, day=day)
 input_data = puzzle.input_data
-# print(input_data)
 
 def solve_a(inp=input_data):
     masses = [int(i) for i in inp.split("\n")]
     total = 0
     for i in masses:
-        total += math.floor(i/3) -2
+        total += i // 3 -2
     return total
 
 def solve_b(inp=input_data):
