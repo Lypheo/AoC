@@ -1,3 +1,7 @@
+from datetime import datetime
+from aocd.models import Puzzle
+from aocd import submit
+
 day = datetime.today().day
 puzzle = Puzzle(year=2019, day=day)
 input_data = puzzle.input_data
