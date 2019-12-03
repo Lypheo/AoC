@@ -36,7 +36,7 @@ def solve(inp=input_data):
     cross = list(used_a.intersection(used_b))
     return min([abs(x[0]) + abs(x[1]) for x in cross]), min([stepsa[i] + stepsb[i] for i in cross])
 
-a, b = solve()
+a, b = solve("R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51\nU98,R91,D20,R16,D67,R40,U7,R15,U6,R7")
 print(f"Part 1: {a}")
 if b: print(f"Part 2: {b}")
 # submit(a, part="a", day=day, year=2019)
