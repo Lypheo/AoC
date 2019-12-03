@@ -1,13 +1,4 @@
-from datetime import datetime
-from aocd.models import Puzzle
-from aocd import submit
-
-day = datetime.today().day
-puzzle = Puzzle(year=2019, day=day)
-input_data = puzzle.input_data
-
-#
-def solve(inp=input_data, noun=12, verb=2):
+def solve(inp=open(r"C:\Users\saifu\Downloads\D2P2-RealisticBigBoy", "r").read()[:-1], noun=12, verb=2):
     inp = [int(i) for i in inp.split(",")]
     inp[1:3] = [noun, verb]
     for i in range(0, len(inp), 4):
