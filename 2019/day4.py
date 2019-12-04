@@ -1,11 +1,12 @@
 from datetime import datetime
 from aocd.models import Puzzle
 from aocd import submit
-
+from collections import defaultdict
 
 day = datetime.today().day
 puzzle = Puzzle(year=2019, day=day)
 input_data = puzzle.input_data
+
 
 def isvalida(i):
     double = 0
@@ -21,16 +22,12 @@ def isvalida(i):
     return True if double > 0 and increase else False
 
 def isvalidb(i):
-    double = {}
+    double = defaultdict(int)
     increase = True
     old = str(i)[0]
     for j in str(i)[1:]:
         if j == old:
-            try:
-                double[j] += 1
-            except KeyError:
-                double[j] = 1
-
+            double[j] += 1
         if int(j) < int(old):
             increase = False
         old = j
@@ -53,4 +50,4 @@ def solve(inp=input_data):
 
 a, b = solve("171309-643603")
 print(f"Part 1: {a}")
-if b: print(f"Part 2: {b}")
+print(f"Part 2: {b}")
