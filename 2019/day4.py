@@ -7,21 +7,7 @@ day = datetime.today().day
 puzzle = Puzzle(year=2019, day=day)
 input_data = puzzle.input_data
 
-
-def isvalida(i):
-    double = 0
-    increase = True
-    old = str(i)[0]
-    for j in str(i)[1:]:
-        if j == old:
-            double += 1
-        if int(j) < int(old):
-            increase = False
-        old = j
-
-    return True if double > 0 and increase else False
-
-def isvalidb(i):
+def isvalid(i):
     double = defaultdict(int)
     increase = True
     old = str(i)[0]
@@ -32,18 +18,21 @@ def isvalidb(i):
             increase = False
         old = j
 
-    return True if (len(double.values()) != 0 and any(i == 1 for i in double.values())) and increase else False
+    if not increase:
+        return False, False
 
-# print(isvalid(112233))
+    a = any(i > 0 for i in double.values()) 
+    b = any(i == 1 for i in double.values())
+    return a, b
 
 def solve(inp=input_data):
     rng = [int(x) for x in inp.split("-")]
     counta = 0
     countb = 0
     for i in range(rng[0], rng[1]+1):
-        if isvalida(i):
+        if isvalid(i)[0]:
             counta += 1
-        if isvalidb(i):
+        if isvalid(i)[1]:
             countb += 1
 
     return counta, countb
