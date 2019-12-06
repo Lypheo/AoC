@@ -39,6 +39,5 @@ def solve(inp=input_data):
     return counta, countb
 
 a, b = solve("171309-643603")
-print(kag.difference(pws))
 print(f"Part 1: {a}")
 print(f"Part 2: {b}")
