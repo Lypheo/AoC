@@ -45,24 +45,21 @@ def intcode(inp=input_data, prog_in=[1]):
     yield "END"
 
 def solve(inp=input_data):
+    p1 = lambda num, phase: intcode(inp, [p1(num-1, phase) if num != 0 else 0, phase[num]]).__next__()
+    p1_max = max(p1(4, i) for i in itertools.permutations([0,1,2,3,4]))
+
     signals = []
     for i in  itertools.permutations([5, 6, 7, 8, 9]):
-        proginp = [[i[j]] for j in range(5)]
-        proginp[0].insert(0, 0)
+        proginp = [[i[j]] if j != 0 else [0, i[j]] for j in range(5)]
         progs = [intcode(inp, proginp[i]) for i in range(5)]
-        while True:
+        while proginp[0][0] != "END":
+            signal = proginp[0][0]
             for k in range(5):
-                o = next(progs[k])
-                print(k, o)
-                proginp[k+1 if k != 4 else 0].insert(0, o)
-            if proginp[0][0] == "END":
-                break
-            else:
-                signal = proginp[0][0]
-
+                proginp[k+1 if k != 4 else 0].insert(0, next(progs[k]))
         signals.append(signal)
-    return max(signals), None
+    return p1_max, max(signals)
 
-test = "3,52,1001,52,-5,52,3,53,1,52,56,54,1007,54,5,55,1005,55,26,1001,54,-5,54,1105,1,12,1,53,54,53,1008,54,0,55,1001,55,1,55,2,53,55,53,4,53,1001,56,-1,56,1005,56,6,99,0,0,0,0,10"
+test = "3,15,3,16,1002,16,10,16,1,16,15,15,4,15,99,0,0"
 a, b = solve()
-print(f"Part 2: {a}")
+print(f"Part 1: {a}")
+print(f"Part 2: {b}")
