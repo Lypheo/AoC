@@ -1,7 +1,7 @@
 from datetime import datetime
 from aocd.models import Puzzle
 from aocd import submit
-from collections import defaultdict
+import timeit, time
 
 day = datetime.today().day
 puzzle = Puzzle(year=2019, day=day)
@@ -33,10 +33,7 @@ def solve(inp=input_data):
             upward = search(parents[current], current, transfers+1) if (current != "COM" and last != "NONE") else 0
             return upward + downward
 
-
-    distance = search(parents["YOU"], "YOU", 0)
+    distance = None#search(parents["YOU"], "YOU", 0)
     return orbits, distance
 
-a, b = solve()
-print(f"Part 1: {a}")
-print(f"Part 2: {b}")
+print(timeit.timeit(solve, number=100)/100)
