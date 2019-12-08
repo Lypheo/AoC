@@ -24,5 +24,4 @@ def solve(inp=input_data):
             print("|||" if out[j*25+i] else "   ", end="")
         print("")
 
-test = "123456789012"
 solve()
