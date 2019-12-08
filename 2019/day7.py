@@ -47,7 +47,6 @@ def intcode(inp=input_data, prog_in=[1]):
 def solve(inp=input_data):
     p1 = lambda num, phase: intcode(inp, [p1(num-1, phase) if num != 0 else 0, phase[num]]).__next__()
     p1_max = max(p1(4, i) for i in itertools.permutations([0,1,2,3,4]))
-
     signals = []
     for i in  itertools.permutations([5, 6, 7, 8, 9]):
         proginp = [[i[j]] if j != 0 else [0, i[j]] for j in range(5)]
@@ -63,3 +62,5 @@ test = "3,15,3,16,1002,16,10,16,1,16,15,15,4,15,99,0,0"
 a, b = solve()
 print(f"Part 1: {a}")
 print(f"Part 2: {b}")
+import timeit
+print(timeit.timeit(solve, number=10)/10)
