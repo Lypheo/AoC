@@ -22,10 +22,7 @@ def solve(inp=input_data):
                 return False
         return True
 
-    h, w = len(grid), len(grid[0])
-    counts = [0] * w*h
-
-    def detections(a, b):
+    def detect(a, b):
         detected = []
         for y,row in enumerate(grid):
             for x, ast in enumerate(row):
@@ -41,26 +38,20 @@ def solve(inp=input_data):
         a = math.atan2(x, y)
         return 2*math.pi + a if a < 0 else a
 
-    for y,row in enumerate(grid):
-        for x, ast in enumerate(row):
-            if ast == "#":
-                counts[y*h + x] = len(detections(x, y))
-
-    p1 = max(counts)
-    station = counts.index(p1)
-    station = (station % h, station // h)
+    counts = [(x,y,len(detect(x, y))) for y,row in enumerate(grid) for x, ast in enumerate(row) if ast == "#"]
+    best = max(counts, key=lambda x: x[2])
+    station = best[:2]
     destroyed = []
-    visible = detections(*station)
+    visible = detect(*station)
     while len(visible) != 0:
         destroy = sorted(visible, key=lambda p: angle(p, station))
         for x,y in destroy:
             grid[y][x] = "."
         destroyed.extend(destroy)
-        visible = detections(*station)
+        visible = detect(*station)
 
-    return p1, destroyed[199]
+    return best[2], destroyed[199]
 
 a, b = solve()
 print(f"Part 1: {a}") #314
-if b: print(f"Part 2: {b}") # 15, 13
-print(timeit(solve, number = 10)/10)
+print(f"Part 2: {b}") # 15, 13
