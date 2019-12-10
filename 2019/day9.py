@@ -2,6 +2,7 @@ from datetime import datetime
 from aocd.models import Puzzle
 from aocd import submit
 from collections import defaultdict
+from timeit import timeit
 
 day = datetime.today().day
 puzzle = Puzzle(year=2019, day=day)
@@ -67,3 +68,4 @@ test3 = "1102,34915192,34915192,7,4,7,99,0"
 a, b = solve()
 print(f"Part 1: {a}")
 if b: print(f"Part 2: {b}")
+print(timeit(solve, number =5 )/5)
