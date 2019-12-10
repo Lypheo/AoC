@@ -9,8 +9,7 @@ puzzle = Puzzle(year=2019, day=day)
 input_data = puzzle.input_data
 
 def solve(inp=input_data):
-    grid = inp.splitlines()
-    grid = [list(row) for row in grid]
+    grid = [list(row) for row in inp.splitlines()]
 
     def los(a, b, x, y):
         difx, dify = x-a, y-b
@@ -23,15 +22,7 @@ def solve(inp=input_data):
         return True
 
     def detect(a, b):
-        detected = []
-        for y,row in enumerate(grid):
-            for x, ast in enumerate(row):
-                if ast == "." or (y == b and x == a):
-                    continue
-                if los(a, b, x, y):
-                    detected.append((x,y))
-
-        return detected
+        return [(x,y) for y,row in enumerate(grid) for x, ast in enumerate(row) if ast != "." and (y != b or x != a) and los(a, b, x, y)]
 
     def angle(p, base):
         x, y = p[0] - base[0], base[1] - p[1]
