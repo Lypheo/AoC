@@ -2,17 +2,16 @@ from datetime import datetime
 from aocd.models import Puzzle
 from aocd import submit
 from collections import defaultdict
-from timeit import timeit
 
 day = datetime.today().day
-puzzle = Puzzle(year=2019, day=9)
+puzzle = Puzzle(year=2019, day=day)
 input_data = puzzle.input_data
 
 def intcode(data=input_data, prog_in=[1]):
     inp = defaultdict(int)
     inp.update({i: v for i,v in enumerate([int(i) for i in data.split(",")])})
-    rel_base = 0
     pointer = 0
+    rel_base = 0
     op = str(inp[pointer]).zfill(5)
     opcode = int(op[-2:])
     modes = [int(x) for x in op[:3]]
@@ -59,12 +58,40 @@ def intcode(data=input_data, prog_in=[1]):
     yield "END"
 
 def solve(inp=input_data):
-    return list(intcode(inp, [1]))[:-1], list(intcode(inp, [2]))[:-1]
+    grid = defaultdict(int)
+    prog_in = []
+    robot = intcode(inp, prog_in)
+    direction = 0
+    pos = (0,0)
+    grid[pos] = 1
+    while True:
+        prog_in.append(grid[pos])
+        paint = next(robot)
+        if paint == "END": break
+        grid[pos] = paint
+        turn = next(robot)
 
-test1 = "104,1125899906842624,99"
-test2 = "109,1,204,-1,1001,100,1,100,1008,100,16,101,1006,101,0,99"
-test3 = "1102,34915192,34915192,7,4,7,99,0"
+        direction = (direction + 90 if turn == 1 else direction - 90) % 360
+        if direction == 0: pos = (pos[0], pos[1]+1)
+        elif direction == 90: pos = (pos[0]+1, pos[1])
+        elif direction == 180: pos = (pos[0], pos[1]-1)
+        elif direction == 270: pos = (pos[0]-1, pos[1])
+
+    panels = len(grid)
+    minpanel = (min(grid.keys(), key=lambda x: x[0])[0], min(grid.keys(), key=lambda x: x[1])[1])
+    maxpanel = (max(grid.keys(), key=lambda x: x[0])[0], max(grid.keys(), key=lambda x: x[1])[1])
+    out = [["   "]* (maxpanel[0] - minpanel[0] +1) for i in range((maxpanel[1] - minpanel[1] +1))]
+    print(minpanel, maxpanel)
+    for k,v in grid.items():
+        if v == 1:
+            out[k[1]+5][k[0]] = "###"
+    for i in reversed(out):
+        for j in i:
+            print(j, end="")
+        print("\n")
+
+    return panels, None
 
 a, b = solve()
-print(f"Part 1: {a}")
-if b: print(f"Part 2: {b}")
+print(f"Part 1: {a}") 
+print(f"Part 2: {b}") 

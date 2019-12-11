@@ -22,7 +22,8 @@ def solve(inp=input_data):
         return True
 
     def detect(a, b):
-        return [(x,y) for y,row in enumerate(grid) for x, ast in enumerate(row) if ast != "." and (y != b or x != a) and los(a, b, x, y)]
+        return [(x,y) for y,row in enumerate(grid) for x, ast in enumerate(row) \
+                        if ast != "." and (y != b or x != a) and los(a, b, x, y)]
 
     def angle(p, base):
         x, y = p[0] - base[0], base[1] - p[1]
