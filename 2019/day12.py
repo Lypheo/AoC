@@ -23,11 +23,7 @@ def solve():
             break
 
         if n == 1000:
-            energy = 0
-            for i in range(4):
-                pot = sum(abs(x) for x in pos[i])
-                kin = sum(abs(x) for x in velocity[i])
-                energy += pot * kin
+            energy = sum(sum(abs(x) for x in pos[i]) * sum(abs(x) for x in velocity[i]) for i in range(4))
 
         for c in itertools.combinations([0,1,2,3], 2):
             p1, p2 = pos[c[0]], pos[c[1]]
@@ -40,8 +36,6 @@ def solve():
                     v1[axis] += 1
                     v2[axis] += -1
 
-            velocity[c[0]] = v1
-            velocity[c[1]] = v2
         for k in range(4):
             pos[k] = [ p+v for p,v in zip(pos[k],velocity[k])]
 
@@ -51,4 +45,4 @@ a, b = solve()
 print(f"Part 1: {a}") 
 print(f"Part 2: {b}") 
 
-print(timeit.timeit(solve, number = 3)/3)
+print(timeit.timeit(solve, number = 5)/5)
