@@ -1,11 +1,34 @@
 from collections import defaultdict
-import math, itertools
+import math, itertools, timeit
 
 def solve():
     pos = [[-1, 7, 3], [12, 2, -13], [14, 18, -8], [17, 4, -4]]
-    # pos = [[-1, 0, 2], [2,-10, -7], [4, -8, 8], [3, 5, -1]]
+    # pos = [[-1, 0, 2], [2,-10, -7], [4, -8, 8], [3, 5, -1]] # test input
     velocity = [[0,0,0], [0,0,0], [0,0,0], [0,0,0]]
-    for i in range(1000):
+    hist = [set(), set(), set()]
+    cycle = [None]*3
+
+    def lcm(a, b):
+        return a * b // math.gcd(a, b)
+
+    for n in itertools.count(0):
+        states = [( tuple(p[i] for p in pos), tuple(v[i] for v in velocity) ) if cycle[i] == None else None for i in range(3)]
+        for i in range(3):
+            if cycle[i] == None and states[i] in hist[i]:
+                cycle[i] = n
+            else:
+                hist[i].add(states[i])
+
+        if not None in cycle:
+            break
+
+        if n == 1000:
+            energy = 0
+            for i in range(4):
+                pot = sum(abs(x) for x in pos[i])
+                kin = sum(abs(x) for x in velocity[i])
+                energy += pot * kin
+
         for c in itertools.combinations([0,1,2,3], 2):
             p1, p2 = pos[c[0]], pos[c[1]]
             v1, v2 = velocity[c[0]], velocity[c[1]]
@@ -20,16 +43,12 @@ def solve():
             velocity[c[0]] = v1
             velocity[c[1]] = v2
         for k in range(4):
-            pos[k] = [j + velocity[k][l] for l,j in enumerate(pos[k])]
+            pos[k] = [ p+v for p,v in zip(pos[k],velocity[k])]
 
-    energy = 0
-    for i in range(4):
-        pot = sum(abs(x) for x in pos[i])
-        kin = sum(abs(x) for x in velocity[i])
-        energy += pot * kin
-
-    return energy, None
+    return energy, lcm(lcm(*cycle[:2]), cycle[2])
 
 a, b = solve()
 print(f"Part 1: {a}") 
 print(f"Part 2: {b}") 
+
+print(timeit.timeit(solve, number = 3)/3)
