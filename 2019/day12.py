@@ -1,8 +1,13 @@
 from collections import defaultdict
-import math, itertools, timeit
+import math, itertools, timeit, re
 
-def solve():
-    pos = [[-1, 7, 3], [12, 2, -13], [14, 18, -8], [17, 4, -4]]
+input_data = """<x=-1, y=7, z=3>
+<x=12, y=2, z=-13>
+<x=14, y=18, z=-8>
+<x=17, y=4, z=-4>"""
+
+def solve(inp):
+    pos = [[int(x) for x in re.findall(r"\w=(-?\d+)", i)] for i in inp.splitlines()]
     # pos = [[-1, 0, 2], [2,-10, -7], [4, -8, 8], [3, 5, -1]] # test input
     velocity = [[0,0,0], [0,0,0], [0,0,0], [0,0,0]]
     hist = [set(), set(), set()]
@@ -41,8 +46,8 @@ def solve():
 
     return energy, lcm(lcm(*cycle[:2]), cycle[2])
 
-a, b = solve()
+a, b = solve(input_data)
 print(f"Part 1: {a}") 
 print(f"Part 2: {b}") 
 
-print(timeit.timeit(solve, number = 5)/5)
+# print(timeit.timeit(solve, number = 5)/5)
