@@ -1,13 +1,17 @@
 from collections import defaultdict
-import math, itertools, timeit, re
+import math, itertools, timeit
 
 input_data = """<x=-1, y=7, z=3>
 <x=12, y=2, z=-13>
 <x=14, y=18, z=-8>
 <x=17, y=4, z=-4>"""
 
+def getints(string):
+    import re
+    return [int(x) for x in re.findall(r"[-\d.]+", string)]
+
 def solve(inp):
-    pos = [[int(x) for x in re.findall(r"\w=(-?\d+)", i)] for i in inp.splitlines()]
+    pos = [getints(i) for i in inp.splitlines()]
     # pos = [[-1, 0, 2], [2,-10, -7], [4, -8, 8], [3, 5, -1]] # test input
     velocity = [[0,0,0], [0,0,0], [0,0,0], [0,0,0]]
     hist = [set(), set(), set()]
