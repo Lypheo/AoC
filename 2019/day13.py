@@ -1,24 +1,17 @@
-from datetime import datetime
-from aocd.models import Puzzle
-from aocd import submit
 from collections import defaultdict
 import math, re
 
-day = datetime.today().day
-puzzle = Puzzle(year=2019, day=day)
-input_data = puzzle.input_data
-
-def getints(string):
-    return [int(x) for x in re.findall(r"[-\d.]+", string)]
+input_data = open(r"C:\Users\saifu\.config\aocd\53616c7465645f5fcfda96a9db2c5883a9e05e2606d444ec87b50db4c32ba1aa72106960361cec7f70bb1febdffcd66a\2019_13_input.txt").read()[:-1]
+# input_data = open(r"C:\Users\saifu\Downloads\input").read()[:-1])
 
 def intcode(data=input_data, prog_in=[1]):
     inp = defaultdict(int)
     inp.update({i: v for i,v in enumerate([int(i) for i in data.split(",")])})
     pointer = 0
     rel_base = 0
-    op = str(inp[pointer]).zfill(5)
-    opcode = int(op[-2:])
-    modes = [int(x) for x in op[:3]]
+    op = inp[pointer]
+    opcode = op % 100
+    modes = [(op % 10**(x+1))//(10**x) for x in reversed(range(2, 5))]
     
     def args(num, pos = False):
         if modes[3-num] == 0:
@@ -55,12 +48,14 @@ def intcode(data=input_data, prog_in=[1]):
             rel_base += args(1)
             pointer += 2
 
-        op = str(inp[pointer]).zfill(5)
-        opcode = int(op[-2:])
-        modes = [int(x) for x in op[:3]]
+        op = inp[pointer]
+        opcode = op % 100
+        modes = [(op % 10**(x+1))//(10**x) for x in reversed(range(2, 5))]
 
     while True:
         yield "END"
+
+tilemap = [" ", "||", "#", "_", "O"]
 
 def solve(inp=input_data):
     inp = "2" + inp[1:]
@@ -75,12 +70,13 @@ def solve(inp=input_data):
 
         if x == -1 and y == 0:
             score = tile
-        else:
-            grid[(x, y)] = tile
-            if tile == 4:
-                ball = x
-            elif tile == 3:
-                paddle = x
+            continue
+
+        grid[(x, y)] = tile
+        if tile == 4:
+            ball = x
+        if tile == 3:
+            paddle = x
 
         if ball and paddle:
             prog_in.clear()
@@ -88,8 +84,20 @@ def solve(inp=input_data):
         else:
             blocks = list(grid.values()).count(2)
 
+        # max_x = max(x[0] for x in grid.keys())
+        # max_y = max(x[1] for x in grid.keys())
+        
+        # if 4 in list(grid.values()) and 3 in list(grid.values()):
+        #     out = ""
+        #     for row in range(max_y+1):
+        #         out += "".join( tilemap[grid[(i, row)]] for i in range(max_x+1) ) + "\n"
+        #     print(out)
+        #     print("\033c", end="")
+
     return blocks, score
 
 a, b = solve()
 print(f"Part 1: {a}") 
 print(f"Part 2: {b}") 
+from timeit import timeit
+# print(timeit(solve, number = 1))
