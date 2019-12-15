@@ -11,11 +11,11 @@ input_data = puzzle.input_data
 def intcode(data=input_data, prog_in=[1]):
     inp = defaultdict(int)
     inp.update({i: v for i,v in enumerate([int(i) for i in data.split(",")])})
-    rel_base = 0
     pointer = 0
-    op = str(inp[pointer]).zfill(5)
-    opcode = int(op[-2:])
-    modes = [int(x) for x in op[:3]]
+    rel_base = 0
+    op = inp[pointer]
+    opcode = op % 100
+    modes = [(op % 10**(x+1))//(10**x) for x in reversed(range(2, 5))]
     
     def args(num, pos = False):
         if modes[3-num] == 0:
@@ -52,9 +52,9 @@ def intcode(data=input_data, prog_in=[1]):
             rel_base += args(1)
             pointer += 2
 
-        op = str(inp[pointer]).zfill(5)
-        opcode = int(op[-2:])
-        modes = [int(x) for x in op[:3]]
+        op = inp[pointer]
+        opcode = op % 100
+        modes = [(op % 10**(x+1))//(10**x) for x in reversed(range(2, 5))]
 
     yield "END"
 

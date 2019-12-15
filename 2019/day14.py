@@ -1,12 +1,8 @@
-from datetime import datetime
-from aocd.models import Puzzle
-from aocd import submit
 from collections import defaultdict, Counter
 import re, math
 
-day = datetime.today().day
-puzzle = Puzzle(year=2019, day=day)
-input_data = puzzle.input_data
+
+input_data = open(r"C:\testing\input").read()[:-1]
 
 def solve(inp=input_data):
     reactions = defaultdict(int)
@@ -36,6 +32,7 @@ def solve(inp=input_data):
                     c[i[1]] += (i[0] * count)
                 else:
                     count_ore(i[1], i[0] * count)
+
         count_ore("FUEL", count)
         return sum(math.ceil(v / reactions[i][0]) * reactions[i][1][0][0] for i,v in c.items())
 
@@ -54,3 +51,5 @@ def solve(inp=input_data):
 a, b = solve()
 print(f"Part 1: {a}") 
 print(f"Part 2: {b}") 
+from timeit import timeit
+# print(timeit(solve, number = 10)/10)

@@ -4,7 +4,7 @@ from aocd import submit
 from collections import defaultdict
 
 day = datetime.today().day
-puzzle = Puzzle(year=2019, day=day)
+puzzle = Puzzle(year=2019, day=11)
 input_data = puzzle.input_data
 
 def intcode(data=input_data, prog_in=[1]):
@@ -94,4 +94,4 @@ def solve(inp=input_data):
 
 a, b = solve()
 print(f"Part 1: {a}") 
-print(f"Part 2: {b}") 
+print(f"Part 2: {b}")
