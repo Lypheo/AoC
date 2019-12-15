@@ -2,7 +2,9 @@ from datetime import datetime
 from aocd.models import Puzzle
 from aocd import submit
 from collections import defaultdict
-import networkx as nx
+# import networkx as nx
+import sys
+sys.setrecursionlimit(2000)
 
 day = datetime.today().day
 puzzle = Puzzle(year=2019, day=day)
@@ -58,6 +60,17 @@ def intcode(data=input_data, prog_in=[1]):
 
     yield "END"
 
+def draw(grid):
+    minx = int(min(z.real for z in grid.keys()))
+    maxx = int(max(z.real for z in grid.keys()))
+    miny = int(min(z.imag for z in grid.keys()))
+    maxy = int(max(z.imag for z in grid.keys()))
+    for y in reversed(range(miny, maxy+1)):
+        for x in range(minx, maxx+1):
+            val = grid[complex(x, y)]
+            print(val if val != 0 else " ", end="")
+        print("\n", end="")
+    print("\n \n", end="")
 
 mov_map = {1:1j, 2:-1j, 3:-1, 4:1}
 rev_map = {1:2, 2:1, 3:4, 4:3}
@@ -67,18 +80,6 @@ def solve(inp=input_data):
     robot = intcode(inp, prog_in)
     grid = defaultdict(int)
     grid[0j] = "."
-
-    def draw(grid):
-        minx = int(min(z.real for z in grid.keys()))
-        maxx = int(max(z.real for z in grid.keys()))
-        miny = int(min(z.imag for z in grid.keys()))
-        maxy = int(max(z.imag for z in grid.keys()))
-        for y in reversed(range(miny, maxy+1)):
-            for x in range(minx, maxx+1):
-                val = grid[complex(x, y)]
-                print((val if val != "." else " ") if val != 0 else " ", end="")
-            print("\n", end="")
-        print("\n \n", end="")
 
     oxygen = None
     def floodfill(pos):
@@ -107,18 +108,50 @@ def solve(inp=input_data):
 
     floodfill(0j)
 
-    draw(grid)
-    G = nx.Graph()
-    G.add_nodes_from(k for k,v in grid.items() if v in ("O", "."))
-    for k,v in grid.items():
-        if v in ("O", "."):
-            adjacent = [k-1, k+1, k-1j, k+1j]
-            adjacent_path = [i for i in adjacent if i in grid and grid[i] in (".", "O")]
-            G.add_edges_from((k, i) for i in adjacent_path)
+    # import solution:
 
-    dkstra = nx.algorithms.shortest_paths.generic.shortest_path_length
-    paths = [dkstra(G, oxygen, g) for g in G.nodes]
-    return dkstra(G, 0j, oxygen), max(paths)
+    # G = nx.Graph()
+    # G.add_nodes_from(k for k,v in grid.items() if v in ("O", "."))
+    # for k,v in grid.items():
+    #     if v in ("O", "."):
+    #         adjacent = [k-1, k+1, k-1j, k+1j]
+    #         adjacent_path = [i for i in adjacent if i in grid and grid[i] in (".", "O")]
+    #         G.add_edges_from((k, i) for i in adjacent_path)
+
+    # dkstra = nx.algorithms.shortest_paths.generic.shortest_path_length
+    # paths = [dkstra(G, oxygen, g) for g in G.nodes]
+    # return dkstra(G, 0j, oxygen), max(paths)
+
+    # proper solution:
+
+    def search(pos, depth, visited):
+        if pos == oxygen:
+            return True
+        elif depth == 0:
+            return False
+
+        visited.add(pos)
+        adjacent = [pos-1, pos+1, pos-1j, pos+1j]
+        adjacent_walkable = [i for i in adjacent if grid[i] in (".", "O") and i not in visited]
+        return any(search(k, depth-1, visited) for k in adjacent_walkable)
+
+    depth = 1
+    while not search(0j, depth, set()):
+        depth += 1
+
+    time = 0
+    filled = set([oxygen])
+    size = sum(v in ("O", ".") for v in grid.values())
+    while len(filled) < size:
+        adjacent_vacuuous = []
+        for k in grid.keys():
+            if k in filled:
+                adjacent = [k-1, k+1, k-1j, k+1j]
+                adjacent_vacuuous.extend(i for i in adjacent if i in grid and grid[i] == ".")
+        filled.update(adjacent_vacuuous)
+        time += 1
+
+    return depth, time
 
 a, b = solve(input_data)
 print(f"Part 1: {a}") 
