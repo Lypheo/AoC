@@ -2,9 +2,10 @@ from datetime import datetime
 from aocd.models import Puzzle
 from aocd import submit
 from collections import defaultdict
-# import networkx as nx
+import networkx as nx
 import sys
 sys.setrecursionlimit(2000)
+from PIL import Image
 
 day = datetime.today().day
 puzzle = Puzzle(year=2019, day=day)
@@ -70,7 +71,7 @@ def draw(grid):
             val = grid[complex(x, y)]
             print(val if val != 0 else " ", end="")
         print("\n", end="")
-    print("\n \n", end="")
+    print("\n\n", end="")
 
 mov_map = {1:1j, 2:-1j, 3:-1, 4:1}
 rev_map = {1:2, 2:1, 3:4, 4:3}
@@ -83,6 +84,7 @@ def solve(inp=input_data):
 
     oxygen = None
     def floodfill(pos):
+        
         for i in [1,2,3,4]:
             pos += mov_map[i]
             if grid[pos] != 0:
@@ -107,7 +109,6 @@ def solve(inp=input_data):
             pos -= mov_map[i]
 
     floodfill(0j)
-
     # import solution:
 
     # G = nx.Graph()
@@ -143,12 +144,11 @@ def solve(inp=input_data):
     filled = set([oxygen])
     size = sum(v in ("O", ".") for v in grid.values())
     while len(filled) < size:
-        adjacent_vacuuous = []
+        adjacent = []
         for k in grid.keys():
             if k in filled:
-                adjacent = [k-1, k+1, k-1j, k+1j]
-                adjacent_vacuuous.extend(i for i in adjacent if i in grid and grid[i] == ".")
-        filled.update(adjacent_vacuuous)
+                adjacent.extend(i for i in (k+1j**i for i in range(4)) if i in grid and grid[i] == ".")
+        filled.update(adjacent)
         time += 1
 
     return depth, time
