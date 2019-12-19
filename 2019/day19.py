@@ -71,22 +71,15 @@ def draw(grid):
     print("\n\n", end="")
 
 def solve(inp=input_data):
-    grid = defaultdict(int)
-    prog_in = []
-    grid = {complex(x, y): next(intcode(inp, [y,x])) for y in range(50) for x in range(50)}
-
+    p1 = sum(next(intcode(inp, [y,x])) for y in range(50) for x in range(50))
     y = 99
     for x in itertools.count(99):
-        v = next(intcode(inp, [y,x]))
-        while v != 1:
+        while next(intcode(inp, [y,x])) != 1:
             y += 1
-            v = next(intcode(inp, [y,x]))
-
         if next(intcode(inp, [y+99,x-99])) == 1:
             p2 = (x-99)*10000 + y
             break
-    
-    return sum(grid.values()), p2
+    return p1, p2
 
 a, b = solve()
 print(f"Part 1: {a}") 
