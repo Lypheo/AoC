@@ -73,9 +73,7 @@ def draw(grid):
 def solve(inp=input_data):
     grid = defaultdict(int)
     prog_in = []
-    for y in range(50):
-        for x in range(50):
-            grid[complex(x, y)] = next(intcode(inp, [y,x]))
+    grid = {complex(x, y): next(intcode(inp, [y,x])) for y in range(50) for x in range(50)}
 
     y = 99
     for x in itertools.count(99):
