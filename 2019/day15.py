@@ -5,7 +5,6 @@ from collections import defaultdict
 import networkx as nx
 import sys
 sys.setrecursionlimit(2000)
-from PIL import Image
 
 day = datetime.today().day
 puzzle = Puzzle(year=2019, day=day)
