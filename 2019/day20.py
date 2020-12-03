@@ -58,7 +58,7 @@ def solve(inp=input_data):
         for n in old_nodes:
             if n.pos == end and n.level == 0:
                 return shortest_path_length(G, start, end), counter
-            if n.level > 25: # credit to some anon for this hint. runs unusably slow without this.
+            if n.level > 25: # credit to some anon for this speed-up hint. runs unusably slow without this 
                 continue
             adjacent = [n.pos + 1j**i for i in range(4)]
             adjacent.remove(n.last)

@@ -16,10 +16,7 @@ def solve(inp=input_data):
         gcd = math.gcd(difx, dify)
         dx, dy = difx//gcd, dify//gcd
 
-        for i in range(1, gcd):
-            if grid[i*dy + b][i*dx + a] == "#":
-                return False
-        return True
+        return any(grid[i*dy + b][i*dx + a] == "#" for i in range(1, gcd))
 
     def detect(a, b):
         return [(x,y) for y,row in enumerate(grid) for x, ast in enumerate(row) \

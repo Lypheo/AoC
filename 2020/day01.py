@@ -5,7 +5,7 @@ import numpy as np
 from aocd.models import Puzzle
 from aocd import submit
 
-day = datetime.today().day
+day = 1
 puzzle = Puzzle(year=2020, day=day)
 input_data = puzzle.input_data
 
@@ -17,11 +17,20 @@ def test(tests, solution):
     print(f"Tests successful!")
     return True
 
+
+
 def solve_a(inp=input_data):
-    return None
+    for i in map(int, inp.split("\n")):
+        for x in map(int, inp.split("\n")):
+            if i + x  == 2020:
+                return i*x
 
 def solve_b(inp=input_data):
-    return None
+    for i in map(int, inp.split("\n")):
+        for x in map(int, inp.split("\n")):
+            for y in map(int, inp.split("\n")):
+                if i + x +y  == 2020:
+                    return i*x*y
 
 tests_a = {
 }
@@ -38,4 +47,4 @@ b = solve_b()
 if b:
     print(f"Part 2: {b}")
     # test(tests_b, solve_b)
-    # submit(b, part="b", day=day, year=2020)
+    submit(b, part="b", day=day, year=2020)

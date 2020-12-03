@@ -1,14 +1,14 @@
 from datetime import datetime
 from aocd.models import Puzzle
 from aocd import submit
-import itertools
 from collections import defaultdict
+import itertools
 
 day = datetime.today().day
-puzzle = Puzzle(year=2019, day=7)
+puzzle = Puzzle(year=2019, day=19)
 input_data = puzzle.input_data
 
-def intcode(data=input_data, prog_in=[1]):
+def intcode(data, prog_in):
     inp = defaultdict(int)
     inp.update({i: v for i,v in enumerate([int(i) for i in data.split(",")])})
     pointer = 0
@@ -33,7 +33,7 @@ def intcode(data=input_data, prog_in=[1]):
             inp[args(3, True)] = args(1) * args(2)
             pointer += 4
         elif opcode == 3:
-            inp[args(1, True)] = prog_in.pop()
+            inp[args(1, True)] = prog_in.pop() if len(prog_in) > 0 else -1
             pointer += 2
         elif opcode == 4:
             yield args(1)
@@ -58,23 +58,38 @@ def intcode(data=input_data, prog_in=[1]):
 
     yield "END"
 
-def solve(inp=input_data):
-    p1 = lambda num, phase: intcode(inp, [p1(num-1, phase) if num != 0 else 0, phase[num]]).__next__()
-    p1_max = max(p1(4, i) for i in itertools.permutations([0,1,2,3,4]))
-    # signals = []
-    # for i in  itertools.permutations([5, 6, 7, 8, 9]):
-    #     proginp = [[i[j]] if j != 0 else [0, i[j]] for j in range(5)]
-    #     progs = [intcode(inp, proginp[i]) for i in range(5)]
-    #     while proginp[0][0] != "END":
-    #         signal = proginp[0][0]
-    #         for k in range(5):
-    #             proginp[k+1 if k != 4 else 0].insert(0, next(progs[k]))
-    #     signals.append(signal)
-    return p1_max, None#max(signals)
+def draw(grid):
+    minx = int(min(z.real for z in grid.keys()))
+    maxx = int(max(z.real for z in grid.keys()))
+    miny = int(min(z.imag for z in grid.keys()))
+    maxy = int(max(z.imag for z in grid.keys()))
+    for y in range(miny, maxy+1):
+        for x in range(minx, maxx+1):
+            val = grid[complex(x, y)]
+            print(val if val != 0 else " ", end="")
+        print("\n", end="")
+    print("\n\n", end="")
 
-test = "3,15,3,16,1002,16,10,16,1,16,15,15,4,15,99,0,0"
-import timeit
+def solve(inp=input_data):
+    prog_in = [[i] for i in range(50)]
+    nics = [intcode(inp, prog_in[i]) for i in range(50)]
+    for nic in nics:
+        next(nic)
+
+    while True:
+        for nic in nics:
+            address = next(nic)
+            x = next(nic)
+            y = next(nic)
+            print(address, x, y)
+            if address == 255:
+                p1 = y
+                break
+            prog_in[address].extend([y,x])
+
+
+    return p1, None
+
 a, b = solve()
-print(f"Part 1: {a}")
-print(f"Part 2: {b}")
-print(timeit.timeit(solve, number = 10)/10)
+print(f"Part 1: {a}") 
+print(f"Part 2: {b}") 
