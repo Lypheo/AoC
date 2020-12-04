@@ -34,7 +34,9 @@ for k, v in lb.items():
 for d in range(1, day+1):
     print(f"Day {d:02d}:")
     participants = sorted({k: v[str(d)] for k,v in timings.items() if str(d) in v}.items(), key=lambda k: k[1][1] if len(k[1]) > 1 else "99:99:99")#[:10]
+    c = 1
     for p, t in participants:
-        print("{} {}   {}".format(p.ljust(20), t[0], t[1] if len(t) > 1 else "-"))
+        print(str(c).rjust(3, " ") + ": {} {}   {}".format(p.ljust(20), t[0], t[1] if len(t) > 1 else "-"))
+        c += 1
 
 
