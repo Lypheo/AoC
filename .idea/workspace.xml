@@ -29,7 +29,7 @@
   <component name="ChangeListManager">
     <list default="true" id="2fe56544-90a9-400e-b86a-1f954b3cbd96" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2020/day04.py" beforeDir="false" afterPath="$PROJECT_DIR$/2020/day04.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2020/day05.py" beforeDir="false" afterPath="$PROJECT_DIR$/2020/day05.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,28 +74,7 @@
       <recent name="C:\Users\saifu\OneDrive\Dokumente\Code\AoC\2020" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.day04 (1)">
-    <configuration name="day02" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="AoC" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/2020" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/2020/day02.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Python.day05">
     <configuration name="day03" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="AoC" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -159,6 +138,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="day05" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="AoC" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/2020" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/2020/day05.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="stats (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="AoC" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -182,11 +182,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.day04 (1)" />
+        <item itemvalue="Python.day05" />
         <item itemvalue="Python.stats (1)" />
+        <item itemvalue="Python.day04 (1)" />
         <item itemvalue="Python.day04" />
         <item itemvalue="Python.day03" />
-        <item itemvalue="Python.day02" />
       </list>
     </recent_temporary>
   </component>
@@ -198,7 +198,7 @@
       <option name="presentableId" value="Default" />
       <updated>1606730177182</updated>
       <workItem from="1606730178376" duration="298000" />
-      <workItem from="1606730619448" duration="42981000" />
+      <workItem from="1606730619448" duration="48967000" />
     </task>
     <servers />
   </component>
@@ -222,26 +222,26 @@
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state x="521" y="180" key="#Plugins/0.0.1858.1080/1920.0.1920.1040@0.0.1858.1080" timestamp="1606974427854" />
-    <state width="1877" height="178" key="GridCell.Tab.0.bottom" timestamp="1607094123448">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state width="1815" height="186" key="GridCell.Tab.0.bottom" timestamp="1607147049827">
+      <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state width="1815" height="216" key="GridCell.Tab.0.bottom/0.0.1858.1080/1920.0.1920.1040@0.0.1858.1080" timestamp="1607062401421" />
-    <state width="1877" height="178" key="GridCell.Tab.0.bottom/0.0.1858.1080/1920.0.1920.1040@1920.0.1920.1040" timestamp="1607094123448" />
-    <state width="1877" height="178" key="GridCell.Tab.0.center" timestamp="1607094123447">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state width="1815" height="186" key="GridCell.Tab.0.bottom/0.0.1858.1080/1920.0.1920.1040@0.0.1858.1080" timestamp="1607147049827" />
+    <state width="1877" height="178" key="GridCell.Tab.0.bottom/0.0.1858.1080/1920.0.1920.1040@1920.0.1920.1040" timestamp="1607094658450" />
+    <state width="1815" height="186" key="GridCell.Tab.0.center" timestamp="1607147049827">
+      <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state width="1815" height="216" key="GridCell.Tab.0.center/0.0.1858.1080/1920.0.1920.1040@0.0.1858.1080" timestamp="1607062401421" />
-    <state width="1877" height="178" key="GridCell.Tab.0.center/0.0.1858.1080/1920.0.1920.1040@1920.0.1920.1040" timestamp="1607094123447" />
-    <state width="1877" height="178" key="GridCell.Tab.0.left" timestamp="1607094123447">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state width="1815" height="186" key="GridCell.Tab.0.center/0.0.1858.1080/1920.0.1920.1040@0.0.1858.1080" timestamp="1607147049827" />
+    <state width="1877" height="178" key="GridCell.Tab.0.center/0.0.1858.1080/1920.0.1920.1040@1920.0.1920.1040" timestamp="1607094658450" />
+    <state width="1815" height="186" key="GridCell.Tab.0.left" timestamp="1607147049827">
+      <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state width="1815" height="216" key="GridCell.Tab.0.left/0.0.1858.1080/1920.0.1920.1040@0.0.1858.1080" timestamp="1607062401421" />
-    <state width="1877" height="178" key="GridCell.Tab.0.left/0.0.1858.1080/1920.0.1920.1040@1920.0.1920.1040" timestamp="1607094123447" />
-    <state width="1877" height="178" key="GridCell.Tab.0.right" timestamp="1607094123448">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state width="1815" height="186" key="GridCell.Tab.0.left/0.0.1858.1080/1920.0.1920.1040@0.0.1858.1080" timestamp="1607147049827" />
+    <state width="1877" height="178" key="GridCell.Tab.0.left/0.0.1858.1080/1920.0.1920.1040@1920.0.1920.1040" timestamp="1607094658449" />
+    <state width="1815" height="186" key="GridCell.Tab.0.right" timestamp="1607147049827">
+      <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state width="1815" height="216" key="GridCell.Tab.0.right/0.0.1858.1080/1920.0.1920.1040@0.0.1858.1080" timestamp="1607062401421" />
-    <state width="1877" height="178" key="GridCell.Tab.0.right/0.0.1858.1080/1920.0.1920.1040@1920.0.1920.1040" timestamp="1607094123448" />
+    <state width="1815" height="186" key="GridCell.Tab.0.right/0.0.1858.1080/1920.0.1920.1040@0.0.1858.1080" timestamp="1607147049827" />
+    <state width="1877" height="178" key="GridCell.Tab.0.right/0.0.1858.1080/1920.0.1920.1040@1920.0.1920.1040" timestamp="1607094658450" />
     <state x="771" y="332" key="SettingsEditor" timestamp="1606752714607">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
@@ -251,10 +251,10 @@
     </state>
     <state x="92" y="92" width="1674" height="896" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1858.1080/1920.0.1920.1040@0.0.1858.1080" timestamp="1607061907217" />
     <state x="2015" y="89" width="1730" height="863" maximized="true" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1858.1080/1920.0.1920.1040@1920.0.1920.1040" timestamp="1607065680957" />
-    <state x="529" y="150" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1607059193255">
+    <state x="529" y="150" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1607144801218">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state x="529" y="150" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1858.1080/1920.0.1920.1040@0.0.1858.1080" timestamp="1607059193255" />
+    <state x="529" y="150" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1858.1080/1920.0.1920.1040@0.0.1858.1080" timestamp="1607144801218" />
     <state x="592" y="235" width="672" height="678" key="search.everywhere.popup" timestamp="1606974410991">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>

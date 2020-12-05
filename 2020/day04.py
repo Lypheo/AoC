@@ -35,7 +35,7 @@ def solve_b(inp=input_data):
             and (pw["ecl"] in "amb blu brn gry grn hzl oth".split())
             and (re.match(r"^\d{9}$", pw["pid"]))
         )
-       for pw in (dict(x.split(":") for x in p.split()) for p in inp.split("\n\n"))
+        for pw in (dict(x.split(":") for x in p.split()) for p in inp.split("\n\n"))
     )
 
 tests = {"""eyr:1972 cid:100
