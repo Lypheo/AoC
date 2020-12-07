@@ -7,8 +7,8 @@ import requests, os
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0"
 YEAR = 2020
 day = datetime.datetime.today().day
-uri = 'https://adventofcode.com/{year}/leaderboard/private/view/134143.json'.format(year=YEAR) # weebautism
-# uri = 'https://adventofcode.com/2020/leaderboard/private/view/198336.json'.format(year=YEAR) # aocg
+# uri = 'https://adventofcode.com/{year}/leaderboard/private/view/134143.json'.format(year=YEAR) # weebautism
+uri = 'https://adventofcode.com/2020/leaderboard/private/view/198336.json'.format(year=YEAR) # aocg
 response = requests.get(uri, cookies={'session': os.environ["AOC_SESSION"]}, headers={'User-Agent': USER_AGENT})
 data = response.text
 
