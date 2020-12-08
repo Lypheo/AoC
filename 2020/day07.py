@@ -1,3 +1,4 @@
+import time
 from datetime import datetime
 import time
 import functools, itertools, collections, re
@@ -613,48 +614,68 @@ def test(tests, solution):
     return True
 
 m = {}
-for l in input_data.split("\n"):
-    bag, content = l.split(" contain ")
-    bag = bag.replace("bags", "bag")
+
+t1 = time.time_ns()
+for l in open(r"C:\Users\saifu\Downloads\bigboy"):
+    bag, content = l.strip("\n").split(" contain ")
+    bag = re.sub(r" bags$", " bag", bag)
     if content != "no other bags.":
-        m[bag] = [(int(b[0]), b[1]) for b in re.findall(r"(\d) ([\w ]+bag)s?", content)]
+        m[bag] = [(int(b[0]), b[1]) for b in re.findall(r"(\d) ([\w ]+ bag)s?[,.]?", content)]
+
+t2 = time.time_ns()
+print(f"Parsing: {(t2-t1)/(1000000)} ms")
 
 def solve_a(inp=input_data):
+    t = {}
     def c_g(bag):
+        if (ret := t.get(bag)) is not None:
+            return ret
         if m.get(bag) is None:
             return False
         if "shiny gold bag" in (x[1] for x in m[bag]):
+            t[bag] = True
             return True
-        return any(c_g(x[1]) for x in m[bag])
+        ret = any(c_g(x[1]) for x in m[bag])
+        t[bag] = ret
+        return ret
 
     return sum(c_g(b) for b in m.keys())
 
-
 def solve_b(inp=input_data):
+    sums = {}
     def cont(bag):
+        if (s := sums.get(bag)) is not None:
+            return s
         if m.get(bag) is None:
             return 0
         else:
-            return sum(b[0] * (1 + cont(b[1])) for b in m[bag])
+            s = sum(b[0] * (1 + cont(b[1])) for b in m[bag])
+            sums[bag] = s
+            return s
 
     return cont("shiny gold bag")
 
-a = solve_a()
-print(f"Part 1: {a}\n")
+# a = solve_a()
+# print(f"Part 1: {a}\n")
 # test(tests, solve_a)
 # submit(a, part="a", day=day, year=2020)
 
-b = solve_b()
-if not b:
-    exit(0)
+# b = solve_b()
+# if not b:
+#     exit(0)
 
-print(f"Part 2: {b}")
+# print(f"Part 2: {b}")
 # test(tests, solve_b)
 # submit(b, part="b", day=day, year=2020)
 
-import time
 t1 = time.time_ns()
-for i in range(times := 100000):
+for i in range(times := 5):
     solve_b()
 t2 = time.time_ns()
-print(f"Time: {(t2-t1)/(times)} ns")
+print(f"Part 1: {(t2-t1)/(1000000*times)} ms")
+
+t1 = time.time_ns()
+for i in range(times := 5):
+    solve_a()
+t2 = time.time_ns()
+print(f"Part 2: {(t2-t1)/(1000000*times)} ms")
