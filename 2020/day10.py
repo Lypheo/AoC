@@ -7,6 +7,8 @@ from aocd.models import Puzzle
 from aocd import submit
 from pprint import pprint
 
+import random as rand
+
 day = 10
 puzzle = Puzzle(year=2020, day=day)
 input_data = puzzle.input_data
@@ -44,15 +46,12 @@ def solve_b(inp=input_data):
             if k - adapters[i] <= 3:
                 c[adapters[i]].append(k)
 
-    cache = {}
+    @functools.lru_cache(None)
     def f(n):
-        if n in cache:
-            return cache[n]
         if n == adapters[-1]:
             return 1
         else:
-            cache[n] = sum(f(k) for k in c[n])
-            return cache[n]
+            return sum(f(k) for k in c[n])
 
     return f(0)
 
