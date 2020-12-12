@@ -96,8 +96,8 @@ test(tests, solve_b)
 # t2 = time.time_ns()
 # print(f"Part 1: {(t2-t1)/(1000000*times)} ms")
 #
-# t1 = time.time_ns()
-# for i in range(times := 10000):
-#     solve_b()
-# t2 = time.time_ns()
-# print(f"Part 2: {(t2-t1)/(1000000*times)} ms")
+t1 = time.time_ns()
+for i in range(times := 5):
+    solve_b()
+t2 = time.time_ns()
+print(f"Part 2: {(t2-t1)/(1000000*times)} ms")
