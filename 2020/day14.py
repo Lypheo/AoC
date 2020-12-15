@@ -47,7 +47,6 @@ def solve_a(inp=input_data):
 def solve_b(inp=input_data):
     lines = inp.split("\n")
     mem = {}
-    mask = None
     for l in lines:
         if l.startswith("mask ="):
             mask = re.findall("mask = ([X01]*)", l)[0]
@@ -89,10 +88,10 @@ mem[26] = 1""": (208, )
 # test(tests, solve_a)
 # submit(a, part="a", day=day, year=2020)
 
-b = solve_b()
-print(f"Part 2: {b}")
-# test(tests, solve_b)
-submit(b, part="b", day=day, year=2020)
+# b = solve_b()
+# print(f"Part 2: {b}")
+test(tests, solve_b)
+# submit(b, part="b", day=day, year=2020)
 
 # t1 = time.time_ns()
 # for i in range(times := 100):
