@@ -125,7 +125,7 @@ print(f"Part 2: {b}")
 # print(f"Part 1: {(t2-t1)/(1000000*times)} ms")
 #
 # t1 = time.time_ns()
-# for i in range(times := 1):
+# for i in range(times := 100):
 #     solve_b()
 # t2 = time.time_ns()
 # print(f"Part 2: {(t2-t1)/(1000000*times)} ms")
