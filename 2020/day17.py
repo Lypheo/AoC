@@ -76,7 +76,11 @@ def solve_b(inp=input_data):
         return tuple(m+n for m, n in zip(v1, v2))
 
     def neighbours(c):
-        return [vadd(c, v) for v in itertools.product((-1, 1, 0), repeat=4) if v != (0,)*4]
+        # return [vadd(c, v) for v in itertools.product((-1, 1, 0), repeat=4) if v != (0,)*4]
+        return nbs(c, 4)
+
+    def nbs(c, d):
+        return [vadd(c, v) for v in itertools.product((-1, 1, 0), repeat=d) if v != (0,)*d]
 
     for i in range(6):
         start = grd.copy()
