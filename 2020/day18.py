@@ -28,8 +28,7 @@ def solve_a(inp=input_data):
         def find_pe(e):
             s = 0
             for i in range(len(e)):
-                s += int(e[i] == "(")
-                s -= int(e[i] == ")")
+                s += int(e[i] == "(") - int(e[i] == ")")
                 if s == -1: return i
 
         while paran := re.search("\(", e):
@@ -48,8 +47,7 @@ def solve_b(inp=input_data):
         def find_pe(e):
             s = 0
             for i in range(len(e)):
-                s += int(e[i] == "(")
-                s -= int(e[i] == ")")
+                s += int(e[i] == "(") - int(e[i] == ")")
                 if s == -1: return i
 
         while paran := re.search("\(", e):
