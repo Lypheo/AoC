@@ -586,8 +586,7 @@ aabaabababbaabbabbababbb
 aabbbbabbabaababaaababab
 bbabbbbbbaabbbbaabbbbabbabaaaababaabbbbb"""
 
-import sys
-# sys.setrecursionlimit(2500)
+input_data = puzzle.input_data
 
 def test(tests, solution):
     for i,o in tests.items():
@@ -605,6 +604,7 @@ def solve_a(inp=input_data):
         i, rule = r.split(": ")
         rules[int(i)] = rule
 
+    @functools.lru_cache(None)
     def get_patterns(r):
         if "|" in r:
             return sum([get_patterns(x) for x in r.split(" | ")], [])
@@ -643,16 +643,14 @@ def solve_b(inp=input_data):
 
     def match(s: str):
         def match11(s):
-            n = 0
+            n1, n2 = 0, 0
             while s[:lens[42]] in get_patterns(rules[42]):
                 s = s[lens[42]:]
-                n += 1
-            if n == 0:
-                return False
+                n1 += 1
             while s[:lens[31]] in get_patterns(rules[31]):
                 s = s[lens[31]:]
-                n -= 1
-            return n == 0 and s == ""
+                n2 += 1
+            return n1 == n2 and s == ""
 
         if s[:lens[8]] not in get_patterns(rules[8]):
             return False
@@ -712,24 +710,24 @@ aabbbbbaabbbaaaaaabbbbbababaaaaabbaaabba''': (3,12)
 }
 
 
-# a = solve_a()
-# print(f"Part 1: {a}\n")
+a = solve_a()
+print(f"Part 1: {a}\n")
 # test(tests, solve_a)
 # submit(a, part="a", day=day, year=2020)
 
-# b = solve_b()
-# print(f"Part 2: {b}")
+b = solve_b()
+print(f"Part 2: {b}")
 # test(tests, solve_b)
 # submit(b, part="b", day=day, year=2020)
-
+#
 # t1 = time.time_ns()
-# for i in range(times := 100):
+# for i in range(times := 5):
 #     solve_a()
 # t2 = time.time_ns()
 # print(f"Part 1: {(t2-t1)/(1000000*times)} ms")
 
-t1 = time.time_ns()
-for i in range(times := 100):
-    solve_b()
-t2 = time.time_ns()
-print(f"Part 2: {(t2-t1)/(1000000*times)} ms")
+# t1 = time.time_ns()
+# for i in range(times := 100):
+#     solve_b()
+# t2 = time.time_ns()
+# print(f"Part 2: {(t2-t1)/(1000000*times)} ms")
