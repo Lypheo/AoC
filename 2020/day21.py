@@ -41,6 +41,7 @@ def solve_a(inp=input_data):
             d[a].append(ings)
 
     d = {k: set.intersection(*v) for k,v in d.items()}
+    print(d)
 
     mappings = {k:v.pop() for k,v in d.items() if len(v) == 1}
     d = {k:v for k,v in d.items() if k not in mappings}
@@ -73,10 +74,9 @@ def solve_b(inp=input_data):
             d[a].append(ings)
 
     d = {k: set.intersection(*v) for k,v in d.items()}
-
+    "".strip()
     mappings = {k:v.pop() for k,v in d.items() if len(v) == 1}
     d = {k:v for k,v in d.items() if k not in mappings}
-
     while d:
         for mk, mv in mappings.items():
             for dk, dv in d.items():
@@ -97,13 +97,13 @@ sqjhc mxmxvkd sbzzf (contains fish)""": (5, "mxmxvkd,sqjhc,fvjkl")
 
 # a = solve_a()
 # print(f"Part 1: {a}\n")
-# test(tests, solve_a)
+test(tests, solve_a)
 # submit(a, part="a", day=day, year=2020)
 
-b = solve_b()
-print(f"Part 2: {b}")
+# b = solve_b()
+# print(f"Part 2: {b}")
 # test(tests, solve_b)
-submit(b, part="b", day=day, year=2020)
+# submit(b, part="b", day=day, year=2020)
 
 # t1 = time.time_ns()
 # for i in range(times := 100):
