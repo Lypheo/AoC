@@ -64,9 +64,6 @@ def solve_b(inp=input_data):
 
         return winner, score(deck2 if winner else deck1)
 
-
-
-
     deck1, deck2 = [[int(x) for x in deck.split("\n")[1:]] for deck in inp.split("\n\n")]
     winner, score = game(deck1, deck2)
     return score
@@ -84,18 +81,27 @@ Player 2:
 8
 4
 7
-10""": (306, 291)
+10""": (306, 291),
+
+"""Player 1:
+43
+19
+
+Player 2:
+2
+29
+14""": (None,)
 }
 
 
 # a = solve_a()
 # print(f"Part 1: {a}\n")
-test(tests, solve_a)
+# test(tests, solve_a)
 # submit(a, part="a", day=day, year=2020)
 
-# b = solve_b()
-# print(f"Part 2: {b}")
-test(tests, solve_b)
+b = solve_b()
+print(f"Part 2: {b}")
+# test(tests, solve_b)
 # submit(b, part="b", day=day, year=2020)
 
 # t1 = time.time_ns()
@@ -103,9 +109,11 @@ test(tests, solve_b)
 #     solve_a()
 # t2 = time.time_ns()
 # print(f"Part 1: {(t2-t1)/(1000000*times)} ms")
-#
-# t1 = time.time_ns()
-# for i in range(times := 100):
-#     solve_b()
-# t2 = time.time_ns()
-# print(f"Part 2: {(t2-t1)/(1000000*times)} ms")
+
+
+
+t1 = time.time_ns()
+for i in range(times := 10):
+    solve_b()
+t2 = time.time_ns()
+print(f"Part 2: {(t2-t1)/(1000000*times)} ms")
