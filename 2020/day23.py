@@ -41,10 +41,8 @@ def solve_a(inp=input_data):
 
         dest = current
         while True:
-            if (dest := dest - 1) < mn:
-                dest = mx
-            if dest not in pickup:
-                break
+            dest = mx if dest == mn else dest -1
+            if dest not in pickup: break
 
         cups[current] = cups[pickup[-1]]
         cups[pickup[-1]] = cups[dest]
@@ -59,15 +57,13 @@ def solve_a(inp=input_data):
     return o
 
 def solve_b(inp=input_data):
-    cupsl = [int(x) for x in inp]
-    cupsl += list(range(len(cupsl)+1, 1000001))
+    cupsl = [int(x) for x in inp] + list(range(10, 1000001))
     l = 1000000
     cups = {}
     for i in range(l):
         cups[cupsl[i]] = cupsl[(i+1) % l]
 
     current = cupsl[0]
-    mn, mx = 1, 1000000
     for _ in range(10000000):
         pickup = [cups[current]]
         for i in range(2):
@@ -75,10 +71,8 @@ def solve_b(inp=input_data):
 
         dest = current
         while True:
-            if (dest := dest - 1) < mn:
-                dest = mx
-            if dest not in pickup:
-                break
+            dest = 1000000 if dest == 1 else dest -1
+            if dest not in pickup: break
 
         cups[current] = cups[pickup[-1]]
         cups[pickup[-1]] = cups[dest]
@@ -99,7 +93,7 @@ tests = {
 #
 # b = solve_b()
 # print(f"Part 2: {b}")
-# test(tests, solve_b)
+test(tests, solve_b)
 # submit(b, part="b", day=day, year=2020)
 
 # t1 = time.time_ns()
@@ -109,9 +103,9 @@ tests = {
 # print(f"Part 1: {(t2-t1)/(1000000*times)} ms")
 
 
-
-t1 = time.time_ns()
-for i in range(times := 1):
-    solve_b()
-t2 = time.time_ns()
-print(f"Part 2: {(t2-t1)/(1000000*times)} ms")
+#
+# t1 = time.time_ns()
+# for i in range(times := 1):
+#     solve_b()
+# t2 = time.time_ns()
+# print(f"Part 2: {(t2-t1)/(1000000*times)} ms")
