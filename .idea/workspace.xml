@@ -23,14 +23,19 @@
   </component>
   <component name="CMakeSettings" AUTO_RELOAD="true">
     <configurations>
-      <configuration PROFILE_NAME="Release" CONFIG_NAME="Release" />
+      <configuration PROFILE_NAME="Release" CONFIG_NAME="Release" ENABLED="true" />
     </configurations>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2fe56544-90a9-400e-b86a-1f954b3cbd96" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/2021/day01.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/2021/day02.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2020/day07.py" beforeDir="false" afterPath="$PROJECT_DIR$/2020/day07.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2020/cmake-build-release/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/2020/cmake-build-release/CMakeFiles/clion-log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2020/day10.py" beforeDir="false" afterPath="$PROJECT_DIR$/2020/day10.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2020/day25.py" beforeDir="false" afterPath="$PROJECT_DIR$/2020/day25.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stats.py" beforeDir="false" afterPath="$PROJECT_DIR$/stats.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template.py" beforeDir="false" afterPath="$PROJECT_DIR$/template.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,11 +56,19 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
   <component name="MacroExpansionManager">
     <option name="directoryName" value="cgghrgr9" />
   </component>
   <component name="ProjectId" id="1l0NinY9iJT1OECF6Q9Ip4s4rc5" />
-  <component name="ProjectLevelVcsManager">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -66,18 +79,35 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/2020" />
-    <property name="settings.editor.selected.configurable" value="CMakeSettings" />
+    <property name="cidr.known.project.marker" value="true" />
+    <property name="cmake.loaded.for.project" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15429688" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\saifu\OneDrive\Dokumente\Code\AoC\2020" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.day07">
-    <configuration name="day04 (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.stats (1)">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="day01" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="AoC" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -85,11 +115,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/2020" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/2021" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/2020/day04.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/2021/day01.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -98,7 +128,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="day05" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="day02" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="AoC" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -106,11 +136,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/2020" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/2021" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/2020/day05.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/2021/day02.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -119,7 +149,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="day06" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="day24" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="AoC" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -131,7 +161,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/2020/day06.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/2020/day24.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -140,7 +170,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="day07" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="day25" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="AoC" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -152,7 +182,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/2020/day07.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/2020/day25.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -183,22 +213,25 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.day04 (1)" />
-      <item itemvalue="Python.day05" />
-      <item itemvalue="Python.day06" />
+      <item itemvalue="Python.day01" />
+      <item itemvalue="Python.day24" />
+      <item itemvalue="Python.day25" />
       <item itemvalue="Python.stats (1)" />
-      <item itemvalue="Python.day07" />
+      <item itemvalue="Python.day02" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.day07" />
         <item itemvalue="Python.stats (1)" />
-        <item itemvalue="Python.day06" />
-        <item itemvalue="Python.day05" />
-        <item itemvalue="Python.day04 (1)" />
+        <item itemvalue="Python.day02" />
+        <item itemvalue="Python.day01" />
       </list>
     </recent_temporary>
   </component>
+  <component name="RustProjectSettings">
+    <option name="toolchainHomeDirectory" value="E:/Programs/rust/cargo/bin" />
+    <option name="version" value="2" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="2fe56544-90a9-400e-b86a-1f954b3cbd96" name="Default Changelist" comment="" />
@@ -208,6 +241,11 @@
       <updated>1606730177182</updated>
       <workItem from="1606730178376" duration="298000" />
       <workItem from="1606730619448" duration="71110000" />
+      <workItem from="1608503149792" duration="51151000" />
+      <workItem from="1638265824659" duration="3322000" />
+      <workItem from="1638327952927" duration="5634000" />
+      <workItem from="1638421788118" duration="105000" />
+      <workItem from="1638421923638" duration="3005000" />
     </task>
     <servers />
   </component>
@@ -225,52 +263,5 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="521" y="180" key="#Plugins" timestamp="1606974427854">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state x="521" y="180" key="#Plugins/0.0.1858.1080/1920.0.1920.1040@0.0.1858.1080" timestamp="1606974427854" />
-    <state x="709" y="294" key="FileChooserDialogImpl" timestamp="1607259515395">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state x="709" y="294" key="FileChooserDialogImpl/0.0.1858.1080/1920.0.1920.1040@0.0.1858.1080" timestamp="1607259515395" />
-    <state width="1815" height="270" key="GridCell.Tab.0.bottom" timestamp="1607343148479">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state width="1815" height="270" key="GridCell.Tab.0.bottom/0.0.1858.1080/1920.0.1920.1040@0.0.1858.1080" timestamp="1607343148479" />
-    <state width="1877" height="178" key="GridCell.Tab.0.bottom/0.0.1858.1080/1920.0.1920.1040@1920.0.1920.1040" timestamp="1607094658450" />
-    <state width="1815" height="270" key="GridCell.Tab.0.center" timestamp="1607343148479">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state width="1815" height="270" key="GridCell.Tab.0.center/0.0.1858.1080/1920.0.1920.1040@0.0.1858.1080" timestamp="1607343148479" />
-    <state width="1877" height="178" key="GridCell.Tab.0.center/0.0.1858.1080/1920.0.1920.1040@1920.0.1920.1040" timestamp="1607094658450" />
-    <state width="1815" height="270" key="GridCell.Tab.0.left" timestamp="1607343148479">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state width="1815" height="270" key="GridCell.Tab.0.left/0.0.1858.1080/1920.0.1920.1040@0.0.1858.1080" timestamp="1607343148479" />
-    <state width="1877" height="178" key="GridCell.Tab.0.left/0.0.1858.1080/1920.0.1920.1040@1920.0.1920.1040" timestamp="1607094658449" />
-    <state width="1815" height="270" key="GridCell.Tab.0.right" timestamp="1607343148479">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state width="1815" height="270" key="GridCell.Tab.0.right/0.0.1858.1080/1920.0.1920.1040@0.0.1858.1080" timestamp="1607343148479" />
-    <state width="1877" height="178" key="GridCell.Tab.0.right/0.0.1858.1080/1920.0.1920.1040@1920.0.1920.1040" timestamp="1607094658450" />
-    <state x="771" y="332" key="SettingsEditor" timestamp="1607259590696">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state x="771" y="332" key="SettingsEditor/0.0.1858.1080/1920.0.1920.1040@0.0.1858.1080" timestamp="1607259590696" />
-    <state x="2015" y="89" width="1730" height="863" maximized="true" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1607065680957">
-      <screen x="1920" y="0" width="1920" height="1040" />
-    </state>
-    <state x="92" y="92" width="1674" height="896" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1858.1080/1920.0.1920.1040@0.0.1858.1080" timestamp="1607061907217" />
-    <state x="2015" y="89" width="1730" height="863" maximized="true" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1858.1080/1920.0.1920.1040@1920.0.1920.1040" timestamp="1607065680957" />
-    <state x="529" y="150" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1607144801218">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state x="529" y="150" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1858.1080/1920.0.1920.1040@0.0.1858.1080" timestamp="1607144801218" />
-    <state x="592" y="235" width="672" height="678" key="search.everywhere.popup" timestamp="1606974410991">
-      <screen x="0" y="0" width="1858" height="1080" />
-    </state>
-    <state x="592" y="235" width="672" height="678" key="search.everywhere.popup/0.0.1858.1080/1920.0.1920.1040@0.0.1858.1080" timestamp="1606974410991" />
   </component>
 </project>

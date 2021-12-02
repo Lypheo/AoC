@@ -4,16 +4,15 @@ from pprint import pprint
 
 import requests, os
 
-USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0"
-YEAR = 2020
-day = datetime.datetime.today().day
-# uri = 'https://adventofcode.com/{year}/leaderboard/private/view/134143.json'.format(year=YEAR) # weebautism
-uri = 'https://adventofcode.com/2020/leaderboard/private/view/198336.json'.format(year=YEAR) # aocg
-response = requests.get(uri, cookies={'session': os.environ["AOC_SESSION"]}, headers={'User-Agent': USER_AGENT})
+YEAR = 2021
+day = min([datetime.datetime.today().day, 25])
+uri = 'https://adventofcode.com/{year}/leaderboard/private/view/134143.json'.format(year=YEAR) # weebautism
+# uri = 'https://adventofcode.com/2021/leaderboard/private/view/993406.json'.format(year=YEAR) # aocg
+# uri = 'https://adventofcode.com/{year}/leaderboard/private/view/963655.json'.format(year=YEAR) # SSC
+response = requests.get(uri, cookies={'session': os.environ["AOC_SESSION"]})
 data = response.text
 
 lb = json.loads(data)["members"]
-
 timings = {}
 def unix_to_ts(t, day):
     t6am = datetime.datetime(YEAR, 12, day, 6, tzinfo=datetime.timezone(datetime.timedelta(hours=1)))
@@ -21,15 +20,26 @@ def unix_to_ts(t, day):
     return time.strftime('%H:%M:%S', time.gmtime(t - unix6am))
 
 anons = {
-    "668767": "kaitokid",
     "652077": "Frechdachs",
-    "405237": "Nala_Alan (?)",
+    "668767": "kaitokid",
+    "405237": "Nala_Alan",
     "386138": "MolesterMan"
 }
+alias = {
+    "Eschryn" : "zCore",
+    "cuanim" : "Vardë",
+    "daf276" : "Attila",
+    "Krieger381" : "Arranun"
+}
+
+dead = ["kaitokid", "ll-FP-ll"]
 
 for k, v in lb.items():
-    times = {k: sorted([unix_to_ts(int(i["get_star_ts"]), int(k)) for i in v.values()]) for k, v in v["completion_day_level"].items()}
-    timings[v["name"] or (anons[v["id"]] if v["id"] in anons else "Anon " + v["id"])] = times
+    times = {k: sorted([unix_to_ts(i["get_star_ts"], int(k)) for i in v.values()]) for k, v in v["completion_day_level"].items()}
+    rname = v["name"] or anons.get(v["id"], "Anon " + v["id"])
+    name = alias.get(rname, rname)
+    if name in dead: continue
+    timings[name] = times
 
 for d in range(1, day+1):
     print(f"Day {d:02d}:")

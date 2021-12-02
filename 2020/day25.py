@@ -32,16 +32,11 @@ def solve_a(inp=input_data):
             o = (o*sn) % 20201227
         return o
 
-    loopn = []
-    for i in (card, door):
-        ln = 0
-        o = 1
-        while o != i:
-            ln += 1
-            o = (o*7) % 20201227
-        loopn.append(ln)
-
-    return transform(loopn[0], door), transform(loopn[1], card)
+    ln, o = 0, 1
+    while o != door:
+        ln += 1
+        o = (o*7) % 20201227
+    return transform(ln, card)
 
 
 def solve_b(inp=input_data):

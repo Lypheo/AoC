@@ -50,8 +50,7 @@ def solve_b(inp=input_data):
     def f(n):
         if n == adapters[-1]:
             return 1
-        else:
-            return sum(f(k) for k in c[n])
+        return sum(f(k) for k in c[n])
 
     return f(0)
 

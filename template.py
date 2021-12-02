@@ -1,12 +1,11 @@
-from datetime import datetime
 import time
 import functools, itertools, collections, re
 import numpy as np
 from aocd.models import Puzzle
 from aocd import submit
 
-day = datetime.today().day
-puzzle = Puzzle(year=2020, day=day)
+day = 1
+puzzle = Puzzle(year=2021, day=day)
 input_data = puzzle.input_data
 
 def test(tests, solution):
@@ -18,10 +17,14 @@ def test(tests, solution):
     return True
 
 def solve_a(inp=input_data):
-    return None
+    inp = inp.splitlines()
+    inp = [int(n) for n in inp.splitlines()]
+    return
 
 def solve_b(inp=input_data):
-    return None
+    inp = inp.splitlines()
+    inp = [int(n) for n in inp.splitlines()]
+    return False
 
 tests_a = {
 }
@@ -29,7 +32,7 @@ tests_a = {
 a = solve_a()
 print(f"Part 1: {a}\n")
 # test(tests_a, solve_a)
-# submit(a, part="a", day=day, year=2020)
+# submit(a, part="a", day=day, year=2021)
 
 tests_b = {
 }
@@ -38,4 +41,4 @@ b = solve_b()
 if b:
     print(f"Part 2: {b}")
     # test(tests_b, solve_b)
-    # submit(b, part="b", day=day, year=2020)
+    # submit(b, part="b", day=day, year=2021)
