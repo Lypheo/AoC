@@ -20,7 +20,7 @@ def test(tests, solution):
 
 def solve_a(inp=input_data):
     groups = inp.split("\n\n")
-    return sum(l in g for l in "abcdefghijklmnopqrstuvwxyz" for g in groups)
+    return sum(len(set(g)-set("\n")) for g in groups)
 
 def solve_b(inp=input_data):
     groups = inp.split("\n\n")

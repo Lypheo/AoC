@@ -29,16 +29,16 @@ def solve_b(inp=input_data):
 tests_a = {
 }
 
+# test(tests_a, solve_a)
 a = solve_a()
 print(f"Part 1: {a}\n")
-# test(tests_a, solve_a)
 # submit(a, part="a", day=day, year=2021)
 
 tests_b = {
 }
 
+# test(tests_b, solve_b)
 b = solve_b()
 if b:
     print(f"Part 2: {b}")
-    # test(tests_b, solve_b)
     # submit(b, part="b", day=day, year=2021)
