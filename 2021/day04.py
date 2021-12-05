@@ -117,3 +117,11 @@ b = solve_b()
 if b:
     print(f"Part 2: {b}")
     # submit(b, part="b", day=day, year=2021)
+
+
+import time
+t1 = time.time_ns()
+for i in range(times := 10):
+    solve_a()
+t2 = time.time_ns()
+print(f"Time: {(t2-t1)/(times)} ns")
