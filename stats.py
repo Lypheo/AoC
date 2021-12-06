@@ -6,9 +6,9 @@ import requests, os
 
 YEAR = 2021
 day = min([datetime.datetime.today().day, 25])
-uri = 'https://adventofcode.com/{year}/leaderboard/private/view/134143.json'.format(year=YEAR) # weebautism
+# uri = 'https://adventofcode.com/{year}/leaderboard/private/view/134143.json'.format(year=YEAR) # weebautism
 # uri = 'https://adventofcode.com/2021/leaderboard/private/view/993406.json'.format(year=YEAR) # aocg
-# uri = 'https://adventofcode.com/{year}/leaderboard/private/view/963655.json'.format(year=YEAR) # SSC
+uri = 'https://adventofcode.com/{year}/leaderboard/private/view/963655.json'.format(year=YEAR) # SSC
 response = requests.get(uri, cookies={'session': os.environ["AOC_SESSION"]})
 data = response.text
 
@@ -38,7 +38,7 @@ for k, v in lb.items():
     times = {k: sorted([unix_to_ts(i["get_star_ts"], int(k)) for i in v.values()]) for k, v in v["completion_day_level"].items()}
     rname = v["name"] or anons.get(v["id"], "Anon " + v["id"])
     name = alias.get(rname, rname)
-    if name in dead: continue
+    # if name in dead: continue
     timings[name] = times
 
 for d in range(1, day+1):
