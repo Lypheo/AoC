@@ -6,9 +6,9 @@ import requests, os
 
 YEAR = 2021
 day = min([datetime.datetime.today().day, 25])
-# uri = 'https://adventofcode.com/{year}/leaderboard/private/view/134143.json'.format(year=YEAR) # weebautism
+uri = 'https://adventofcode.com/{year}/leaderboard/private/view/134143.json'.format(year=YEAR) # weebautism
 # uri = 'https://adventofcode.com/2021/leaderboard/private/view/993406.json'.format(year=YEAR) # aocg
-uri = 'https://adventofcode.com/{year}/leaderboard/private/view/963655.json'.format(year=YEAR) # SSC
+# uri = 'https://adventofcode.com/{year}/leaderboard/private/view/963655.json'.format(year=YEAR) # SSC
 response = requests.get(uri, cookies={'session': os.environ["AOC_SESSION"]})
 data = response.text
 
