@@ -9,10 +9,12 @@ puzzle = Puzzle(year=2021, day=day)
 input_data = puzzle.input_data
 
 def test(tests, solution, part):
+    c = 1
     for i,o in tests.items():
         if o[part] and (ao := solution(i)) != o[part]:
-            print(f"Testcase failed:\n    Input: {i}\n    Expected output: {o}\n    Actual output: {ao}\n")
+            print(f"Testcase {c} failed:\n    Expected output: {o}\n    Actual output: {ao}\n")
             return False
+        c += 1
     print(f"Tests successful!")
     return True
 
