@@ -3,6 +3,7 @@ import functools, itertools, collections, re
 import numpy as np
 from aocd.models import Puzzle
 from aocd import submit
+from collections import defaultdict as dd
 
 day = 1
 puzzle = Puzzle(year=2021, day=day)

@@ -8,6 +8,7 @@ from collections import defaultdict as dd
 day = 9
 puzzle = Puzzle(year=2021, day=day)
 input_data = puzzle.input_data
+# input_data = open(r"C:\Users\saifu\Downloads\9-4096-4.in").read().strip()
 
 def test(tests, solution, part):
     c = 1
@@ -98,9 +99,9 @@ if b:
     # submit(int(b) if isinstance(b, float) else b, part="b", day=day, year=2021)
 #
 #
-import time
-t1 = time.time_ns()
-for i in range(times := 100):
-    solve_b()
-t2 = time.time_ns()
-print(f"Time: {(t2-t1)/(1000000*times)} ms")
+# import time
+# t1 = time.time_ns()
+# for i in range(times := 100):
+#     solve_b()
+# t2 = time.time_ns()
+# print(f"Time: {(t2-t1)/(1000000*times)} ms")
