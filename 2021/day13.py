@@ -39,7 +39,7 @@ def solve_b(inp=input_data):
     cs, ins = inp.split("\n\n")
     cs = [[int(x) for x in k.split(",")] for k in cs.split("\n")]
     ins = [(k.split("=")[0][-1], int(k.split("=")[1])) for k in ins.split("\n")]
-    grid = {cs}
+    grid = {(x,y) for x,y in cs}
     for dir, c in ins:
         newg = set()
         if dir == "x":
