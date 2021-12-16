@@ -28,10 +28,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2fe56544-90a9-400e-b86a-1f954b3cbd96" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/2021/day15.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/2021/day16.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2021/day13.py" beforeDir="false" afterPath="$PROJECT_DIR$/2021/day13.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2021/day14.py" beforeDir="false" afterPath="$PROJECT_DIR$/2021/day14.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,37 +90,16 @@
       <recent name="C:\Users\saifu\OneDrive\Dokumente\Code\AoC\2020" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.day15">
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+  <component name="RunManager" selected="Python.day16">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
       </method>
     </configuration>
     <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
-    </configuration>
-    <configuration name="day12" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="AoC" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/2021" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/2021/day12.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
     </configuration>
     <configuration name="day13" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="AoC" />
@@ -187,6 +164,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="day16" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="AoC" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/2021" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/2021/day16.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="stats" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="AoC" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -209,19 +207,19 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.day12" />
       <item itemvalue="Python.day13" />
       <item itemvalue="Python.day14" />
       <item itemvalue="Python.stats" />
       <item itemvalue="Python.day15" />
+      <item itemvalue="Python.day16" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.day16" />
         <item itemvalue="Python.day15" />
         <item itemvalue="Python.stats" />
         <item itemvalue="Python.day14" />
         <item itemvalue="Python.day13" />
-        <item itemvalue="Python.day12" />
       </list>
     </recent_temporary>
   </component>
@@ -246,6 +244,7 @@
       <workItem from="1638421923638" duration="97565000" />
       <workItem from="1639466965409" duration="9486000" />
       <workItem from="1639551177288" duration="4779000" />
+      <workItem from="1639630721791" duration="10081000" />
     </task>
     <servers />
   </component>
