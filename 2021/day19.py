@@ -1,11 +1,5 @@
-import pprint
-import time
 import functools, itertools, collections, re
-import numpy as np
 from aocd.models import Puzzle
-from aocd import submit
-from collections import defaultdict as dd
-from pprint import pprint
 
 day = 19
 puzzle = Puzzle(year=2021, day=day)
@@ -57,14 +51,10 @@ def solve_a(inp=input_data):
         oris[(i1, i2)] = id
         pos[(i1, i2)] = s2loc2
 
-    # print(oris)
-
     beacons = set(scanners[0][1])
     import networkx as nx
 
     paths = {}
-    # print(set(oris.keys()), set(pos.keys()))
-    # exit()
     G = nx.Graph()
     G.add_edges_from(oris.keys())
     for i in range(1,len(scanners)):
@@ -102,10 +92,40 @@ def solve_b(inp=input_data):
     def dist(p1, p2):
         return sum(abs(a-b) for a,b in zip(p1,p2))
 
+    ts = [((0, 1, 2), (-1, -1, 1)),
+          ((0, 1, 2), (-1, 1, -1)),
+          ((0, 1, 2), (1, -1, -1)),
+          ((0, 1, 2), (1, 1, 1)),
+          ((0, 2, 1), (-1, -1, -1)),
+          ((0, 2, 1), (-1, 1, 1)),
+          ((0, 2, 1), (1, -1, 1)),
+          ((0, 2, 1), (1, 1, -1)),
+          ((1, 0, 2), (-1, -1, -1)),
+          ((1, 0, 2), (-1, 1, 1)),
+          ((1, 0, 2), (1, -1, 1)),
+          ((1, 0, 2), (1, 1, -1)),
+          ((1, 2, 0), (-1, -1, 1)),
+          ((1, 2, 0), (-1, 1, -1)),
+          ((1, 2, 0), (1, -1, -1)),
+          ((1, 2, 0), (1, 1, 1)),
+          ((2, 0, 1), (-1, -1, 1)),
+          ((2, 0, 1), (-1, 1, -1)),
+          ((2, 0, 1), (1, -1, -1)),
+          ((2, 0, 1), (1, 1, 1)),
+          ((2, 1, 0), (-1, -1, -1)),
+          ((2, 1, 0), (-1, 1, 1)),
+          ((2, 1, 0), (1, -1, 1)),
+          ((2, 1, 0), (1, 1, -1))]
+
     def orientations(ip):
-        for p in itertools.permutations(ip):
-            for signs in itertools.product([1,-1], [1,-1], [1,-1]):
-                yield tuple([p[i]*signs[i] for i in range(3)])
+        # for p in itertools.permutations(ip):
+        #     for signs in itertools.product([1,-1], [1,-1], [1,-1]):
+        #         px = tuple([p[i]*signs[i] for i in range(3)])
+        #         yield px
+        for o,r in ts:
+            p = (ip[o[0]], ip[o[1]], ip[o[2]])
+            px = tuple([p[i]*r[i] for i in range(3)])
+            yield px
 
     scanners = [(i, [tuple(int(c) for c in b.split(",")) for b in sc.split("\n")[1:]])  for i, sc in enumerate(inp.split("\n\n"))]
     pos = {}
@@ -368,16 +388,16 @@ tests = {
 # print(f"Part 1: {a}\n")
 # submit(int(a) if isinstance(a, float) else a, part="a", day=day, year=2021)
 
-# test(tests, solve_b, 1)
-# b = solve_b()
-# if b:
-#     print(f"Part 2: {b}")
+test(tests, solve_b, 1)
+b = solve_b()
+if b:
+    print(f"Part 2: {b}")
     # submit(int(b) if isinstance(b, float) else b, part="b", day=day, year=2021)
 #
 #
 import time
 t1 = time.time_ns()
-for i in range(times := 1):
+for i in range(times := 30):
     solve_b()
 t2 = time.time_ns()
 print(f"Time: {(t2-t1)/(1000000*times)} ms")
