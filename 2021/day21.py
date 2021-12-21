@@ -49,11 +49,11 @@ def solve_a(inp=input_data):
 
 def solve_b(inp=input_data):
     spos = [int(n[-1]) for n in inp.splitlines()]
+
     def wrap10(v, inc):
-        for _ in range(inc):
-            v += 1
-            if v == 11:
-                v = 1
+        v += inc
+        if v >= 11:
+            v = v % 10
         return v
 
     vadd = lambda a,b: [ac + bc for ac,bc in zip(a,b)]
@@ -63,7 +63,6 @@ def solve_b(inp=input_data):
         pso = [p1, p2]
         scoreso = [score1, score2]
         wn = [0,0]
-        nxt = list()
         for roll in itertools.product(range(1,4), range(1,4), range(1,4)):
             ps = pso.copy()
             scores = scoreso.copy()
@@ -72,12 +71,11 @@ def solve_b(inp=input_data):
             if scores[turn] >= 21:
                 wn[turn] += 1
             else:
-                nxt.append((scores[0], scores[1], ps[0], ps[1], 1 if turn == 0 else 0))
+                wn = vadd(wn, wins(*scores, *ps, 1 if turn == 0 else 0))
 
-        wn = functools.reduce(vadd, (wins(*args) for args in nxt), wn)
         return tuple(wn)
 
-    return max(wins(0, 0, spos[0], spos[1], 0))
+    return max(wins(0, 0, *spos, 0))
 
 tests = {
     """Player 1 starting position: 4
@@ -89,10 +87,10 @@ Player 2 starting position: 8""" : [739785, 444356092776315]
 # print(f"Part 1: {a}\n")
 # submit(int(a) if isinstance(a, float) else a, part="a", day=day, year=2021)
 #
-# test(tests, solve_b, 1)
-b = solve_b()
-print(f"Part 2: {b}")
-submit(int(b) if isinstance(b, float) else b, part="b", day=day, year=2021)
+test(tests, solve_b, 1)
+# b = solve_b()
+# print(f"Part 2: {b}")
+# submit(int(b) if isinstance(b, float) else b, part="b", day=day, year=2021)
 #
 #
 # import time
