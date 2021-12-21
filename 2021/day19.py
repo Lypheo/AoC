@@ -15,10 +15,8 @@ def test(tests, solution, part):
     print(f"Tests successful!")
     return True
 
-def solve_a(inp=input_data):
-    def dist(p1, p2, abs_=True):
-        if not abs_:
-            return sum(a-b for a,b in zip(p1,p2))
+def solve(inp=input_data):
+    def dist(p1, p2):
         return sum(abs(a-b) for a,b in zip(p1,p2))
 
     def orientations(ip):
@@ -30,107 +28,10 @@ def solve_a(inp=input_data):
     scanners = [(i, [tuple(int(c) for c in b.split(",")) for b in sc.split("\n")[1:]])  for i, sc in enumerate(inp.split("\n\n"))]
     pos = {}
     oris = {}
-    for (i1, s1), (i2, s2) in itertools.permutations(scanners, 2):
-        seenboth = set()
-        for b1 in s1:
-            distances1 = set(dist(b1, p) for p in s1 if p != b1)
-            for b2 in s2:
-                distances2 = set(dist(b2, p) for p in s2 if p != b2)
-                overlap = distances2.intersection(distances1)
-                if len(overlap) >= 11:
-                    seenboth.add((b1, b2))
-        if not seenboth:
-            continue
-        a,b = seenboth.pop()
-        c,d = seenboth.pop()
-        for id, (bo, do) in enumerate(zip(orientations(b), orientations(d))):
-            s2loc1 = tuple(ac-bc for ac,bc in zip(a,bo))
-            s2loc2 = tuple(ac-bc for ac,bc in zip(c,do))
-            if s2loc1 == s2loc2:
-                break
-        oris[(i1, i2)] = id
-        pos[(i1, i2)] = s2loc2
-
-    beacons = set(scanners[0][1])
-    import networkx as nx
-
-    paths = {}
-    G = nx.Graph()
-    G.add_edges_from(oris.keys())
-    for i in range(1,len(scanners)):
-        paths[(0, i)] = path = nx.shortest_path(G, 0, i)
-        spos = pos[(0, path[1])]
-        last = [0]
-        for s, t in itertools.pairwise(path[1:]):
-            last.append(s)
-            to = pos[(s,t)]
-            for v,w in reversed(list(itertools.pairwise(last))):
-                to = list(orientations(to))[oris[(v,w)]]
-
-            spos = tuple(ac+bc for ac,bc in zip(spos,to))
-        pos[(0, i)] = spos
-
-
-    def lor(p):
-        return list(orientations(p))
-
-    def transform(scid, point):
-        path = paths[(0, scid)]
-        for v,w in reversed(list(itertools.pairwise(path))):
-            po = lor(point)[oris[(v,w)]]
-            origin = pos[(v,w)]
-            point = tuple(ac+bc for ac,bc in zip(origin,po))
-        return point
-
-    for i, sc in scanners[1:]:
-        for point in sc:
-            beacons.add(transform(i, point))
-
-    return len(beacons)
-
-def solve_b(inp=input_data):
-    def dist(p1, p2):
-        return sum(abs(a-b) for a,b in zip(p1,p2))
-
-    ts = [((0, 1, 2), (-1, -1, 1)),
-          ((0, 1, 2), (-1, 1, -1)),
-          ((0, 1, 2), (1, -1, -1)),
-          ((0, 1, 2), (1, 1, 1)),
-          ((0, 2, 1), (-1, -1, -1)),
-          ((0, 2, 1), (-1, 1, 1)),
-          ((0, 2, 1), (1, -1, 1)),
-          ((0, 2, 1), (1, 1, -1)),
-          ((1, 0, 2), (-1, -1, -1)),
-          ((1, 0, 2), (-1, 1, 1)),
-          ((1, 0, 2), (1, -1, 1)),
-          ((1, 0, 2), (1, 1, -1)),
-          ((1, 2, 0), (-1, -1, 1)),
-          ((1, 2, 0), (-1, 1, -1)),
-          ((1, 2, 0), (1, -1, -1)),
-          ((1, 2, 0), (1, 1, 1)),
-          ((2, 0, 1), (-1, -1, 1)),
-          ((2, 0, 1), (-1, 1, -1)),
-          ((2, 0, 1), (1, -1, -1)),
-          ((2, 0, 1), (1, 1, 1)),
-          ((2, 1, 0), (-1, -1, -1)),
-          ((2, 1, 0), (-1, 1, 1)),
-          ((2, 1, 0), (1, -1, 1)),
-          ((2, 1, 0), (1, 1, -1))]
-
-    def orientations(ip):
-        # for p in itertools.permutations(ip):
-        #     for signs in itertools.product([1,-1], [1,-1], [1,-1]):
-        #         px = tuple([p[i]*signs[i] for i in range(3)])
-        #         yield px
-        for o,r in ts:
-            p = (ip[o[0]], ip[o[1]], ip[o[2]])
-            px = tuple([p[i]*r[i] for i in range(3)])
-            yield px
-
-    scanners = [(i, [tuple(int(c) for c in b.split(",")) for b in sc.split("\n")[1:]])  for i, sc in enumerate(inp.split("\n\n"))]
-    pos = {}
-    oris = {}
     ds = []
+    for i,s in scanners:
+        ds.append({b1: set(dist(b1, p) for p in s if p != b1) for b1 in s})
+
     for i,s in scanners:
         ds.append({b1: set(dist(b1, p) for p in s if p != b1) for b1 in s})
 
@@ -187,7 +88,7 @@ def solve_b(inp=input_data):
             beacons.add(transform(i, point))
 
     spos = [v for k,v in pos.items() if k[0] == 0] + [(0,0,0)]
-    return max(dist(p1, p2) for p1, p2 in itertools.permutations(spos, 2))
+    return len(beacons), max(dist(p1, p2) for p1, p2 in itertools.permutations(spos, 2))
 
 
 tests = {
@@ -388,16 +289,17 @@ tests = {
 # print(f"Part 1: {a}\n")
 # submit(int(a) if isinstance(a, float) else a, part="a", day=day, year=2021)
 
-test(tests, solve_b, 1)
-b = solve_b()
-if b:
-    print(f"Part 2: {b}")
+test(tests, lambda t: solve(t)[1], 1)
+test(tests, lambda t: solve(t)[0], 0)
+# b = solve_b()
+# if b:
+#     print(f"Part 2: {b}")
     # submit(int(b) if isinstance(b, float) else b, part="b", day=day, year=2021)
 #
 #
-import time
-t1 = time.time_ns()
-for i in range(times := 30):
-    solve_b()
-t2 = time.time_ns()
-print(f"Time: {(t2-t1)/(1000000*times)} ms")
+# import time
+# t1 = time.time_ns()
+# for i in range(times := 30):
+#     solve_b()
+# t2 = time.time_ns()
+# print(f"Time: {(t2-t1)/(1000000*times)} ms")
