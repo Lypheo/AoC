@@ -21,12 +21,14 @@ def test(tests, solution, part):
     return True
 
 def solve_a(inp=input_data):
-    inp = inp.splitlines()
-    inp = [int(n) for n in inp.splitlines()]
-    return
+    elves = inp.split("\n\n")
+    elves = [sum([int(x) for x in e.splitlines()]) for e in elves]
+    return max(elves)
 
 def solve_b(inp=input_data):
-    return False
+    elves = inp.split("\n\n")
+    elves = sorted([sum([int(x) for x in e.splitlines()]) for e in elves])
+    return sum(elves[-3:])
 
 tests = {
 }
@@ -37,8 +39,8 @@ print(f"Part 1: {a}\n")
 # submit(int(a) if isinstance(a, float) else a, part="a", day=day, year=2022)
 
 # test(tests, solve_b, 1)
-# b = solve_b()
-# print(f"Part 2: {b}")
+b = solve_b()
+print(f"Part 2: {b}")
 # submit(int(b) if isinstance(b, float) else b, part="b", day=day, year=2022)
 #
 #

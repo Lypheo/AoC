@@ -1,5 +1,6 @@
 import time
 import functools, itertools, collections, re
+from math import prod
 from pprint import pprint
 
 import numpy as np
@@ -51,7 +52,9 @@ def solve_a(inp=input_data):
     # return
 
 def partition(c1, c2):
-    # zerteilt c1
+    # partitions c1 with respect to c2
+    # generalized to n dimensions for whatever reason
+
     def blocks(nums):
         if not nums:
             return nums
@@ -73,6 +76,7 @@ def partition(c1, c2):
         us[i] = blocks(sorted(unshared))
         s[i] = blocks(sorted(shared))
 
+    # all permutations of shared/unshared axis
     for shared_o in list(itertools.product([s,us], repeat=dim))[1:]:
         for cube in itertools.product(*[d[k] for k,d in enumerate(shared_o)]):
             ps.add(tuple(tuple(v) for v in cube))
@@ -84,9 +88,14 @@ def solve_b(inp=input_data):
     ins = []
     for l in inp:
         ins.append([[int(x) for x in axis.split("=")[1].split("..")] for axis in l.split(" ")[1].split(",")] + [l.split(" ")[0]])
-
+    def vol(cubes_):
+        return sum( prod(c[i][1] - c[i][0] + 1 for i in range(3)) for c in cubes_)
     cube = set()
     j = 0
+    ans = 0
+    def inters(c1, c2):
+        return all(r2[0] <= r1[0] <= r2[1] or r1[0] <= r2[0] <= r1[1]  for r1, r2 in zip(c1, c2))
+
     for i in ins:
         print(j:=j+1)
         on = i[-1] == "on"
@@ -95,24 +104,19 @@ def solve_b(inp=input_data):
             splinters = {c1}
             for c2 in cube:
                 for splinter in splinters.copy():
+                    if not inters(splinter, c2):
+                        continue
                     splinters.remove(splinter)
                     splinters.update(partition(splinter, c2))
             cube.update(splinters)
         else:
             for c2 in cube.copy():
+                if not inters(c1, c2):
+                    continue
                 cube.remove(c2)
                 cube.update(partition(c2, c1))
 
-    ans = 0
-    # points = set()
-    # for i in cube:
-    #     for x,y,z in itertools.product(range(i[0][0], i[0][1]+1), range(i[1][0], i[1][1]+1), range(i[2][0], i[2][1]+1)):
-    #         assert (x,y,z) not in points, (x,y,z)
-    #         points.add((x,y,z))
-    from math import prod
-    for c in cube:
-        ans += prod(c[i][1] - c[i][0] + 1 for i in range(3))
-    return ans
+    return vol(cube)
 
 tests = {
     """on x=10..12,y=10..12,z=10..12
@@ -186,16 +190,16 @@ off x=-93533..-4276,y=-16170..68771,z=-104985..-24507""" : [590784, 275851493628
 # print(f"Part 1: {a}\n")
 # submit(int(a) if isinstance(a, float) else a, part="a", day=day, year=2021)
 #
-test(tests, solve_b, 1)
+# test(tests, solve_b, 1)
 # b = solve_b()
 # if b:
 #     print(f"Part 2: {b}")
 #     submit(int(b) if isinstance(b, float) else b, part="b", day=day, year=2021)
 #
 #
-# import time
-# t1 = time.time_ns()
-# for i in range(times := 1000):
-#     solve_b()
-# t2 = time.time_ns()
-# print(f"Time: {(t2-t1)/(1000000*times)} ms")
+import time
+t1 = time.time_ns()
+for i in range(times := 1):
+    solve_b()
+t2 = time.time_ns()
+print(f"Time: {(t2-t1)/(1000000*times)} ms")

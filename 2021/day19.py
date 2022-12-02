@@ -32,9 +32,6 @@ def solve(inp=input_data):
     for i,s in scanners:
         ds.append({b1: set(dist(b1, p) for p in s if p != b1) for b1 in s})
 
-    for i,s in scanners:
-        ds.append({b1: set(dist(b1, p) for p in s if p != b1) for b1 in s})
-
     for (i1, s1), (i2, s2) in itertools.permutations(scanners, 2):
         seenboth = set()
         for b1, b2 in itertools.product(s1, s2):
@@ -297,9 +294,9 @@ test(tests, lambda t: solve(t)[0], 0)
     # submit(int(b) if isinstance(b, float) else b, part="b", day=day, year=2021)
 #
 #
-# import time
-# t1 = time.time_ns()
-# for i in range(times := 30):
-#     solve_b()
-# t2 = time.time_ns()
-# print(f"Time: {(t2-t1)/(1000000*times)} ms")
+import time
+t1 = time.time_ns()
+for i in range(times := 30):
+    solve()
+t2 = time.time_ns()
+print(f"Time: {(t2-t1)/(1000000*times)} ms")

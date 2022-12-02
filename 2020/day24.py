@@ -19,7 +19,7 @@ def test(tests, solution):
     for i,o in tests.items():
         if (ao := solution(i)) not in o:
             print(f"Testcase failed:\nInput:\n{i}\nExpected output:\n    {o}\nActual output:\n    ", end="")
-            pprint(ao)
+            # pprint(ao)
             return False
     print(f"Tests successful!")
     return True

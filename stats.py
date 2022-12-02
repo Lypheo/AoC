@@ -4,10 +4,11 @@ from pprint import pprint
 
 import requests, os
 
-YEAR = 2021
+YEAR = 2022
 day = min([datetime.datetime.today().day, 25])
 uri = 'https://adventofcode.com/{year}/leaderboard/private/view/134143.json'.format(year=YEAR) # weebautism
-# uri = 'https://adventofcode.com/2021/leaderboard/private/view/993406.json'.format(year=YEAR) # aocg
+# uri = 'https://adventofcode.com/2021/leaderboard/private/view/993406.json'.format(year=YEAR) # aocg old
+# uri = 'https://adventofcode.com/2022/leaderboard/private/view/198336'.format(year=YEAR) # aocg
 # uri = 'https://adventofcode.com/{year}/leaderboard/private/view/963655.json'.format(year=YEAR) # SSC
 response = requests.get(uri, cookies={'session': os.environ["AOC_SESSION"]})
 data = response.text
@@ -20,10 +21,10 @@ def unix_to_ts(t, day):
     return time.strftime('%H:%M:%S', time.gmtime(t - unix6am))
 
 anons = {
-    "652077": "Frechdachs",
-    "668767": "kaitokid",
-    "405237": "Nala_Alan",
-    "386138": "MolesterMan"
+    652077: "Frechdachs",
+    668767: "kaitokid",
+    405237: "Nala_Alan",
+    386138: "MolesterMan"
 }
 alias = {
     "Eschryn" : "zCore",
@@ -36,7 +37,7 @@ dead = ["kaitokid", "ll-FP-ll"]
 
 for k, v in lb.items():
     times = {k: sorted([unix_to_ts(i["get_star_ts"], int(k)) for i in v.values()]) for k, v in v["completion_day_level"].items()}
-    rname = v["name"] or anons.get(v["id"], "Anon " + v["id"])
+    rname = v["name"] or anons.get(v["id"], "Anon {}".format(v["id"]))
     name = alias.get(rname, rname)
     # if name in dead: continue
     timings[name] = times
