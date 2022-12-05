@@ -6,7 +6,7 @@ from collections import defaultdict as dd
 from itertools import *
 from pprint import pprint
 
-day = 3
+day = 4
 puzzle = Puzzle(year=2022, day=day)
 input_data = puzzle.input_data
 
@@ -21,26 +21,25 @@ def test(tests, solution, part):
     return True
 
 def solve_a(inp=input_data):
-    inp = inp.splitlines()
-    summ = 0
+    inp = [[[int(z) for z in y.split("-")] for y in x.split(",")] for x in inp.splitlines()]
+    sum = 0
     for l in inp:
-        ln = int(len(l)/2)
-        first = l[:ln]
-        second = l[ln:]
-        both = set(first).intersection(set(second))
-        b = both.pop()
-        summ += (ord(b) - ord("A") + 27) if b.isupper() else (ord(b) - ord("a") + 1)
-    return summ
+        left, right = l
+        if left[0] <= right[0] and left[1] >= right[1] or right[0] <= left[0] and right[1] >= left[1]:
+            sum += 1
+
+    return sum
 
 def solve_b(inp=input_data):
-    inp = inp.splitlines()
-    summ = 0
-    for i in range(int(len(inp)/3)):
-        rucks = inp[i*3:i*3+3]
-        badge = set.intersection(*[set(x) for x in rucks])
-        b = badge.pop()
-        summ += (ord(b) - ord("A") + 27) if b.isupper() else (ord(b) - ord("a") + 1)
-    return summ
+    # inp = [[[int(z) for z in y.split("-")] for y in x.split(",")] for x in inp.splitlines()]
+    sum = 0
+    for l in inp.splitlines():
+        ll, lr, rl, rr = [int(x) for x in re.findall("\d+", l)]
+        if rl <= ll <= rr or ll <= rl <= lr:
+            sum += 1
+
+    return sum
+
 
 tests = {
 }
