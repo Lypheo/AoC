@@ -24,7 +24,7 @@ def test(tests, solution, part):
 def solve(inp=input_data, bb = False):
     inp = inp.splitlines()
     tree = {"/" : {}}
-    cd = [""]
+    cd = []
     for l in inp:
         if l.startswith("$ cd"):
             d = l.split(" ")[-1]
@@ -54,6 +54,7 @@ def solve(inp=input_data, bb = False):
             total += size if size <= 100000 else 0
             sizes.append(size)
             return size
+
     s = calc("/", tree["/"])
     to_delete = 30000000 - (70000000 - s) if not bb else 700000000  - (3000000000  - s)
     return total, [x for x in sorted(sizes) if x >= to_delete][0]
@@ -99,5 +100,7 @@ import time
 t1 = time.time_ns()
 for i in range(times := 1):
     print(solve(bigboy, True))
+    # print(solve(input_data, False))
 t2 = time.time_ns()
 print(f"Time: {(t2-t1)/(1000000*times)} ms")
+print(f"Time: {(t2-t1)/(times):,} ns")
