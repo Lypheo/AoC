@@ -37,7 +37,6 @@ def solve_a(inp=input_data):
         if i in [20, 60, 100, 140, 180, 220]:
             ans += reg * i
         reg += ops.pop(0)
-        # print(i, reg, reg*i)
 
     return ans
 
