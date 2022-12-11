@@ -78,13 +78,13 @@ def solve_b(inp=input_data):
     items = [[[it % div for div in divs] for it in its] for its in items]
     from copy import deepcopy
     for i in range(10000):
-        # print(items)
         for m in range(len(ops)):
             for prev_wl in deepcopy(items)[m]:
-                # print(it)
                 worrylevel = []
                 for k, div in zip(prev_wl, divs):
+                    # in the case of old * old, we can square the remainder cuz a^k = b^k (mod n). old + old doesn’t happen in my input so disregard that case
                     operand = ops[m][1] if ops[m][1] != "old" else k
+                    # this works because a + k = b + k (mod n) and a * k = b * k (mod n)
                     if ops[m][0] == "*":
                         worrylevel.append((k * operand) % div)
                     else:
