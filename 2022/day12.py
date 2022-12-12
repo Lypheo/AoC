@@ -50,8 +50,6 @@ def solve_b(inp=input_data):
             h = inp[y][x]
             if h == "E":
                 goal = x + y*1j
-            elif h == "S":
-                start = x + y*1j
             grid[x + y*1j] = {"S": 0, "E": 25}.get(h, ord(h)-ord("a"))
     for k,v in grid.items():
         for i in range(4):
