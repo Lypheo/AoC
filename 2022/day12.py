@@ -24,37 +24,35 @@ def test(tests, solution, part):
 def solve_a(inp=input_data):
     inp = inp.splitlines()
     grid = {}
-    goal, start = None, None
     G = nx.DiGraph()
     for y in range(len(inp)):
         for x in range(len(inp[0])):
-            if inp[y][x] == "E":
+            h = inp[y][x]
+            if h == "E":
                 goal = x + y*1j
-            elif inp[y][x] == "S":
+            elif h == "S":
                 start = x + y*1j
-            grid[x + y*1j] = {"S": 0, "E": 25}.get(inp[y][x], ord(inp[y][x])-ord("a"))
-    pos = 0
+            grid[x + y*1j] = {"S": 0, "E": 25}.get(h, ord(h)-ord("a"))
     for k,v in grid.items():
         for i in range(4):
             adj = k+1j**i
             if grid.get(adj, 100) <= v + 1:
                 G.add_edge(k, adj)
-    print(start, goal)
+
     return nx.shortest_path_length(G,source=start,target=goal)
 
 def solve_b(inp=input_data):
     inp = inp.splitlines()
     grid = {}
-    goal, start = None, None
     G = nx.DiGraph()
     for y in range(len(inp)):
         for x in range(len(inp[0])):
-            if inp[y][x] == "E":
+            h = inp[y][x]
+            if h == "E":
                 goal = x + y*1j
-            elif inp[y][x] == "S":
+            elif h == "S":
                 start = x + y*1j
-            grid[x + y*1j] = {"S": 0, "E": 25}.get(inp[y][x], ord(inp[y][x])-ord("a"))
-    pos = 0
+            grid[x + y*1j] = {"S": 0, "E": 25}.get(h, ord(h)-ord("a"))
     for k,v in grid.items():
         for i in range(4):
             adj = k+1j**i
@@ -71,15 +69,15 @@ acctuvwj
 abdefghi""": [31, 29]
 }
 
-# test(tests, solve_a, 0)
+test(tests, solve_a, 0)
 # a = solve_a()
 # print(f"Part 1: {a}\n")
 # submit(int(a) if isinstance(a, float) else a, part="a", day=day, year=2022)
 #
 test(tests, solve_b, 1)
-b = solve_b()
-print(f"Part 2: {b}")
-submit(int(b) if isinstance(b, float) else b, part="b", day=day, year=2022)
+# b = solve_b()
+# print(f"Part 2: {b}")
+# submit(int(b) if isinstance(b, float) else b, part="b", day=day, year=2022)
 #
 #
 # import time
