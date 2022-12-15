@@ -53,36 +53,9 @@ def solve_a(inp=input_data, test = False):
     out = set()
     for iv in ans[yrow]:
         out.update(range(iv[0], iv[1]))
-    # print(ans)
-    # print([p for p in ans if p.imag == (2000000 if not test else 10)])
     return len(out)
 
 def solve_b(inp=input_data, test = False):
-    # wind = (4000000 if not test else 20)
-    # inp = inp.splitlines()
-    # sensors = {}
-    # ans = dd(list)
-    # for line in inp:
-    #     sensor, beacon = line[10:].split(":")
-    #     beacon = beacon.split(" at ")[1]
-    #     sensor = complex(*[int(x.split("=")[1]) for x in sensor.split(", ")])
-    #     beacon = complex(*[int(x.split("=")[1]) for x in beacon.split(", ")])
-    #     sensors[sensor] = beacon
-    #
-    # print(len(sensors.values()))
-    # ds = {}
-    # for sensor, beacon in sensors.items():
-    #     diff = sensor - beacon
-    #     d = sum(int(abs(x)) for x in [diff.imag, diff.real])
-    #     ds[sensor] = d
-    # mh_dist = lambda a,b: int(abs(a.real - b.real) + abs(a.imag - b.imag))
-    # for x in range(wind+1):
-    #     if x % (4000000/20) == 0:
-    #         print("another 5%")
-    #     for y in range(wind+1):
-    #         p = complex(x,y)
-    #         if not any(mh_dist(p, sensor) <= d for sensor, d in ds.items()):
-    #             return x * 4000000 + y
     wind = (4000000 if not test else 20)
     inp = inp.splitlines()
     sensors = {}
@@ -97,17 +70,11 @@ def solve_b(inp=input_data, test = False):
     for sensor, beacon in sensors.items():
         ds[sensor] = mh_dist(sensor, beacon)
 
-    # from math import ceil, floor
     pairs = []
     for (s1, d1), (s2, d2) in combinations(ds.items(), 2):
         if mh_dist(s1, s2) == d1 + d2 + 2:
             pairs.append((s1, s2))
 
-    # s = [*pairs[0], *pairs[1]]
-    # for s1, s2 in combinations(s, 2):
-    #     print(s1, s2, mh_dist(s1, s2))
-
-    # print(sensors.keys())
     for (s1, s2), (s3, s4) in combinations(pairs, 2):
     # for ss in combinations(sensors.keys(), 4):
         ss = [s1, s2, s3, s4]
@@ -118,7 +85,6 @@ def solve_b(inp=input_data, test = False):
             border.update(complex(s.real + x, s.imag + (d-abs(x))) for x in range(-d, d+1))
             border.update(complex(s.real + x, s.imag - (d-abs(x))) for x in range(-d, d+1))
             borders.append(border)
-        # print([len(border) for border in borders])
         beacon = set.intersection(*borders)
         if len(beacon) == 1:
             b = beacon.pop()
@@ -170,9 +136,9 @@ print(f"Part 2: {b}")
 # submit(int(b) if isinstance(b, float) else b, part="b", day=day, year=2022)
 #
 #
-# import time
-# t1 = time.time_ns()
-# for i in range(times := 1000):
-#     solve_b()
-# t2 = time.time_ns()
-# print(f"Time: {(t2-t1)/(1000000*times)} ms")
+import time
+t1 = time.time_ns()
+for i in range(times := 1):
+    solve_b()
+t2 = time.time_ns()
+print(f"Time: {(t2-t1)/(1000000*times)} ms")
