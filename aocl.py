@@ -1,3 +1,6 @@
+import re
+
+
 def test(tests, solution, part):
     c = 1
     for i,o in tests.items():
@@ -33,3 +36,6 @@ def ip(st, e): # interpolate complex numbers
         for y in sr(int(diff.imag), inc=True):
             rng.append(complex(st.real + y * diff.real / diff.imag, st.imag + y))
     return rng
+
+def ints(line):
+    return [int(x) for x in re.findall("(-?\d+)", line)]

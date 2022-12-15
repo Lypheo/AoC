@@ -67,16 +67,16 @@ def solve_a(inp=input_data, test = False):
 
 def solve_b(inp=input_data, test = False):
     inp = inp.splitlines()
-    ds = {}
+    radii = {}
     for line in inp:
         sensor, beacon = line[10:].split(":")
         beacon = beacon.split(" at ")[1]
         sensor = complex(*[int(x.split("=")[1]) for x in sensor.split(", ")])
         beacon = complex(*[int(x.split("=")[1]) for x in beacon.split(", ")])
-        ds[sensor] = mh_dist(sensor, beacon)
+        radii[sensor] = mh_dist(sensor, beacon)
 
     pairs = []
-    for (s1, d1), (s2, d2) in combinations(ds.items(), 2):
+    for (s1, d1), (s2, d2) in combinations(radii.items(), 2):
         if mh_dist(s1, s2) == d1 + d2 + 2:
             pairs.append((s1, s2))
 
@@ -92,12 +92,12 @@ def solve_b(inp=input_data, test = False):
         s1, s2 = sorted([s1,s2], key= lambda s: s.real)
         s3, s4 = sorted([s3,s4], key= lambda s: s.real)
         diags = []
-        for s, os in zip([s1, s3], [s2, s4]):
-            d = ds[s] + 1
-            od = ds[os] + 1
-            e = complex(s.real + d, s.imag)
-            st = complex(os.real - od, os.imag)
-            diags.append([st, e])
+        for sensor_a, sensor_b in zip([s1, s3], [s2, s4]):
+            r_a = radii[sensor_a] + 1
+            r_b = radii[sensor_b] + 1
+            end = complex(sensor_a.real + r_a, sensor_a.imag)
+            start = complex(sensor_b.real - r_b, sensor_b.imag)
+            diags.append([start, end])
 
         b = line_intersection(*diags)
         if b != False:
@@ -169,9 +169,9 @@ Sensor at x=2881987, y=1923522: closest beacon is at x=2528182, y=2000000
 Sensor at x=3059723, y=2540501: closest beacon is at x=3008934, y=2768339""" : [5564017, 11558423398893]
 }
 
-test(tests, lambda inp: solve_a(inp, False), 0)
-a = solve_a()
-print(f"Part 1: {a}\n")
+# test(tests, lambda inp: solve_a(inp, False), 0)
+# a = solve_a()
+# print(f"Part 1: {a}\n")
 # submit(int(a) if isinstance(a, float) else a, part="a", day=day, year=2022)
 
 test(tests, lambda inp: solve_b(inp, False), 1)
@@ -182,8 +182,9 @@ print(f"Part 2: {b}")
 
 import time
 t1 = time.time_ns()
-for i in range(times := 20):
-    solve_a()
+for i in range(times := 100):
+    # solve_a()
     solve_b()
+
 t2 = time.time_ns()
 print(f"Time: {(t2-t1)/(1000000*times)} ms")
