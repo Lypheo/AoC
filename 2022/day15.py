@@ -20,11 +20,12 @@ def test(tests, solution, part):
     print(f"Tests successful!")
     return True
 
+mh_dist = lambda a,b: int(abs(a.real - b.real) + abs(a.imag - b.imag))
 def solve_a(inp=input_data, test = False):
     yrow = (2000000 if not test else 10)
     inp = inp.splitlines()
     sensors = {}
-    ans = dd(list)
+    ivs = []
     for line in inp:
         sensor, beacon = line[10:].split(":")
         beacon = beacon.split(" at ")[1]
@@ -32,42 +33,37 @@ def solve_a(inp=input_data, test = False):
         beacon = complex(*[int(x.split("=")[1]) for x in beacon.split(", ")])
         sensors[sensor] = beacon
     for sensor, beacon in sensors.items():
-        diff = sensor - beacon
-        d = sum(int(abs(x)) for x in [diff.imag, diff.real])
-        print(sensor)
-        for y in range(d+1):
-            x = d - y
-            iv = (int(sensor.real - x), int(sensor.real + x))
-            ivs = []
-            for b in sensors.values():
-                by = int(b.imag)
-                if by in range(iv[0], iv[1]+1):
-                    ivs.extend([(iv[0], by-1), (by+1, iv[1])])
-            if not ivs:
-                ivs = [iv]
-            if sensor.imag + y == yrow:
-                ans[sensor.imag + y].extend(ivs)
-            if sensor.imag - y == yrow:
-                ans[sensor.imag - y].extend(ivs)
+        d = mh_dist(sensor, beacon)
+        ydiff = yrow - sensor.imag
+        if ydiff > d:
+            continue
+        x = d - abs(ydiff)
+        iv = (int(sensor.real - x), int(sensor.real + x))
+        ivs.append(iv)
 
-    out = set()
-    for iv in ans[yrow]:
-        out.update(range(iv[0], iv[1]))
-    return len(out)
+    bs = set(b.real for b in sensors.values() if b.imag == yrow)
+    out = 0
+    ivs = sorted(ivs, key = lambda iv: iv[0])
+    laste = ivs[0][0]-1
+    for i in range(len(ivs)):
+        s,e = ivs[i]
+        if e <= laste:
+            continue
+        s = max(s, laste + 1)
+        out +=  e - s + 1
+        out -= int(any(s <= b <= e for b in bs))
+        laste = e
+
+    return out
 
 def solve_b(inp=input_data, test = False):
-    wind = (4000000 if not test else 20)
     inp = inp.splitlines()
-    sensors = {}
+    ds = {}
     for line in inp:
         sensor, beacon = line[10:].split(":")
         beacon = beacon.split(" at ")[1]
         sensor = complex(*[int(x.split("=")[1]) for x in sensor.split(", ")])
         beacon = complex(*[int(x.split("=")[1]) for x in beacon.split(", ")])
-        sensors[sensor] = beacon
-    ds = {}
-    mh_dist = lambda a,b: int(abs(a.real - b.real) + abs(a.imag - b.imag))
-    for sensor, beacon in sensors.items():
         ds[sensor] = mh_dist(sensor, beacon)
 
     pairs = []
@@ -76,38 +72,23 @@ def solve_b(inp=input_data, test = False):
             pairs.append((s1, s2))
 
     for (s1, s2), (s3, s4) in combinations(pairs, 2):
-    # for ss in combinations(sensors.keys(), 4):
-        ss = [s1, s2, s3, s4]
+        s1, s2 = sorted([s1,s2], key= lambda s: s.real)
+        s3, s4 = sorted([s3,s4], key= lambda s: s.real)
         borders = []
-        for s in ss:
+        for s, os in zip([s1, s3], [s2, s4]):
             d = ds[s] + 1
+            od = ds[os] + 1
             border = set()
-            border.update(complex(s.real + x, s.imag + (d-abs(x))) for x in range(-d, d+1))
-            border.update(complex(s.real + x, s.imag - (d-abs(x))) for x in range(-d, d+1))
+            sign = -1 if s.imag > os.imag else 1
+            border.update(complex(s.real + x, s.imag + (d-x) * sign) for x in range(0, d+1))
+            border.update(complex(os.real - x, os.imag + (od - x) * -sign) for x in range(0, od+1))
             borders.append(border)
         beacon = set.intersection(*borders)
         if len(beacon) == 1:
             b = beacon.pop()
-            if not any(mh_dist(b, s) <= ds[s] for s in sensors.keys()):
-                print(b, ss)
+            if not any(mh_dist(b, s) <= ds[s] for s in ds.keys()):
                 return b.real * 4000000 + b.imag
 
-
-        # midp1_raw = (s2 - s1)/ 2 + s1
-        # midp1 = complex(ceil(midp1_raw.real), ceil(midp1_raw.imag))
-        # print(midp1, s1, s2)
-        # for dir in (complex(dx, dy) for dx in [-1, 0, 1] for dy in [-1, 0, 1] if not (dx == 0 and dy == 0)):
-        #     adj_pair = (midp1 + dir, midp1 - dir)
-        #     if mh_dist(adj_pair[0], s3) == ds[s3] and mh_dist(adj_pair[1], s4) == ds[s4]:
-        #         return midp1.real * 4000000 + midp1.imag
-
-        # p1_raw = (s2 - s1)/ 2 + s1
-        # p1 = complex(ceil(p1_raw.real), ceil(p1_raw.imag))
-        # p2_raw = (s4 - s3)/ 2 + s3
-        # p2 = complex(ceil(p2_raw.real), ceil(p2_raw.imag))
-        # if p1 == p2:
-        #     print(p1)
-        #     return p1.real * 4000000 + p1.imag
 tests = {
     """Sensor at x=2, y=18: closest beacon is at x=-2, y=15
 Sensor at x=9, y=16: closest beacon is at x=10, y=16
@@ -125,20 +106,21 @@ Sensor at x=14, y=3: closest beacon is at x=15, y=3
 Sensor at x=20, y=1: closest beacon is at x=15, y=3""" : [26, 56000011]
 }
 
-# test(tests, lambda inp: solve_a(inp, True), 0)
+test(tests, lambda inp: solve_a(inp, True), 0)
 # a = solve_a()
 # print(f"Part 1: {a}\n")
 # submit(int(a) if isinstance(a, float) else a, part="a", day=day, year=2022)
 
-# test(tests, lambda inp: solve_b(inp, True), 1)
+test(tests, lambda inp: solve_b(inp, True), 1)
 b = solve_b()
 print(f"Part 2: {b}")
 # submit(int(b) if isinstance(b, float) else b, part="b", day=day, year=2022)
 #
-#
+
 import time
 t1 = time.time_ns()
-for i in range(times := 1):
-    solve_b()
+for i in range(times := 100):
+    # solve_b()
+    solve_a()
 t2 = time.time_ns()
 print(f"Time: {(t2-t1)/(1000000*times)} ms")
