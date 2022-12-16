@@ -49,10 +49,10 @@ def solve_a(inp=input_data, test = False):
         x = d - abs(ydiff)
         iv = (int(sensor.real - x), int(sensor.real + x))
         ivs.append(iv)
-
     bs = set(b.real for b in sensors.values() if b.imag == yrow)
     out = 0
     ivs = sorted(ivs, key = lambda iv: iv[0])
+    print(ivs)
     laste = ivs[0][0]-1
     for i in range(len(ivs)):
         s,e = ivs[i]
@@ -170,8 +170,8 @@ Sensor at x=3059723, y=2540501: closest beacon is at x=3008934, y=2768339""" : [
 }
 
 # test(tests, lambda inp: solve_a(inp, False), 0)
-# a = solve_a()
-# print(f"Part 1: {a}\n")
+a = solve_a()
+print(f"Part 1: {a}\n")
 # submit(int(a) if isinstance(a, float) else a, part="a", day=day, year=2022)
 
 test(tests, lambda inp: solve_b(inp, False), 1)
