@@ -30,7 +30,6 @@ def solve_a(inp=input_data):
         ds[v] = dst
 
     nonzero = [v for v, fr in frs.items() if fr]
-    # print([nx.shortest_path_length(G, "AA", t) for t in nonzero])
 
     @functools.cache
     def val(node, open, time):
@@ -48,23 +47,21 @@ def solve_a(inp=input_data):
 def solve_b(inp=input_data):
     # takes literally forever but works lmao
     inp = inp.splitlines()
-    frs = {}
-    nbours = {}
+    flowrates = {}
     G = nx.Graph()
     for line in inp:
         v = line[6:][:2]
         dst = line.split("to valves ")[1].split(", ") if "valves" in line else line.split("to valve ")[1].split(", ")
         fr = int(line.split("flow rate=")[1].split(";")[0])
-        frs[v] = fr
+        flowrates[v] = fr
         for d in dst:
             G.add_edge(v, d)
-        nbours[v] = set(dst)
 
     weights = {}
     for n1, n2 in combinations(G.nodes(), 2):
-        if frs[n1] and frs[n2] or "AA" in [n1, n2]:
+        if flowrates[n1] and flowrates[n2] or "AA" in [n1, n2]:
             weights[(n1, n2)] = weights[(n2, n1)] = nx.shortest_path_length(G, n1, n2)
-    nonzero = set(v for v, fr in frs.items() if fr)
+    nonzero = set(v for v, fr in flowrates.items() if fr)
 
     def val(nodes, open, times):
         if len(open) == len(nonzero):
@@ -74,29 +71,21 @@ def solve_b(inp=input_data):
         for node, rs, time in zip(nodes, [rs1, rs2], times):
             if time <= 2:
                 continue
-            for child in nonzero - {node} - open:
-                newt = time - weights[(node, child)] - 1
-                rs.append([newt * frs[child], (child, open | {child}, newt)])
+            for next_node in nonzero - {node} - open:
+                newt = time - weights[(node, next_node)] - 1
+                rs.append([newt * flowrates[next_node], next_node, open | {next_node}, newt])
 
-        if not rs1 and not rs2:
-            return 0
-        elif not rs2:
-            return max(p1 + val((child1, ""), open1, (time1, 0)) for [p1, (child1, open1, time1)] in rs1)
-        elif not rs1:
-            return max(p2 + val(("", child2), open2, (0, time2)) for [p2, (child2, open2, time2)] in rs2)
-        else:
-            M = 0
-            i = 0
-            for [p1, (child1, open1, time1)], [p2, (child2, open2, time2)] in product(rs1, rs2):
-                if times[0] == 26:
-                    i += 1
-                    # gc.collect()
-                    print(i)
-                if child1 == child2:# and p1 == p2 and p1 > 0:
-                    continue
-                M = max(M, p1 + p2 + val((child1, child2), open1 | open2, (time1, time2)))
-            # del rs1, rs2
-            return M
+        rs1 = rs1 or [[0, "", set(), 0]]
+        rs2 = rs2 or [[0, "", set(), 0]]
+        M = 0
+        i = 0
+        for [p1, node1, open1, time1], [p2, node2, open2, time2] in product(rs1, rs2):
+            if times[0] == 26: print(i := i +1) # progress
+            if node1 == node2:
+                continue
+            M = max(M, p1 + p2 + val((node1, node2), open1 | open2, (time1, time2)))
+        return M
+
     return val(("AA", "AA"), frozenset(), (26, 26))
 
 
