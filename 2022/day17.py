@@ -108,7 +108,7 @@ def solve_b(inp=input_data):
             # print(i, oi, cl)
             ypc = maxy - omaxy
             precycle_length, precycle_y = res[oi-1]
-            # print(cl, ypc, precycle_length, precycle_y, omaxy, res[((1000000000000 - precycle_length) % cl) + oi][1])
+            print(cl, ypc, precycle_length, precycle_y, omaxy, res[((1000000000000 - precycle_length) % cl) + oi][1])
             return ((1000000000000 - precycle_length) // cl) * ypc + precycle_y + res[((1000000000000 - precycle_length) % cl) + oi][1] - omaxy
         else:
             seen[state] = (i, maxy)
@@ -150,7 +150,7 @@ print(f"Part 2: {b}")
 #
 # import time
 # t1 = time.time_ns()
-# for i in range(times := 1000):
+# for i in range(times := 10):
 #     solve_b()
 # t2 = time.time_ns()
 # print(f"Time: {(t2-t1)/(1000000*times)} ms")
