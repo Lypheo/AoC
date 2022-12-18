@@ -37,15 +37,17 @@ def solve_b(inp=input_data):
         cube[d] = n
         return tuple(cube)
 
+    # not a general solution
+    # relies on the lava not having any branched holes/caves
     for x,y,z in drops:
         adj = [(x+1, y, z), (x-1, y, z), (x, y+1, z), (x, y-1, z), (x, y, z+1),(x, y, z-1)]
         for side in adj:
-            xp, yp, zp = side
             if side not in drops and \
                 any(
-                    all(rd(side, d, n) not in drops for n in range(side[d], maxs[d]+1))
-                    or all(rd(side, d, n) not in drops for n in sr(side[d], mins[d], inc=True))
-                for d in [0,1,2]):
+                    all(rd(side, d, n) not in drops for n in sr(side[d], maxs[d], inc=True)) or
+                    all(rd(side, d, n) not in drops for n in sr(side[d], mins[d], inc=True))
+                    for d in [0,1,2]
+                ):
                 ans += 1
     return ans
 tests = {
