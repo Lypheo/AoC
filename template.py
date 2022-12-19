@@ -5,8 +5,9 @@ from aocd import submit
 from collections import defaultdict as dd
 from itertools import *
 from pprint import pprint
+import sys
+sys.path.append("..")
 from aocl import *
-
 day = 1
 puzzle = Puzzle(year=2022, day=day)
 input_data = puzzle.input_data

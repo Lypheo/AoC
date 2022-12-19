@@ -5,7 +5,7 @@ def test(tests, solution, part):
     c = 1
     for i,o in tests.items():
         if o[part] and (ao := solution(i)) != o[part]:
-            print(f"Testcase {c} failed:\n    Expected output: {o}\n    Actual output: {ao}\n")
+            print(f"Testcase {c} failed:\n    Expected output: {o[part]}\n    Actual output: {ao}\n")
             return False
         c += 1
     print(f"Tests successful!")
@@ -39,3 +39,10 @@ def ip(st, e): # interpolate complex numbers
 
 def ints(line):
     return [int(x) for x in re.findall("(-?\d+)", line)]
+
+
+def tup_s(tp1, tp2):
+    return tuple(a - b for a,b in zip(tp1, tp2))
+
+def tup_a(tp1, tp2):
+    return tuple(a + b for a,b in zip(tp1, tp2))
