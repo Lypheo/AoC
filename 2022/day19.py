@@ -85,11 +85,23 @@ def solve_a(inp=input_data):
                         new_states.add((newr, newm))
 
 
-            states = new_states
+            # states = new_states
             # I changed a lot around this part of the code as it was running and I dont know which version produced the correct answer, so this might be wrong
-            Mg = max(s[1][-1] for s in states)
-            if Mg:
-                states = {s for s in states if s[1][-1] >= Mg}
+            # Mg = max(s[1][-1] for s in states)
+            # if Mg:
+            #     states = {s for s in states if s[1][-1] >= Mg}
+            rtime = 32 - t
+            sf = lambda n: (n**2+n)/ 2
+            sfr = lambda start, end: sf(end) - sf(start - 1)
+            obs_per_grob = bp[3][1]
+            @functools.cache
+            def max_geodes(orobs, grobs, curr_obs, curr_geodes):
+                max_obs = sfr(orobs, orobs + rtime - 2) + curr_obs
+                max_grobs = max_obs // obs_per_grob + grobs
+                return sfr(grobs, max_grobs) + curr_geodes
+
+            # dont ask me why this works, I just gradually reduced how many I pruned until the answer was correct lmao
+            states = sorted(new_states, key = lambda s: max_geodes(*s[0][-2:], *s[1][-2:]))[-10000:]
 
             print(t, len(states))
         quality = max([material[-1] for r, material in states])
@@ -186,14 +198,15 @@ Blueprint 2: Each ore robot costs 2 ore. Each clay robot costs 3 ore. Each obsid
 # submit(int(a) if isinstance(a, float) else a, part="a", day=day, year=2022)
 
 # test(tests, solve_b, 1)
-b = solve_b()
-print(f"Part 2: {b}")
+# b = solve_b()
+# print(f"Part 2: {b}")
 # submit(int(b) if isinstance(b, float) else b, part="b", day=day, year=2022)
 #
 #
-# import time
-# t1 = time.time_ns()
-# for i in range(times := 1000):
-#     solve_b()
-# t2 = time.time_ns()
-# print(f"Time: {(t2-t1)/(1000000*times)} ms")
+import time
+t1 = time.time_ns()
+for i in range(times := 1000):
+    solve_a()
+    solve_b()
+t2 = time.time_ns()
+print(f"Time: {(t2-t1)/(1000000*times)} ms")
