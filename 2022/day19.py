@@ -86,7 +86,6 @@ def solve_a(inp=input_data):
 
 
             # states = new_states
-            # I changed a lot around this part of the code as it was running and I dont know which version produced the correct answer, so this might be wrong
             # Mg = max(s[1][-1] for s in states)
             # if Mg:
             #     states = {s for s in states if s[1][-1] >= Mg}
@@ -103,7 +102,7 @@ def solve_a(inp=input_data):
             # dont ask me why this works, I just gradually reduced how many I pruned until the answer was correct lmao
             states = sorted(new_states, key = lambda s: max_geodes(*s[0][-2:], *s[1][-2:]))[-10000:]
 
-            print(t, len(states))
+            # print(t, len(states))
         quality = max([material[-1] for r, material in states])
         print(quality)
         ans += id * quality
@@ -205,7 +204,7 @@ Blueprint 2: Each ore robot costs 2 ore. Each clay robot costs 3 ore. Each obsid
 #
 import time
 t1 = time.time_ns()
-for i in range(times := 1000):
+for i in range(times := 1):
     solve_a()
     solve_b()
 t2 = time.time_ns()
