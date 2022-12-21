@@ -44,19 +44,19 @@ def solve_b(inp=input_data):
     monkeys = {}
     for l in inp:
         m, op = l.split(": ")
-        if not any(s in op for s in "+*-/"):
+        if op.isnumeric():
             op = int(op)
         else:
-            op = (op[:4], op[5], op[7:])
+            op = (op[:4], op[5] if m != "root" else "=", op[7:])
         monkeys[m] = op
-    monkeys["root"] = (monkeys["root"][0], "=", monkeys["root"][2])
     monkeys["humn"] = "x"
 
     def calc(exp):
         if isinstance(exp, tuple):
             m1, op, m2 = exp
             op1, op2 = calc(monkeys[m1]), calc(monkeys[m2])
-            return f"({op1}{op}{op2})" if not all(isinstance(x, int) for x in [op1, op2]) else int(eval(f"{op1}{op}{op2}"))
+            s = f"({op1}{op}{op2})"
+            return s if not all(isinstance(x, int) for x in [op1, op2]) else int(eval(s))
         else:
             return exp
     return calc(monkeys["root"]) # to be pasted into https://www.wolframalpha.com/calculators/equation-solver-calculator
