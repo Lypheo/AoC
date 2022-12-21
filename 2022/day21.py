@@ -71,8 +71,7 @@ def solve_b(inp=input_data):
                 return int(calc(monkeys[m1]) == calc(monkeys[m2]))
         else:
             return exp
-    eq = calc(monkeys["root"]).split("==") # to be pasted into https://www.wolframalpha.com/calculators/equation-solver-calculator
-    return eq
+    return calc(monkeys["root"]) # to be pasted into https://www.wolframalpha.com/calculators/equation-solver-calculator
 
 
 tests = {
