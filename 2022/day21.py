@@ -49,26 +49,14 @@ def solve_b(inp=input_data):
         else:
             op = (op[:4], op[5], op[7:])
         monkeys[m] = op
-    monkeys["root"] = (monkeys["root"][0], "==", monkeys["root"][2])
+    monkeys["root"] = (monkeys["root"][0], "=", monkeys["root"][2])
     monkeys["humn"] = "x"
 
-    @functools.cache
     def calc(exp):
         if isinstance(exp, tuple):
             m1, op, m2 = exp
             op1, op2 = calc(monkeys[m1]), calc(monkeys[m2])
-            if not all(isinstance(x, int) for x in [op1, op2]):
-                return f"({op1}{op}{op2})"
-            if op == "+":
-                return calc(monkeys[m1]) + calc(monkeys[m2])
-            elif op == "-":
-                return calc(monkeys[m1]) - calc(monkeys[m2])
-            elif op == "/":
-                return int(calc(monkeys[m1]) / calc(monkeys[m2]))
-            elif op == "*":
-                return int(calc(monkeys[m1]) * calc(monkeys[m2]))
-            else:
-                return int(calc(monkeys[m1]) == calc(monkeys[m2]))
+            return f"({op1}{op}{op2})" if not all(isinstance(x, int) for x in [op1, op2]) else int(eval(f"{op1}{op}{op2}"))
         else:
             return exp
     return calc(monkeys["root"]) # to be pasted into https://www.wolframalpha.com/calculators/equation-solver-calculator
@@ -97,9 +85,9 @@ hmdt: 32""" : [152, 301]
 # print(f"Part 1: {a}\n")
 # submit(int(a) if isinstance(a, float) else a, part="a", day=day, year=2022)
 
-test(tests, solve_b, 1)
-# b = solve_b()
-# print(f"Part 2: {b}")
+# test(tests, solve_b, 1)
+b = solve_b()
+print(f"Part 2: {b}")
 # submit(int(b) if isinstance(b, float) else b, part="b", day=day, year=2022)
 #
 #
