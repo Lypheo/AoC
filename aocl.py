@@ -46,3 +46,15 @@ def tup_s(tp1, tp2):
 
 def tup_a(tp1, tp2):
     return tuple(a + b for a,b in zip(tp1, tp2))
+
+def pgrid(grid, empty = ".", zero = "top"):
+    x1, x2 = min([p.real for p in grid.keys()]), max([p.real for p in grid.keys()])
+    y1, y2 = min([p.imag for p in grid.keys()]), max([p.imag for p in grid.keys()])
+    x1, x2, y1, y2 = map(int, [x1, x2, y1, y2])
+    if zero != "top":
+        y1, y2 = y2, y1
+    for y in sr(y1, y2, inc=True):
+        for x in sr(x1, x2, inc=True):
+            print(grid.get(complex(x, y), empty), end="")
+        print("")
+    print("\n")
