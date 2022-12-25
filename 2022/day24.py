@@ -52,18 +52,11 @@ def solve_a(inp=input_data):
             nextcpos = [cpos + c for c in dirs.values() if cpos + c not in nextg]
             if cpos not in nextg:
                 nextcpos.append(cpos)
-            # if not nextcpos:
             if end in nextcpos:
                 return i
             nextstates.update(nextcpos)
 
         print(i, len(nextstates))
-        # print(nextstates)
-        # break
-        # nextstates = list(nextstates)
-        # nextstates_dist = [mh_dist(state, end) for state in nextstates]
-        # best = min(nextstates_dist)
-        # states = set(state for state, d in zip(nextstates, nextstates_dist) if d <= best + 309)
         states = nextstates
         grid = nextg
     return None
@@ -131,14 +124,14 @@ tests = {
 ######.#""" : [18, 54]
 }
 
-# test(tests, solve_a, 0)
+test(tests, solve_a, 0)
 # a = solve_a()
 # print(f"Part 1: {a}\n")
 # submit(int(a) if isinstance(a, float) else a, part="a", day=day, year=2022)
 
-# test(tests, solve_b, 1)
-b = solve_b()
-print(f"Part 2: {b}")
+test(tests, solve_b, 1)
+# b = solve_b()
+# print(f"Part 2: {b}")
 # submit(int(b) if isinstance(b, float) else b, part="b", day=day, year=2022)
 #
 #
