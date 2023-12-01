@@ -36,7 +36,7 @@ tests = {
 # test(tests, solve_a, 0)
 a = solve_a()
 print(f"Part 1: {a}\n")
-# submit(int(a) if isinstance(a, float) else a, part="a", day=day, year=2022)
+submit(int(a) if isinstance(a, float) else a, part="a", day=day, year=2022)
 
 # test(tests, solve_b, 1)
 b = solve_b()

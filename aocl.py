@@ -11,16 +11,23 @@ def test(tests, solution, part):
     print(f"Tests successful!")
     return True
 
-mh_dist = lambda a,b: int(abs(a.real - b.real) + abs(a.imag - b.imag))
+def mh_dist(a, b):
+    if isinstance(a, tuple):
+        return sum(abs(a[i] - b[i]) for i in range(len(a)))
+    else:
+        return int(abs(a.real - b.real) + abs(a.imag - b.imag))
 
 def sr(a, b=None, step=1, inc=False): # signed range
-    if b == None:
+    if b is None:
         start, end = 0, a
     else:
         start, end = a, b
     if inc:
         end += 1 if end >= start else -1
     return range(start, end, step if end >= start else -step)
+
+def sri(*args):
+    return sr(*args, inc=True)
 
 def ip(st, e): # interpolate complex numbers
     diff = e - st
@@ -37,18 +44,14 @@ def ip(st, e): # interpolate complex numbers
             rng.append(complex(st.real + y * diff.real / diff.imag, st.imag + y))
     return rng
 
-def ints(line):
-    return [int(x) for x in re.findall("(-?\d+)", line)]
-
-
 def tup_s(tp1, tp2):
     return tuple(a - b for a,b in zip(tp1, tp2))
 
 def tup_a(tp1, tp2):
     return tuple(a + b for a,b in zip(tp1, tp2))
 
-def pgrid(grid, empty = ".", zero = "top", t = "grid"):
-    if t == "grid":
+def pgrid(grid, empty = ".", zero = "top"):
+    if isinstance(grid, dict):
         x1, x2 = min([p.real for p in grid.keys()]), max([p.real for p in grid.keys()])
         y1, y2 = min([p.imag for p in grid.keys()]), max([p.imag for p in grid.keys()])
         x1, x2, y1, y2 = map(int, [x1, x2, y1, y2])
@@ -70,3 +73,12 @@ def pgrid(grid, empty = ".", zero = "top", t = "grid"):
                 print("#" if complex(x,y) in grid else empty, end="")
             print("")
         print("\n")
+
+def blocks(inp):
+    return inp.split("\n\n")
+
+def lines(inp):
+    return inp.splitlines()
+
+def ints(line):
+    return [int(x) for x in re.findall(r"(-?\d+)", line)]
