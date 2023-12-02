@@ -46,16 +46,20 @@ def solve_b(inp=input_data):
         #     else:
         #         newl += rl[0]
         #         i += 1
-        firstm = re.match(r".*?(one|two|three|four|five|six|seven|eight|nine|\d)", l).group(1)
-        lastm = re.match(r".*?(eno|owt|eerht|ruof|evif|xis|neves|thgie|enin|\d)", "".join((reversed(l)))).group(1)
-        nums = [firstm, lastm]
-        print(l, nums)
-        for i, num in enumerate(nums):
-            for k, s in enumerate("one,two,three,four,five,six,seven,eight,nine".split(",")):
-                num = num.replace(s, str(k+1))
-            for k, s in enumerate("eno|owt|eerht|ruof|evif|xis|neves|thgie|enin".split("|")):
-                num = num.replace(s, str(k+1))
-            c += int(num) * (10 if not i else 1)
+        # firstm = re.match(r".*?(one|two|three|four|five|six|seven|eight|nine|\d)", l).group(1)
+        # lastm = re.match(r".*?(eno|owt|eerht|ruof|evif|xis|neves|thgie|enin|\d)", "".join((reversed(l)))).group(1)
+        # nums = [firstm, lastm]
+        # print(l, nums)
+        # for i, num in enumerate(nums):
+        #     for k, s in enumerate("one,two,three,four,five,six,seven,eight,nine".split(",")):
+        #         num = num.replace(s, str(k+1))
+        #     for k, s in enumerate("eno|owt|eerht|ruof|evif|xis|neves|thgie|enin".split("|")):
+        #         num = num.replace(s, str(k+1))
+        #     c += int(num) * (10 if not i else 1)
+        m = {k:v+1 for v, k in enumerate("one,two,three,four,five,six,seven,eight,nine".split(","))}
+        m.update({str(i):str(i) for i in range(1,10)})
+        c += 10 * int(m[re.match(r".*?(one|two|three|four|five|six|seven|eight|nine|\d)", l).group(1)])
+        c += int(m[re.match(r".*(one|two|three|four|five|six|seven|eight|nine|\d)", l).group(1)])
 
     return c
 

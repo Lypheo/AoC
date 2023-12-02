@@ -5,6 +5,7 @@ from aocd import submit
 from collections import defaultdict as dd
 from itertools import *
 from pprint import pprint
+from math import prod
 import sys
 sys.path.append("..")
 from aocl import *
