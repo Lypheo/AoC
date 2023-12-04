@@ -62,7 +62,6 @@ for y, line in enumerate(inp):
         elif num:
             nbs = {n for x2 in sr(x-1, x-len(num)-1) for n in nbd(complex(x2,y))} - set(sr(x-1, x-len(num)-1))
             nbc = [grid.get(k, ".") for k in nbs]
-            # print(x, y, num, [n + complex(x2,y) for x2 in sr(x-1, x-len(num)-1) for n in nbd(complex(x2,y))])
             if any(not k.isdigit() and k != "." for k in nbc):
                 res += int(num)
             num = ""

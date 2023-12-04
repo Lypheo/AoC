@@ -101,6 +101,13 @@ nbd = lambda *args: nb(*args, diag=True) # neighbours diagonal
 nbl = lambda *args: list(nbl(*args)) # neighbours list
 nbdl = lambda *args: list(nbd(*args)) # neighbours diagonal list
 
+def parse_grid(inp):
+    grid = dict()
+    for y, line in enumerate(inp):
+        for x, c in enumerate(line):
+            grid[complex(x, y)] = c
+    return grid
+
 def blocks(inp):
     return inp.split("\n\n")
 
