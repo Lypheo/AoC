@@ -119,9 +119,32 @@ for m in maps:
 res = min(s for s,e in seed_ranges)
 print(f"Solution: {res}\n")
 
-# import time
-# t1 = time.time_ns()
-# for i in range(times := 1000):
-#     solve_b()
-# t2 = time.time_ns()
-# print(f"Time: {(t2-t1)/(1000000*times)} ms")
+import time
+t1 = time.time_ns()
+for i in range(times := 1000):
+    seed_ranges = [(s,s+l-1) for s, l in zip(seeds[::2], seeds[1::2])]
+    for m in maps:
+        new_ranges = []
+        while seed_ranges:
+            s, e = seed_ranges.pop()
+            for dst_start, src_start, length in m:
+                src_end = src_start + length - 1
+                offset = dst_start - src_start
+                if src_start <= s <= src_end:
+                    if e > src_end:
+                        new_ranges.append((s + offset, src_end + offset))
+                        seed_ranges.append((src_end + 1, e))
+                    else:
+                        new_ranges.append((s + offset, e + offset))
+                    break
+                elif src_start <= e <= src_end:
+                    seed_ranges.append((s, src_start - 1))
+                    new_ranges.append((src_start + offset, e + offset))
+                    break
+            else:
+                new_ranges.append((s, e))
+        seed_ranges = new_ranges
+
+    res = min(s for s,e in seed_ranges)
+t2 = time.time_ns()
+print(f"Time: {(t2-t1)/(1000000*times)} ms")
