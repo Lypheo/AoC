@@ -51,7 +51,6 @@ def find_steps(start):
             dr = 0 if ins == "L" else 1
             node = g[node][dr]
 
-from math import lcm
 stepl = [find_steps(x) for x in cur]
 from math import gcd
 lcm = 1
