@@ -65,7 +65,6 @@ while True:
     cur = nxt.pop()
 
 p1 = max(nx.shortest_path_length(loop, start).values())
-# print(loop.nodes)
 
 curvature = {}
 pos = min(loop.nodes, key=lambda n: n.real)
@@ -77,13 +76,11 @@ while len(visited) < len(loop.nodes):
     pos = list(x for x in loop.neighbors(last) if x not in visited).pop()
     visited.add(pos)
     curv = grads[grid[pos]]
-    # print(last, pos, last + curvature[last], pos + curv, mh_dist(curv + pos, last + curvature[last]))
-    # if mh_dist(curv + pos, last + curvature[last]) > mh_dist(-curv + pos, last + curvature[last]):
     if mh_dist(curv, curvature[last]) >= mh_dist(-curv, curvature[last]) and mh_dist(curv + pos, last + curvature[last]) >= mh_dist(-curv + pos, last + curvature[last]):
         curv *= -1
     curvature[pos] = curv
-m = {-1: "←", 1:"→", -1j:"↑", 1j:"↓", -1-1j:"↖", 1-1j:"↗", 1+1j:"↘", -1+1j:"↙"}
-pgrid({k: m[v] for k,v in curvature.items()})
+# m = {-1: "←", 1:"→", -1j:"↑", 1j:"↓", -1-1j:"↖", 1-1j:"↗", 1+1j:"↘", -1+1j:"↙"}
+# pgrid({k: m[v] for k,v in curvature.items()})
 
 x1, x2 = min([p.real for p in loop.nodes]), max([p.real for p in loop.nodes])
 y1, y2 = min([p.imag for p in loop.nodes]), max([p.imag for p in loop.nodes])
@@ -110,11 +107,3 @@ for x in sri(x1, x2):
         part2 += int(enclosed)
 
 print(f"Solution: {part2}\n")
-# submit(res)
-
-# import time
-# t1 = time.time_ns()
-# for i in range(times := 1000):
-#     solve_b()
-# t2 = time.time_ns()
-# print(f"Time: {(t2-t1)/(1000000*times)} ms")
