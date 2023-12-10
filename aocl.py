@@ -27,6 +27,7 @@ def sr(a, b=None, step=1, inc=False): # signed range (because range() doesn’t 
         start, end = a, b
     if inc:
         end += 1 if end >= start else -1
+    start, end = int(start), int(end)
     return range(start, end, step if end >= start else -step)
 
 sri = lambda *args: sr(*args, inc=True) # signed range inclusive

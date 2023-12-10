@@ -25,7 +25,6 @@ for line in inp:
     diff = hist.copy()
     diffs = [diff.copy()]
     while not all(x == 0 for x in diff):
-        assert diff
         diff = [x-y for y, x in pairwise(diff)]
         diffs.append(diff.copy())
     x = diff[-1]
