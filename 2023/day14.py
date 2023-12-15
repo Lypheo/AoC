@@ -23,7 +23,7 @@ O.#..O.#.#
 #....###..
 #OO..#....
 """.strip()
-inp = puzzle.input_data
+# inp = puzzle.input_data
 
 
 # res = 0
@@ -77,7 +77,9 @@ for cycle in range(1, 1000000000):
                         newy -= 1
                     grid[newy][x] = "O"
                     res += lenx - x
+        # print("\n".join("".join(row) for row in grid), end="\n\n")
         grid = rotate_grid(grid)
+
     if cycle_length:
         if (cycle % cycle_length) == (1000000000 % cycle_length):
             ans = res
