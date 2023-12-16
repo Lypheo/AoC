@@ -48,7 +48,7 @@ for i, box in enumerate(boxes, 1):
     res += sum(i * j * int(lens[1]) for j, lens in enumerate(box, 1))
 print(f"Solution: {res}\n")
 # submit(res)
-
+#
 # import time
 # t1 = time.time_ns()
 # for i in range(times := 1000):
