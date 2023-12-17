@@ -26,11 +26,12 @@ inp = """
 2546548887735
 4322674655533
 """.strip()
+# SCX, SCY = 4, 36
 # SCX, SCY = 12, 13
 inp = puzzle.input_data
 SCX, SCY = 11, 11
-MIND, MAXD = 4, 10
 
+MIND, MAXD = 4, 10
 sys.setrecursionlimit(100000)
 infty = 9999999999999999
 inp = lines(inp)
@@ -113,9 +114,8 @@ goal = maxx + maxy * 1j
 #     # grid[cur] = "#"
 #     steps += 1
 
-# maxcost = 1101
-maxcost = 930
-# maxcost = 150
+maxcost = 1101
+# maxcost = infty
 print(maxcost)
 norm = lambda x: x.real / abs(x.real) if x.real != 0 else 1j * x.imag / abs(x.imag)
 def viable(pos):
@@ -124,13 +124,20 @@ def viable(pos):
         return ceil(dy / MAXD) <= ceil(dx / MIND) + 1
     else:
         return ceil(dx / MAXD) <= ceil(dy / MIND) + 1
-@functools.cache
+
+mem = dd(list)
+# @functools.cache
 def search(cost, pos, endb):
+    d = norm(endb - pos)
+    if pos in mem:
+        for e, v in mem[pos]:
+            if norm(e - pos) == d and abs(e - pos) >= abs(pos - endb):
+                return v
     if pos == goal:
         return cost
     if cost > maxcost or mh_dist(pos, goal)*2 > maxcost - cost:# or not viable(pos):
+        mem[pos].append((endb, infty))
         return infty
-    d = norm(endb - pos)
 
     nxt = [pos + 4 * d*1j, pos + 4 * d*-1j]
     nxtendb = [pos + 11 * d*1j, pos + 11 * d*-1j]
@@ -146,11 +153,43 @@ def search(cost, pos, endb):
         if np not in grid:
             continue
         out = min(out, search(nc, np, nendb))
+    mem[pos].append((endb, out))
     return out
 
-res = min(search(SCX, 4, 11), search(SCY, 4j, 11j))
+# res = min(search(SCX, 4, 11), search(SCY, 4j, 11j))
 
-print(f"Solution: {res}\n")
+# mincost = maxcost
+mincost = 1500
+# mincost = infty
+# states = [(SCX, 4, 10), (SCY, 4j, 10j)]
+seen = {(4, 10): SCX, (4j, 10j): SCY}
+for i in range(1000):
+    # states = sorted(states, key=lambda state: mh_dist(state[1], goal))[:100000]
+    # states = [state for state in states if state[0] <= mincost and mh_dist(state[1], goal)*3 <= mincost - state[0]]
+    print(i, mincost, len(seen))
+    nxt = []
+    for (start, end), cost in seen.items():
+        d = norm(end - start)
+        for pos in ip(start, end):
+            if pos not in grid:
+                break
+            if pos == goal:
+                mincost = min(mincost, cost)
+                break
+            for d2 in (d*1j, d*-1j):
+                if pos + d2*4 not in grid:
+                    continue
+                dcost = cost + sum(grid[p] for p in ip(pos + d2, pos + d2 * 4))
+                nxt.append((dcost, pos + d2*4, pos + d2 * 10))
+            cost += grid.get(pos + d, 0)
+    # states = nxt
+    for cost, s, e in nxt:
+        r = (s, e)
+        seen[r] = min(seen.get(r, infty), cost)
+    seen = {k: v for k,v in seen.items() if v <= mincost}
+
+
+# print(f"Solution: {mincost}\n")
 # submit(res)
 
 # import time
