@@ -25,7 +25,7 @@ inp = r"""
 """.strip()
 inp = puzzle.input_data
 
-
+t1 = time.time_ns()
 grid = parse_grid(lines(inp))
 minx, maxx = min([p.real for p in grid.keys()]), max([p.real for p in grid.keys()])
 miny, maxy = min([p.imag for p in grid.keys()]), max([p.imag for p in grid.keys()])
@@ -100,9 +100,8 @@ for arrows in configs:
 print(f"Solution: {res}\n")
 # submit(res)
 
-# import time
 # t1 = time.time_ns()
 # for i in range(times := 1000):
 #     solve_b()
-# t2 = time.time_ns()
-# print(f"Time: {(t2-t1)/(1000000*times)} ms")
+t2 = time.time_ns()
+print(f"Time: {(t2-t1) / 1000000} ms")
