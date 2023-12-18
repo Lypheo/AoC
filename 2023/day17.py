@@ -76,7 +76,7 @@ for i in range(1000):
                     continue
                 dcost = cost + sum(grid[p] for p in ip(pos + d2, pos + d2 * 4))
                 r = (pos + d2*4, pos + d2 * 10)
-                if dcost < mincost and mh_dist(r[0], goal)*3 <= mincost - dcost:
+                if dcost < mincost and mh_dist(r[0], goal) <= mincost - dcost:
                     newseen[r] = min(dcost, newseen.get(r, infty))
             cost += grid.get(pos + d, 0)
     seen = newseen
