@@ -35,33 +35,28 @@ res = 0
 
 pos = 0
 grid = {}
+points = []
 for line in inp:
     dir_, c, color = line.split(" ")
     c = int(c)
-    color = color.strip("()")
-    for i in range(c):
-        d = {"R": 1, "L": -1, "D": 1j, "U": -1j}[dir_]
-        # grid[pos] = color
-        grid[pos] = "#"
-        pos += d
+    color = color.strip("()")[1:]
+    c = int(color[:5], 16)
+    dir_ = ["R", "D", "L", "U"][int(color[5])]
+    points.append(pos)
+    d = {"R": 1, "L": -1, "D": 1j, "U": -1j}[dir_]
+    pos += c * d
+    # for i in range(c):
+    #     grid[pos] = "#"
+    #     pos += d
 
-pgrid(grid)
-x1, x2 = min([p.real for p in grid.keys()]), max([p.real for p in grid.keys()])
-y1, y2 = min([p.imag for p in grid.keys()]), max([p.imag for p in grid.keys()])
-
-q = [x1 -1 + y1*1j -1j]
-outside = set()
-seen = set(q)
-while q:
-    c = q.pop()
-    outside.add(c)
-    for p in nbd(c):
-        if x1-1 <= p.real <= x2+1 and y1-1 <= p.imag <= y2+1 and p not in grid and p not in seen:
-            q.append(p)
-            seen.add(p)
-outside = {p for p in outside if x1 <= p.real <= x2 and y1 <= p.imag <= y2}
-res = (x2+1-x1)* (y2+1-y1) - len(outside)
-
+print(points)
+for p1, p2 in pairwise(points + [points[0]]):
+    res += (p1.imag + p2.imag) * (p1.real - p2.real)
+    res += abs(p2 - p1)
+res /= 2
+res += 1
+# x1, x2 = min([p.real for p in grid.keys()]), max([p.real for p in grid.keys()])
+# y1, y2 = min([p.imag for p in grid.keys()]), max([p.imag for p in grid.keys()])
 
 print(f"Solution: {res}\n")
 # submit(res)
