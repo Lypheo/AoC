@@ -45,9 +45,6 @@ for line in inp:
     points.append(pos)
     d = {"R": 1, "L": -1, "D": 1j, "U": -1j}[dir_]
     pos += c * d
-    # for i in range(c):
-    #     grid[pos] = "#"
-    #     pos += d
 
 print(points)
 for p1, p2 in pairwise(points + [points[0]]):
