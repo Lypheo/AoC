@@ -99,7 +99,7 @@ def nb(p, diag=False): # neighbours
         raise Exception("wrong type bro")
 
 nbd = lambda *args: nb(*args, diag=True) # neighbours diagonal
-nbl = lambda *args: list(nbl(*args)) # neighbours list
+nbl = lambda *args: list(nb(*args)) # neighbours list
 nbdl = lambda *args: list(nbd(*args)) # neighbours diagonal list
 
 def parse_grid(inp):
