@@ -69,15 +69,33 @@ while bricks:
 #         for zz in sri(s[1], e[1]):
 #             grid[complex(p.imag, zz)] = "#"
 # pgrid(grid, zero="bot")
+# print(fallen_bricks)
 
+foundation = {}
+foundation_bricks = dd(list)
+i = 0
 for s, e in fallen_bricks:
-    new_fallen = [x for x in fallen_bricks if x != (s, e)]
-    for ss, ee in new_fallen:
-        d = drop((ss, ee), new_fallen)
-        if d != (ss, ee):
+    print(i:= i+1, len(fallen_bricks))
+    possible_contacts = set((p, zz-1) for p in ip(s[0], e[0]) for zz in sri(s[1], e[1]))
+    if s[1] != e[1]:
+        possible_contacts = {min(possible_contacts, key=lambda x: x[1])}
+    contacts = set()
+    for ss, ee in fallen_bricks:
+        cubes = set((p, zz) for p in ip(ss[0], ee[0]) for zz in sri(ss[1], ee[1]))
+        overlap = cubes & possible_contacts
+        if overlap:
+            contacts.update(overlap)
+            foundation_bricks[(s, e)].append((ss, ee))
+    foundation[(s, e)] = contacts
+
+required = set()
+for s, e in fallen_bricks:
+    for ss, ee in fallen_bricks:
+        rests_on = foundation_bricks[(ss, ee)]
+        if len(rests_on) == 1 and rests_on[0] == (s, e):
+            required.add((s,e))
             break
-    else:
-        res += 1
+res = len(fallen_bricks) - len(required)
 
 print(f"Solution: {res}\n")
 # submit(res)
