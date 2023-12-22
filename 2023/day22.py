@@ -51,8 +51,6 @@ def zs_below(s, e, fallen):
 def drop(brick, fallen):
     s, e = brick
     below = zs_below(s, e, fallen)
-    # if brick == (((1+0j), 1), ((1+2j), 1)):
-        # print(below)
     if not below:
         z = 1
     else:
@@ -63,22 +61,16 @@ def drop(brick, fallen):
 while bricks:
     fallen_bricks.append(drop(bricks.pop(0), fallen_bricks))
 
-# grid = {}
-# for s, e in fallen_bricks:
-#     for p in ip(s[0], e[0]):
-#         for zz in sri(s[1], e[1]):
-#             grid[complex(p.imag, zz)] = "#"
-# pgrid(grid, zero="bot")
-# print(fallen_bricks)
 
-foundation = {}
-foundation_bricks = dd(list)
+foundation_bricks = dd(list) # top -> bottom
+supports = dd(list) # bottom -> top
 i = 0
 for s, e in fallen_bricks:
     print(i:= i+1, len(fallen_bricks))
     possible_contacts = set((p, zz-1) for p in ip(s[0], e[0]) for zz in sri(s[1], e[1]))
     if s[1] != e[1]:
         possible_contacts = {min(possible_contacts, key=lambda x: x[1])}
+
     contacts = set()
     for ss, ee in fallen_bricks:
         cubes = set((p, zz) for p in ip(ss[0], ee[0]) for zz in sri(ss[1], ee[1]))
@@ -86,16 +78,34 @@ for s, e in fallen_bricks:
         if overlap:
             contacts.update(overlap)
             foundation_bricks[(s, e)].append((ss, ee))
-    foundation[(s, e)] = contacts
+            supports[(ss, ee)].append((s, e))
 
-required = set()
+part1 = len(fallen_bricks)
 for s, e in fallen_bricks:
     for ss, ee in fallen_bricks:
-        rests_on = foundation_bricks[(ss, ee)]
-        if len(rests_on) == 1 and rests_on[0] == (s, e):
-            required.add((s,e))
+        foundation = foundation_bricks[(ss, ee)]
+        if len(foundation) == 1 and foundation[0] == (s, e):
+            part1 -= 1
             break
-res = len(fallen_bricks) - len(required)
+
+print(f"Part 1: {part1}")
+
+for bottom in supports.copy():
+    dropped = {bottom}
+    tops = set(supports[bottom])
+    while tops:
+        new_drops = set()
+        for top in tops:
+            foundation = foundation_bricks[top]
+            if all(supporter in dropped for supporter in foundation):
+                new_drops.add(top)
+
+        tops = set()
+        for top in new_drops:
+            tops |= set(supports[top])
+
+        dropped.update(new_drops)
+    res += len(dropped) - 1
 
 print(f"Solution: {res}\n")
 # submit(res)
