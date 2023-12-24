@@ -33,50 +33,29 @@ for line in inp:
     v = [int(x) for x in v.split(", ")]
     hails.append((p, v))
 
-# for h1, h2 in combinations(hails, 2):
-#     x1, y1,_  = h1[0]
-#     x2, y2,_  = h2[0]
-#     vx1, vy1,_ = h1[1]
-#     vx2, vy2,_ = h2[1]
-#     # p1 + v1*t = p2 + v2*u
-#     # x1 + vx1*t = x2 + vx2*u
-#     # y1 + vy1*t = y2 + vy2*u
-#     # (x1-x2 + vx1*t)/vx2 = u
-#     # y1 + vy1*t = y2 + vy2*((x1-x2 + vx1*t)/vx2)
-#     # wolfram alpha:
-#     # t = (vy_2 (x_2 - x_1) + (y_1 - y_2) vx_2)/(vy_2 vx_1 - vy_1 vx_2) and vy_1 vx_2!=vy_2 vx_1
-#
-#     if vy1 * vx2 == vy2 * vx1 or (vy1 * vx2 - vy2 * vx1) == 0:
-#         continue
-#
-#     t = (vy2 * (x2 - x1) + (y1 - y2) * vx2) / (vy2 * vx1 - vy1 * vx2)
-#     u = (vy1 * (x1 - x2) + (y2 - y1) * vx1) / (vy1 * vx2 - vy2 * vx1)
-#     crossx = x1 + t*vx1
-#     crossy = y1 + t*vy1
-#     if t > 0 and u > 0 and lower <= crossx <= upper and lower <= crossy <= upper:
-#         res += 1
+for h1, h2 in combinations(hails, 2):
+    x1, y1,_  = h1[0]
+    x2, y2,_  = h2[0]
+    vx1, vy1,_ = h1[1]
+    vx2, vy2,_ = h2[1]
+    # p1 + v1*t = p2 + v2*u
+    # x1 + vx1*t = x2 + vx2*u
+    # y1 + vy1*t = y2 + vy2*u
+    # (x1-x2 + vx1*t)/vx2 = u
+    # y1 + vy1*t = y2 + vy2*((x1-x2 + vx1*t)/vx2)
+    # wolfram alpha:
+    # t = (vy_2 (x_2 - x_1) + (y_1 - y_2) vx_2)/(vy_2 vx_1 - vy_1 vx_2) and vy_1 vx_2!=vy_2 vx_1
 
-# p + v*t = p_hat + v_hat*u
-# (x, y, z) + (vx, vy, vz)*t = (x2, y2, z2) + (vx2, vy2, vz2) * u
+    if vy1 * vx2 == vy2 * vx1 or (vy1 * vx2 - vy2 * vx1) == 0:
+        continue
 
-# from sympy import solve, Symbol
-# from sympy.abc import x,y,z
-# A = []
-# vx, vy, vz = Symbol("vx"), Symbol("vy"), Symbol("vz")
-# symbols = [x,y,z,vx,vy,vz]
-# for i, h in enumerate(hails,1):
-#     x2, y2, z2 = h[0]
-#     vx2, vy2, vz2 = h[1]
-#     # c + vc*t = c2 + vc2*u
-#     u = Symbol(f"u{i}")
-#     t = Symbol(f"t{i}")
-#     symbols.extend([u,t])
-#     A.append(x + vx*t - x2 - vx2*u)
-#     A.append(y + vy*t - y2 - vy2*u)
-#     A.append(z + vz*t - z2 - vz2*u)
-# print(A)
-# print(solve(A, symbols, dict=True))
-
+    t = (vy2 * (x2 - x1) + (y1 - y2) * vx2) / (vy2 * vx1 - vy1 * vx2)
+    u = (vy1 * (x1 - x2) + (y2 - y1) * vx1) / (vy1 * vx2 - vy2 * vx1)
+    crossx = x1 + t*vx1
+    crossy = y1 + t*vy1
+    if t > 0 and u > 0 and lower <= crossx <= upper and lower <= crossy <= upper:
+        res += 1
+print(f"Part2: {res}\n")
 from sympy import solve, Symbol
 from sympy.abc import x,y,z
 A = []
@@ -94,12 +73,10 @@ for i, h in enumerate(hails,1):
     A.append(x + vx*t - x2 - vx2*t)
     A.append(y + vy*t - y2 - vy2*t)
     A.append(z + vz*t - z2 - vz2*t)
-print(A)
-sol = solve(A, symbols, dict=True)[0]
-print(sol)
 
-res = sol[x] + sol[y] + sol[z]
-print(f"Solution: {res}\n")
+sol = solve(A, symbols, dict=True)[0]
+p2 = sol[x] + sol[y] + sol[z]
+print(f"Part2: {p2}\n")
 # submit(res)
 
 # import time
