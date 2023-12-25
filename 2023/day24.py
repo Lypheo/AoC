@@ -46,7 +46,7 @@ for h1, h2 in combinations(hails, 2):
     # wolfram alpha:
     # t = (vy_2 (x_2 - x_1) + (y_1 - y_2) vx_2)/(vy_2 vx_1 - vy_1 vx_2) and vy_1 vx_2!=vy_2 vx_1
 
-    if vy1 * vx2 == vy2 * vx1 or (vy1 * vx2 - vy2 * vx1) == 0:
+    if vy1 * vx2 == vy2 * vx1 or vy1 * vx2 == vy2 * vx1:
         continue
 
     t = (vy2 * (x2 - x1) + (y1 - y2) * vx2) / (vy2 * vx1 - vy1 * vx2)
@@ -55,6 +55,7 @@ for h1, h2 in combinations(hails, 2):
     crossy = y1 + t*vy1
     if t > 0 and u > 0 and lower <= crossx <= upper and lower <= crossy <= upper:
         res += 1
+
 print(f"Part2: {res}\n")
 from sympy import solve, Symbol
 from sympy.abc import x,y,z
