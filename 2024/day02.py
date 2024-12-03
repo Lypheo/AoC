@@ -15,7 +15,6 @@ from fn import _ as l
 day = 2
 puzzle = Puzzle(year=2024, day=day)
 inp = puzzle.input_data
-
 inp = lines(inp)
 res = 0
 def check_safe(nums):
@@ -39,11 +38,3 @@ for line in inp:
     res += int(safe)
 
 print(f"Solution: {res}\n")
-# submit(res)
-
-# import time
-# t1 = time.time_ns()
-# for i in range(times := 1000):
-#     solve_b()
-# t2 = time.time_ns()
-# print(f"Time: {(t2-t1)/(1000000*times)} ms")
