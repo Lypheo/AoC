@@ -1,11 +1,5 @@
-import time
-import functools, itertools, collections, re
 from aocd.models import Puzzle
 from aocd import submit
-from collections import defaultdict as dd
-from itertools import *
-from pprint import pprint
-from math import prod
 import sys
 sys.path.append("..")
 from aocl import *
@@ -14,45 +8,22 @@ from fn import _ as l
 
 day = 4
 puzzle = Puzzle(year=2024, day=day)
-inp = """
-
-""".strip()
 inp = puzzle.input_data
 
 inp = lines(inp)
-res = 0
 grid = {}
 for y, line in enumerate(inp):
     for x, row in enumerate(line):
         grid[x + y*1j] = row
 
-# for pos, c in grid.items():
-#     if c != "X":
-#         continue
-#     for k in nbd(pos):
-#         if grid.get(k) == "M":
-#             v = k - pos
-#             if grid.get(k + v) == "A" and grid.get(k + v*2) == "S":
-#                 res += 1
+def count_xmas(pos):
+    return sum("".join([grid.get(pos + v*i, "") for i in range(4)]) == "XMAS" for v in nbd(0))
 
-for pos, c in grid.items():
-    if c != "A":
-        continue
-    mas = 0
-    for k in nbd(pos):
-        if grid.get(k) == "M":
-            v = pos - k
-            if (v.real != 0 and v.imag != 0) and grid.get(pos + v) == "S":
-                mas += 1
-    res += mas == 2
+res = seq(grid.keys()).map(count_xmas).sum()
+print(f"Solution 1: {res}\n")
 
+def count_mas(pos):
+    return sum("".join([grid.get(pos + v*i, "") for i in sri(-1, 1)]) == "MAS" for v in nbd(0) if abs(v) > 1)
 
-print(f"Solution: {res}\n")
-# submit(res)
-
-# import time
-# t1 = time.time_ns()
-# for i in range(times := 1000):
-#     solve_b()
-# t2 = time.time_ns()
-# print(f"Time: {(t2-t1)/(1000000*times)} ms")
+res = seq(grid.keys()).map(count_mas).count(l == 2)
+print(f"Solution 2: {res}\n")
