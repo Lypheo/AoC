@@ -47,27 +47,22 @@ inp = """
 inp = puzzle.input_data
 
 rules, updates = blocks(inp)
-res = 0
 rules = [ints(line) for line in lines(rules)]
 reqs = dd(list)
 for a,b in rules:
     reqs[b].append(a)
-updates = [ints(line) for line in lines(updates)]
+updates = [seq(ints(line)) for line in lines(updates)]
 
+p1 = 0
+p2 = 0
 for update in updates:
-    valid = True
-    for ax, a in enumerate(update):
-        if any(b in reqs[a] for b in update[ax+1:]):
-            valid = False
-            break
+    valid = update.enumerate().smap(lambda i, a: update[i+1:].intersection(reqs[a]).empty()).all()
+    p1 += update[update.len()//2] if valid else 0
     if not valid:
-        new = []
-        while len(new) < len(update):
-            for a in update:
-                if a not in new and not any(b in reqs[a] for b in set(update)-set(new)):
-                    new.append(a)
+        for i in range(update.len()//2 + 1):
+            mid = update.find(lambda x: not any(b in reqs[x] for b in update))
+            update = update.filter(l != mid)
+        p2 += mid
 
-        res += new[len(new)//2]
-
-print(f"Solution: {res}\n")
+print(f"Solution: {p1}, {p2}\n")
 # submit(res)
