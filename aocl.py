@@ -102,11 +102,15 @@ nbd = lambda *args: nb(*args, diag=True) # neighbours diagonal
 nbl = lambda *args: list(nb(*args)) # neighbours list
 nbdl = lambda *args: list(nbd(*args)) # neighbours diagonal list
 
-def parse_grid(inp):
+def parse_grid(inp, rev_y=False):
+    inp = lines(inp) if isinstance(inp, str) else inp
     grid = dict()
     for y, line in enumerate(inp):
         for x, c in enumerate(line):
             grid[complex(x, y)] = c
+    if rev_y:
+        max_y = max([p.imag for p in grid.keys()])
+        return {complex(p.real, max_y-p.imag) : v for p,v in grid.items()}
     return grid
 
 def blocks(inp):
@@ -117,3 +121,13 @@ def lines(inp):
 
 def ints(line):
     return [int(x) for x in re.findall(r"(-?\d+)", line)]
+
+from functional.pipeline import extend
+
+@extend()
+def sfilter(it, f):
+    return seq(it).filter(lambda t: f(*t))
+
+@extend()
+def sreduce(it, f):
+    return seq(it).reduce(lambda t: f(*t))

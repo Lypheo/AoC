@@ -14,36 +14,6 @@ from fn import _ as l
 
 day = 5
 puzzle = Puzzle(year=2024, day=day)
-inp = """
-47|53
-97|13
-97|61
-97|47
-75|29
-61|13
-75|53
-29|13
-97|29
-53|29
-61|53
-97|53
-61|29
-47|13
-75|47
-97|75
-47|61
-75|61
-47|29
-75|13
-53|13
-
-75,47,61,53,29
-97,61,53,29,13
-75,29,13
-75,97,47,61,53
-61,13,29
-97,13,75,29,47
-""".strip()
 inp = puzzle.input_data
 
 rules, updates = blocks(inp)
@@ -53,8 +23,7 @@ for a,b in rules:
     reqs[b].append(a)
 updates = [seq(ints(line)) for line in lines(updates)]
 
-p1 = 0
-p2 = 0
+p1, p2 = 0, 0
 for update in updates:
     valid = update.enumerate().smap(lambda i, a: update[i+1:].intersection(reqs[a]).empty()).all()
     p1 += update[update.len()//2] if valid else 0
