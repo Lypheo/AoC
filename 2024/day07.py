@@ -11,6 +11,9 @@ sys.path.append("..")
 from aocl import *
 from functional import seq
 from fn import _ as l
+from math import log10
+
+st=time.time()
 
 day = 7
 puzzle = Puzzle(year=2024, day=day)
@@ -39,7 +42,14 @@ for line in inp:
         for b in nums[1:]:
             if s > res:
                 break
-            s = eval(f"{s}{ops.pop()}{b}")
+            op = ops.pop()
+            match op:
+                case "*":
+                    s *= b
+                case "+":
+                    s += b
+                case "":
+                    s = s * 10**(1+int(log10(b))) + b
         if s == res:
             sol += res
             break
@@ -47,3 +57,5 @@ for line in inp:
 
 print(f"Solution: {sol}\n")
 # submit(sol)
+
+print("----%.2f s----"%(time.time()-st))
