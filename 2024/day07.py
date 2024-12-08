@@ -42,8 +42,7 @@ for line in inp:
         for b in nums[1:]:
             if s > res:
                 break
-            op = ops.pop()
-            match op:
+            match ops.pop():
                 case "*":
                     s *= b
                 case "+":
