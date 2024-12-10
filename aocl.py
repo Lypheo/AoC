@@ -102,12 +102,12 @@ nbd = lambda *args: nb(*args, diag=True) # neighbours diagonal
 nbl = lambda *args: list(nb(*args)) # neighbours list
 nbdl = lambda *args: list(nbd(*args)) # neighbours diagonal list
 
-def parse_grid(inp, rev_y=False):
+def parse_grid(inp, rev_y=False, to_int=False):
     inp = lines(inp) if isinstance(inp, str) else inp
     grid = dict()
     for y, line in enumerate(inp):
         for x, c in enumerate(line):
-            grid[complex(x, y)] = c
+            grid[complex(x, y)] = c if not to_int else int(c)
     if rev_y:
         max_y = max([p.imag for p in grid.keys()])
         return {complex(p.real, max_y-p.imag) : v for p,v in grid.items()}

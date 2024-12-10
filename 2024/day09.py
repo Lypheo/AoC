@@ -16,9 +16,9 @@ st=time.time()
 day = 9
 puzzle = Puzzle(year=2024, day=day)
 inp = """
-2333133121414131402
+12345
 """.strip()
-inp = puzzle.input_data
+# inp = puzzle.input_data
 res = 0
 
 idn = 0
