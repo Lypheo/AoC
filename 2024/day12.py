@@ -31,20 +31,13 @@ res = 0
 seen = set()
 regions = []
 
-for p in grid:
-    if p in seen:
-        continue
+def f(p, v):
+    if p in seen or v != grid.get(p):
+        return []
     seen.add(p)
-    region = {p}
-    q = [p]
-    while q:
-        x = q.pop()
-        for pp in nb(x):
-            if grid.get(pp) == grid[p] and pp not in seen:
-                seen.add(pp)
-                q.append(pp)
-                region.add(pp)
-    regions.append(region)
+    return sum((f(pp, v) for pp in nb(p)), []) + [p]
+
+regions = [f(p, grid[p]) for p in grid]
 
 def cost(region):
     area = len(region)
