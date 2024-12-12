@@ -11,6 +11,7 @@ sys.path.append("..")
 from aocl import *
 from functional import seq
 from fn import _ as l
+from pyperclip import copy
 st=time.time()
 
 day = 11
@@ -38,6 +39,7 @@ inp = ints(inp)
 res = sum(f(x, 75) for x in inp)
 
 print(f"Solution: {res}\n")
+copy(res)
 # submit(res)
 
 print("----%.2f s----"%(time.time()-st))
