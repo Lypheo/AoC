@@ -43,7 +43,7 @@ def cost(region):
     return len(region) * sum(pp not in region for p in region for pp in nb(p))
 
 def cost2(region):
-    nregion = seq(region).map(l*2).map(lambda x: [x, x+1, x+1j, x+1+1j]).flatten().to_set()
+    nregion = region.seq().map(l*2).map(lambda x: [x, x+1, x+1j, x+1+1j]).flatten().to_set()
     corners = 0
     for p in nregion:
         nbs = {x for x in nb(p) if x in nregion}

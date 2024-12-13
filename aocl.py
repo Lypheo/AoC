@@ -1,6 +1,7 @@
 import re
 from itertools import product
 from numbers import Number
+from functional import seq
 
 def test(tests, solution, part):
     if len(tests) == 1 and not next(tests.keys()):
@@ -131,3 +132,6 @@ def sfilter(it, f):
 @extend()
 def sreduce(it, f):
     return seq(it).reduce(lambda t: f(*t))
+
+from forbiddenfruit import curse
+curse(object, "seq", lambda self: seq(self))
