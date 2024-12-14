@@ -1,3 +1,4 @@
+import functools
 import re
 from itertools import product
 from numbers import Number
@@ -82,26 +83,34 @@ def pgrid(grid, empty = ".", zero = "top"): # print 2d grids indexed by complex 
             print("")
         print("\n")
 
+diag_offsets = {}
+for d in [2,3]:
+    res = list(product(sri(-1, 1), repeat=d))
+    res.remove(tuple(0 for _ in range(d)))
+    diag_offsets[d] = res
+
+straight_offsets = {}
+for d in [2,3]:
+    res = list(tuple(off if i == dim else 0 for i in range(d))
+               for off, dim in product((-1, 1), range(d)))
+    straight_offsets[d] = res
+
+straight_offsets_j = [complex(*off) for off in straight_offsets[2]]
+diag_offsets_j = [complex(*off) for off in diag_offsets[2]]
 def nb(p, diag=False): # neighbours
+    assert isinstance(p, Number) or isinstance(p, tuple)
     if isinstance(p, Number):
-        offsets = (complex(*off) for off in nb((0,0), diag))
-        for off in offsets:
-            yield p + off
-    elif isinstance(p, tuple):
-        d = len(p)
-        if diag:
-            for off in product(sri(-1, 1), repeat=d):
-                if off != tuple(0 for _ in range(d)):
-                    yield tup_a(p, off)
-        else:
-            for off, dim in product((-1, 1), range(d)):
-                yield tup_a(p, tuple(off if i == dim else 0 for i in range(d)))
+        offs = diag_offsets_j if diag else straight_offsets_j
+        return (p + off for off in offs)
     else:
-        raise Exception("wrong type bro")
+        d = len(p)
+        offs = diag_offsets[d] if diag else straight_offsets[d]
+        return (tup_a(p, off) for off in offs)
 
 nbd = lambda *args: nb(*args, diag=True) # neighbours diagonal
 nbl = lambda *args: list(nb(*args)) # neighbours list
 nbdl = lambda *args: list(nbd(*args)) # neighbours diagonal list
+nbc, nbdc = functools.cache(nbl), functools.cache(nbdl)
 
 def parse_grid(inp, rev_y=False, to_int=False):
     inp = lines(inp) if isinstance(inp, str) else inp

@@ -38,30 +38,31 @@ H,W = 103, 101
 inp = lines(inp)
 res = 0
 
-grid = {complex(x, y): [] for x in range(W) for y in range(H)}
+bots = []
 for line in inp:
     p = complex(*ints(line)[:2])
     v = complex(*ints(line)[2:])
-    grid[p].append(v)
+    bots.append([v, p])
 
-for i in count(1):
-    ngrid = {complex(x, y): [] for x in range(W) for y in range(H)}
-    for p, robots in grid.items():
-        for v in robots:
-            newp = p + v
-            newp = complex(newp.real % W, newp.imag % H)
-            ngrid[newp].append(v)
-    grid = ngrid
-    if i == 100:
-        p1 = sum(len(grid[p]) for p in grid if 0 <= p.real < W/2-1 and 0 <= p.imag < H/2-1)
-        p1 *= sum(len(grid[p]) for p in grid if 0 <= p.real < W/2-1 and H/2 < p.imag < H)
-        p1 *= sum(len(grid[p]) for p in grid if W/2 < p.real < W and 0 <= p.imag < H/2-1)
-        p1 *= sum(len(grid[p]) for p in grid if W/2 < p.real < W and H/2 < p.imag < H)
+for c in count(1):
+    for i, (v, p) in enumerate(bots):
+        newp = v + p
+        newp = complex(newp.real % W, newp.imag % H)
+        bots[i][1] = newp
 
-    sgrid = {k: len(v) if v else "." for k,v in grid.items()}
-    if sum(any(sgrid.get(k) != "." for k in nbd(p)) for p in sgrid if sgrid[p] != ".") / sum(v != "." for p, v in sgrid.items()) > 0.7:
-        pgrid(sgrid)
-        p2 = i
+    if c == 100:
+        quads = [0]*4
+        for v, p in bots:
+            quads[0] += 0 <= p.real < W/2-1 and 0 <= p.imag < H/2-1
+            quads[1] += 0 <= p.real < W/2-1 and H/2 < p.imag < H
+            quads[2] += W/2 < p.real < W and 0 <= p.imag < H/2-1
+            quads[3] += W/2 < p.real < W and H/2 < p.imag < H
+        p1 = prod(quads)
+
+    sgrid = {p for v, p in bots}
+    if sum(any(k in sgrid for k in nbdc(p)) for p in sgrid) / len(sgrid) > 0.7:
+        # pgrid(sgrid)
+        p2 = c
         break
 
 
