@@ -61,7 +61,7 @@ for c in count(1):
 
     sgrid = {p for v, p in bots}
     if sum(any(k in sgrid for k in nbdc(p)) for p in sgrid) / len(sgrid) > 0.7:
-        # pgrid(sgrid)
+        pgrid(sgrid)
         p2 = c
         break
 
