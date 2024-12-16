@@ -95,8 +95,6 @@ inp = blocks(inp)
 inp[0] = inp[0].replace("#", "##").replace("O", "[]").replace(".", "..").replace("@", "@.")
 grid = parse_grid(inp[0])
 moves = inp[1].replace("\n", "")
-res = 0
-mmap = {"^": -1j, "v": 1j, ">": 1, "<": -1}
 pos = grid.keys().seq().find(lambda k: grid[k] == "@")
 
 def move_p(p, d):
@@ -124,14 +122,10 @@ def move_p(p, d):
     return True
 
 for move in moves:
-    dir = mmap[move]
-    # pgrid(grid)
-    # print(move)
-    print(grid.items().seq().filter(lambda x: x[1] == "[").sum(lambda x: x[0].real + x[0].imag * 100))
+    dir = {"^": -1j, "v": 1j, ">": 1, "<": -1}[move]
     if move_p(pos, dir):
         pos += dir
 
-pgrid(grid)
 res = grid.items().seq().filter(lambda x: x[1] == "[").sum(lambda x: x[0].real + x[0].imag * 100)
 print(f"Solution: {res}\n")
 

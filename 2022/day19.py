@@ -84,7 +84,6 @@ def solve_a(inp=input_data):
                         newr = rt(robots, 1, 1)
                         new_states.add((newr, newm))
 
-
             # states = new_states
             # Mg = max(s[1][-1] for s in states)
             # if Mg:

@@ -57,7 +57,7 @@ def f(p, d):
     for n in nbc(p):
         if n == p - d: continue
         if grid[n] == ".":
-            G.add_weighted_edges_from([((p, d), (n, n - p), 1 if n == p + d else 1001)])
+            G.add_edge((p, d), (n, n - p), weight = 1 if n == p + d else 1001)
             f(n, n - p)
 
 f(pos, 1)
