@@ -30,4 +30,4 @@ print(f"Solution: {res}\n")
 copy(res)
 # submit(res)
 
-print("----%.2f s----"%(time.time()-st))
+print(f"----{(time.time()-st):.3f} s----")

@@ -41,7 +41,6 @@ def ex(regs, prog):
     while ip < len(prog)-1:
         inst, op = prog[ip:ip+2]
         ip += 2
-        # print(inst, op, ip, regs)
         match inst:
             case 0:
                 regs[0] = int(regs[0] / (2**combo(op)))
@@ -75,15 +74,12 @@ if A != 0:
     jmp 0
 """
 
-Regs[0] = 0
+res = 0
 for x in Prog[::-1]:
-    while ex(Regs, Prog)[0] != x:
-        Regs[0] += 1
-    Regs[0] *= 8
-res = Regs[0] // 8
+    res *= 8
+    while ex([res, 0,0], Prog)[0] != x:
+        res += 1
 
 print(f"Solution: {res}\n")
-copy(res)
-
-print("----%.2f s----"%(time.time()-st))
+print(f"----{(time.time()-st):.3f} s----")
 
