@@ -15,8 +15,7 @@ from pyperclip import copy
 
 st=time.time()
 
-day =
-puzzle = Puzzle(year=2024, day=day)
+puzzle = Puzzle(year=2024, day=)
 inp = """
 
 """.strip()

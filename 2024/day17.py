@@ -1,29 +1,13 @@
 import time
 import functools, itertools, collections, re
 from aocd.models import Puzzle
-from aocd import submit
-from collections import defaultdict as dd
-from itertools import *
-from pprint import pprint
-from math import prod
 import sys
 sys.path.append("..")
 from aocl import *
-from functional import seq
-from fn import _ as l
-from pyperclip import copy
 
 st=time.time()
 
-day = 17
-puzzle = Puzzle(year=2024, day=day)
-inp = """
-Register A: 2024
-Register B: 0
-Register C: 0
-
-Program: 0,3,5,4,3,0
-""".strip()
+puzzle = Puzzle(year=2024, day=17)
 inp = puzzle.input_data
 
 res = 0
