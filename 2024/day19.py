@@ -43,7 +43,7 @@ def f(des: str):
 p1 = sum(f(design) > 0 for design in designs)
 p2 = sum(f(design) for design in designs)
 
-print(f"Solution: {p1, p2}\n")
+print(f"Solution: {p1, p2}")
 copy(res)
 # submit(res)
 
