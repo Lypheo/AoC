@@ -44,8 +44,6 @@ grid[pos] = "."
 grid[goal] = "."
 
 G = nx.Graph()
-seen = set()
-
 for p in grid:
     if grid[p] != ".": continue
     for n in nbc(p):
