@@ -29,9 +29,8 @@ numpad_pos = {'7': 0, '8': 1, '9': 2, '4': 1j, '5': (1+1j), '6': (2+1j), '1': 2j
 dirpad_pos = {'^': 1, 'A': 2, '<': 1j, 'v': (1+1j), '>': (2+1j), 'G': 0}
 dirs = {1j: "v", -1j: "^", 1: ">", -1:"<"}
 
-def pad2(code, pos_dict):
-    # if isinstance(code, list):
-    #     return sum([pad(c, pos_dict) for c in code], [])
+def pad2(code):
+    pos_dict = numpad_pos
     pos = pos_dict["A"]
     gap = pos_dict["G"]
     outs = [""]
@@ -60,65 +59,10 @@ def pad2(code, pos_dict):
         app("A")
         pos = goal
     return outs
-#
-# print(pad(pad(pad(["579A"], numpad_pos), dirpad_pos), dirpad_pos))
-# print(pad(["579A"], numpad_pos))
-# print(pad(pad(["579A"], numpad_pos), dirpad_pos))
 
-# inp = lines(inp)
-# res = 0
-# for line in inp:
-    # cmds = pad(pad(pad([line], numpad_pos), dirpad_pos), dirpad_pos)
-    # res += len(cmds) * ints(line)[0]
-
-# def pad(pos, goal, numpad=True):
-#     gap = numpad_pos["G"] if numpad else dirpad_pos["G"]
-#     outs = [""]
-#     def app(x, a=outs):
-#         a[:] = [o + x for o in a]
-#     def walk(dir):
-#         out = ""
-#         unit = dir/abs(dir) if dir else None
-#         while dir:
-#             out += dirs[unit]
-#             dir -= unit
-#         return out
-#
-#     d = goal - pos
-#     if pos.real == gap.real and goal.imag == gap.imag:
-#         app(walk(d.real)); app(walk(d-d.real))
-#     elif pos.imag == gap.imag and goal.real == gap.real:
-#         app(walk(d-d.real)); app(walk(d.real))
-#     else:
-#         oouts = outs.copy()
-#         app(walk(d-d.real)); app(walk(d.real))
-#         app(walk(d.real), oouts); app(walk(d-d.real), oouts)
-#         outs += oouts
-#     app("A")
-#     return outs
-#
-# from heapq import heappush, heappop
-#
-# numA, dirA = numpad_pos["A"], dirpad_pos["A"]
-# def solve(code):
-#     Q = [(0, numA, dirA, dirA)]
-#     while Q:
-#         if not code:
-#             return heappop(Q)[0]
-#         num = code.pop(0)
-#         cost, *ps = heappop(Q)
-#         goal = numpad_pos[num]
-#         paths = pad(ps[0], goal, True)
-#         ps[0] = goal
-#         for p in ps[1:]:
-
-#
-# inp = lines(inp)
-# res = 0
-# for line in inp:
-#     res += solve(line) * ints(line)[0]
-
-def pad(code, pos_dict, dep):
+@functools.cache
+def pad(code):
+    pos_dict = dirpad_pos
     pos = pos_dict["A"]
     gap = pos_dict["G"]
     out = ""
@@ -137,24 +81,28 @@ def pad(code, pos_dict, dep):
         elif pos.imag == gap.imag and goal.real == gap.real:
             walk(d-d.real); walk(d.real)
         else:
-            if dep in []:
-                walk(d-d.real);walk(d.real)
-            else:
-                walk(d.real);walk(d-d.real)
+            walk(d.real);walk(d-d.real)
         out += "A"
         pos = goal
     return out
 
+@functools.cache
+def f(chunk, depth):
+    if depth == 0:
+        return len(chunk)
+    tf = pad(chunk)
+    chunks = re.findall(r".*A", tf)
+    return sum(f(c, depth-1) for c in chunks)
+
 inp = lines(inp)
 res = 0
 for line in inp:
-    paths = pad2(line, numpad_pos)
+    paths = pad2(line)
     print(line, paths)
-    cmds = min(len(pad(pad(path, dirpad_pos, 2), dirpad_pos, 3)) for path in paths)
-    # print(cmds, len(cmds), line)
-    # print(pad(pad(line, numpad_pos), dirpad_pos))
-    # print(pad(line, numpad_pos))
-    res += cmds * ints(line)[0]
+    minval = 1e99
+    for path in paths:
+        minval = min(minval, f(path, 2))
+    res += minval * ints(line)[0]
 
 
 print(f"Solution: {res}\n")
