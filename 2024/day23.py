@@ -60,21 +60,18 @@ for line in inp:
     edges[a].append(b)
     edges[b].append(a)
 
-cs = set(tuple(sorted([a,b])) for a in edges for b in edges[a])
+cliques = set(tuple(sorted([a,b])) for a in edges for b in edges[a])
 while True:
-    if len(list(cs)[0]) == 3:
-        p1 = sum(any(n.startswith("t") for n in c) for c in cs)
+    if len(list(cliques)[0]) == 3:
+        p1 = sum(any(n.startswith("t") for n in c) for c in cliques)
     nxt = set()
-    for c in cs:
-        for n in set.intersection(*[set(edges[x]) for x in c]) - set(c):
-            nxt.add(tuple(sorted([n, *c])))
+    for clique in cliques:
+        for n in set.intersection(*[set(edges[x]) for x in clique]) - set(clique):
+            nxt.add(tuple(sorted([n, *clique])))
     if not nxt:
-        p2 =  ",".join(sorted(cs.pop()))
+        p2 =  ",".join(sorted(cliques.pop()))
         break
-    cs = nxt
+    cliques = nxt
 
 print(f"Solution: {p1, p2}\n")
-copy(res)
-# submit(res)
-
 print(f"----{(time.time()-st):.3f} s----")
