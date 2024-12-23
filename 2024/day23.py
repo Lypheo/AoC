@@ -53,7 +53,6 @@ td-yn
 inp = puzzle.input_data
 #
 inp = lines(inp)
-res = 0
 edges = dd(list)
 for line in inp:
     a, b = line.split("-")
