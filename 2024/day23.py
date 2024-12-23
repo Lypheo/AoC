@@ -60,40 +60,20 @@ for line in inp:
     edges[a].append(b)
     edges[b].append(a)
 
-threes = set()
-for a,b in combinations(edges, 2):
-    if not a in edges[b]:
-        continue
-    inters = set(edges[a]) & set(edges[b])
-    for c in inters:
-        threes.add(tuple(sorted([a, b, c])))
-
-p1 = sum(any(n.startswith("t") for n in c) for c in threes)
-def check(nodes):
-    for a in nodes:
-        for b in set(nodes) - {a}:
-            if b not in edges[a]:
-                return False
-    return True
-
 cs = set(tuple(sorted([a,b])) for a in edges for b in edges[a])
 while True:
-    # print(len(cs), cs)
-    print(len(cs))
-    print(list(cs)[0])
+    if len(list(cs)[0]) == 3:
+        p1 = sum(any(n.startswith("t") for n in c) for c in cs)
     nxt = set()
     for c in cs:
-        for n in set(edges) - set(c):
-            if all(x in edges[n] for x in c):
-                nxt.add(tuple(sorted([n, *c])))
-    if nxt:
-        cs = nxt
-    else:
-        assert len(cs) == 1
+        for n in set.intersection(*[set(edges[x]) for x in c]) - set(c):
+            nxt.add(tuple(sorted([n, *c])))
+    if not nxt:
         p2 =  ",".join(sorted(cs.pop()))
         break
+    cs = nxt
 
-print(f"Solution: {p2}\n")
+print(f"Solution: {p1, p2}\n")
 copy(res)
 # submit(res)
 
