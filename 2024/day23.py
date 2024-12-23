@@ -1,0 +1,100 @@
+import time
+import functools, itertools, collections, re
+from aocd.models import Puzzle
+from aocd import submit
+from collections import defaultdict as dd
+from itertools import *
+from pprint import pprint
+from math import prod
+import sys
+sys.path.append("..")
+from aocl import *
+from functional import seq
+from fn import _ as l
+from pyperclip import copy
+
+st=time.time()
+
+puzzle = Puzzle(year=2024, day=23)
+inp = """
+kh-tc
+qp-kh
+de-cg
+ka-co
+yn-aq
+qp-ub
+cg-tb
+vc-aq
+tb-ka
+wh-tc
+yn-cg
+kh-ub
+ta-co
+de-co
+tc-td
+tb-wq
+wh-td
+ta-ka
+td-qp
+aq-cg
+wq-ub
+ub-vc
+de-ta
+wq-aq
+wq-vc
+wh-yn
+ka-de
+kh-ta
+co-tc
+wh-qp
+tb-vc
+td-yn
+""".strip()
+inp = puzzle.input_data
+#
+inp = lines(inp)
+res = 0
+edges = dd(list)
+for line in inp:
+    a, b = line.split("-")
+    edges[a].append(b)
+    edges[b].append(a)
+
+threes = set()
+for a,b in combinations(edges, 2):
+    if not a in edges[b]:
+        continue
+    inters = set(edges[a]) & set(edges[b])
+    for c in inters:
+        threes.add(tuple(sorted([a, b, c])))
+
+p1 = sum(any(n.startswith("t") for n in c) for c in threes)
+def check(nodes):
+    for a in nodes:
+        for b in set(nodes) - {a}:
+            if b not in edges[a]:
+                return False
+    return True
+
+cs = set(tuple(sorted([a,b])) for a in edges for b in edges[a])
+while True:
+    # print(len(cs), cs)
+    print(len(cs))
+    print(list(cs)[0])
+    nxt = set()
+    for c in cs:
+        for n in set(edges) - set(c):
+            if all(x in edges[n] for x in c):
+                nxt.add(tuple(sorted([n, *c])))
+    if nxt:
+        cs = nxt
+    else:
+        assert len(cs) == 1
+        p2 =  ",".join(sorted(cs.pop()))
+        break
+
+print(f"Solution: {p2}\n")
+copy(res)
+# submit(res)
+
+print(f"----{(time.time()-st):.3f} s----")

@@ -46,12 +46,8 @@ inp = lines(inp)
 p1 = 0
 for line in inp:
     p1 += getSecret(ints(line)[0], 2000)
+p2 = max(sum(v.values()) for v in bdic.values())
 
-p2 = 0
-for four in product(sri(-9,9), repeat=4):
-    bananas = sum(bdic[four].values())
-    if bananas > p2:
-        p2 = bananas
 print(f"Solution: {p1, p2}\n")
 copy(res)
 # submit(res)
