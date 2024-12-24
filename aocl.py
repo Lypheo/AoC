@@ -94,6 +94,7 @@ for d in [2,3]:
     res = list(tuple(off if i == dim else 0 for i in range(d))
                for off, dim in product((-1, 1), range(d)))
     straight_offsets[d] = res
+del res
 
 straight_offsets_j = [complex(*off) for off in straight_offsets[2]]
 diag_offsets_j = [complex(*off) for off in diag_offsets[2]]
