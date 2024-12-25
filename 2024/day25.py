@@ -60,7 +60,7 @@ inp = """
 inp = puzzle.input_data
 
 grids = blocks(inp)
-grids = [{k for k,v in parse_grid(g).items() if v == "#"} for g in grids]
+grids = [parse_grid(g, to_set=True) for g in grids]
 keys = [g for g in grids if 0 in g]
 locks = [g for g in grids if 0 not in g]
 res = 0
