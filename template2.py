@@ -1,3 +1,4 @@
+import os
 import time
 import functools, itertools, collections, re
 from aocd.models import Puzzle
@@ -7,7 +8,7 @@ from itertools import *
 from pprint import pprint
 from math import prod
 import sys
-sys.path.append("..")
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from aocl import *
 from functional import seq
 from fn import _ as l
