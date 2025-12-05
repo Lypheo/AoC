@@ -33,14 +33,18 @@ inp = """
 inp = puzzle.input_data
 
 fresh, av = blocks(inp)
-fresh = [ints(line.replace("-", " ")) for line in lines(fresh)]
+fresh = [tuple(ints(line.replace("-", " "))) for line in lines(fresh)]
 av = [int(line) for line in lines(av)]
 res = 0
-for ing in av:
-    for s, e in fresh:
-        if s <= ing <= e:
-            res += 1
-            break
+fresh = sorted(fresh)
+
+last_end = 0
+for start, end in fresh:
+    start = max(start, last_end+1)
+    if end > last_end:
+        res += end - start + 1
+        last_end = end
+
 print(f"Solution: {res}\n")
 copy(res)
 # submit(res)
