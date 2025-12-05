@@ -16,24 +16,31 @@ from pyperclip import copy
 
 st=time.time()
 
-puzzle = Puzzle(year=2025, day=4)
+puzzle = Puzzle(year=2025, day=5)
 inp = """
+3-5
+10-14
+16-20
+12-18
 
+1
+5
+8
+11
+17
+32
 """.strip()
 inp = puzzle.input_data
 
-grid = parse_grid(inp, to_set=True)
-orig_len = len(grid)
-while True:
-    next_grid = grid.copy()
-    for roll in grid:
-        if sum(x in grid for x in nbd(roll)) < 4:
-            next_grid.remove(roll)
-    if grid == next_grid:
-        break
-    grid = next_grid
-res = orig_len - len(grid)
-
+fresh, av = blocks(inp)
+fresh = [ints(line.replace("-", " ")) for line in lines(fresh)]
+av = [int(line) for line in lines(av)]
+res = 0
+for ing in av:
+    for s, e in fresh:
+        if s <= ing <= e:
+            res += 1
+            break
 print(f"Solution: {res}\n")
 copy(res)
 # submit(res)
