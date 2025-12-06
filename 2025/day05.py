@@ -32,21 +32,29 @@ inp = """
 """.strip()
 inp = puzzle.input_data
 
-fresh, av = blocks(inp)
-fresh = [tuple(ints(line.replace("-", " "))) for line in lines(fresh)]
+ranges, av = blocks(inp)
+ranges = [tuple(ints(line.replace("-", " "))) for line in lines(ranges)]
 av = [int(line) for line in lines(av)]
-res = 0
-fresh = sorted(fresh)
 
+ranges = sorted(ranges)
+
+res = 0
 last_end = 0
-for start, end in fresh:
+for start, end in ranges:
     start = max(start, last_end+1)
     if end > last_end:
         res += end - start + 1
         last_end = end
 
+ranges = sorted(ranges)
+def f(current, next):
+    out, last_end = current
+    start, end = next
+    return out + max(end - max(start, last_end+1) + 1, 0), max(end, last_end)
+res = functools.reduce(f, ranges, (0,0))[0]
+
+
 print(f"Solution: {res}\n")
 copy(res)
-# submit(res)
 
 print(f"----{(time.time()-st):.3f} s----")
