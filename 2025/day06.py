@@ -30,7 +30,6 @@ res = 0
 sep = [" "]*Y
 tasks = [[inp[y][x] for y in range(Y)] for x in range(X)] + [sep]
 
-# print(tasks)
 op = ""
 while True:
     if sep not in tasks:
@@ -39,7 +38,6 @@ while True:
     task = tasks[:i]
     op = task[0][-1]
     nums = [int("".join(x for x in el if x.isnumeric())) for el in task]
-    # print(nums, op)
     res += sum(nums) if op == "+" else prod(nums)
     tasks = tasks[i+1:]
 

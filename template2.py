@@ -28,6 +28,5 @@ res = 0
 
 print(f"Solution: {res}\n")
 copy(res)
-# submit(res)
 
 print(f"----{(time.time()-st):.3f} s----")

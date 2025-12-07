@@ -38,23 +38,22 @@ inp = """
 inp = puzzle.input_data
 
 grid = parse_grid(inp)
-res = 0
-pos = {next(pos for pos, val in grid.items() if val == "S")}
+pos = {next(pos for pos, val in grid.items() if val == "S"): 1}
 Y = int(max(pos.imag for pos in grid.keys()))
+
 for i in range(Y+1):
-    # print(pos)
-    next_pos = set()
-    for p in pos:
+    next_pos = dd(int)
+    for p, num in pos.items():
         p += 1j
         if grid.get(p, ".") == "^":
-            next_pos.update([p - 1, p + 1])
-            res += 1
+            next_pos[p + 1] += num
+            next_pos[p - 1] += num
         else:
-            next_pos.add(p)
+            next_pos[p] += num
     pos = next_pos
 
+res = sum(pos.values())
 print(f"Solution: {res}\n")
 copy(res)
-# submit(res)
 
 print(f"----{(time.time()-st):.3f} s----")
