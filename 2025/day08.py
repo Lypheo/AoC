@@ -49,14 +49,17 @@ res = 0
 pairs = sorted(combinations(boxes, 2), key=lambda x: eucl(x[0], x[1])) 
 
 links = {box: {box} for box in boxes}
-for a, b in pairs[:1000]:
+for a, b in pairs:
     for box in links[a].copy():
         links[box].update(links[b])
     for box in links[b].copy():
         links[box].update(links[a])
-circuits = {tuple(sorted(linked_boxes)) for linked_boxes in links.values()}
-sizes = sorted([len(v) for v in circuits])
-res = prod(sizes[-3:])
+    if len(links[a]) == len(boxes):
+        res = a[0] * b[0]
+        break
+# circuits = {tuple(sorted(linked_boxes)) for linked_boxes in links.values()}
+# sizes = sorted([len(v) for v in circuits])
+# res = prod(sizes[-3:])
 print(f"Solution: {res}\n")
 copy(res)
 
