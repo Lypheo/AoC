@@ -142,3 +142,10 @@ def sreduce(it, f):
 
 from forbiddenfruit import curse
 curse(object, "seq", lambda self: seq(self))
+
+def debug(g):
+    def h(*args):
+        out = g(*args)
+        print("In: ", args, "Out: ", out)
+        return out
+    return h

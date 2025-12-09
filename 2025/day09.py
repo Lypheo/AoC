@@ -27,57 +27,55 @@ inp = """
 2,3
 7,3
 """.strip()
-# inp = puzzle.input_data
+inp = puzzle.input_data
 
 points = [complex(*ints(line)) for line in lines(inp)]
 res = 0
+
 def area(a, b):
     return int(abs(a.real - b.real) + 1) * int(abs(a.imag - b.imag) + 1)
 def sign(x):
     return -1 if x < 0 else 1
+def norm(c):
+    return c/abs(c.real + c.imag)
 
 def angle(v1, v2):
     assert not (v1.real == v2.real == 0 or v1.imag == v2.imag == 0)
-    if v1.real:
-        return 1 if sign(v1.real) == sign(v2.imag) else -1
-    else:
-        return 1 if sign(v1.imag) != sign(v2.real) else -1
+    return -1 if v1 * 1j == v2 else 1
 
 edges = seq(points + [points[0]]).sliding(2).map(tuple).to_list()
 orths = {} # orthonormal pointing outside
 total_angle = 0
 for edge1, edge2 in seq(edges + [edges[0]]).sliding(2):
-    dir1 = edge1[1] - edge1[0]    
-    dir2 = edge2[1] - edge2[0]
+    dir1 = norm(edge1[1] - edge1[0])
+    dir2 = norm(edge2[1] - edge2[0])
     total_angle += angle(dir1, dir2)
-    orths[edge1] = -dir2/abs(dir2.real + dir2.imag)
-    print(edge1, edge2, dir1, dir2, angle(dir1, dir2))
+    orths[edge1] = dir1 * 1j
 orths = {k: v*sign(total_angle) for k,v in orths.items()}
-print(points)
-print(edges)
-print(orths)
-print(total_angle)
 
-def isSubedge(rect_edge, edge):
-    rect_dir, dir = rect_edge[1] - rect_edge[0], edge[1] - edge[0]
-    if rect_dir.imag * dir.imag + rect_dir.real * dir.real == 0:
-        return False
-    if dir.real:
-        return all(min(p.real for p in rect_edge) <= ep.real <= max(p.real for p in rect_edge) for ep in edge)
-    else:
-        return all(min(p.imag for p in rect_edge) <= ep.imag <= max(p.imag for p in rect_edge) for ep in edge)
+invalid_dirs_from_point = dd(list)
+for edge1, edge2 in seq(edges + [edges[0]]).sliding(2):
+    dir1 = norm(edge1[1] - edge1[0])
+    dir2 = norm(edge2[1] - edge2[0])
+    if orths[edge1] != dir2:
+        invalid_dirs_from_point[edge1[1]].extend([orths[edge1], dir1])
 
 def valid(a,b,c,d):
-    if any(a.real < p.real < c.real and c.imag < p.imag < a.imag for p in points):
+    if any(a.real < p.real < c.real and a.imag < p.imag < c.imag for p in points):
         return False
-    rect_orths = {(a,b): 1j, (b,c): 1, (c,d): -1j, (d,a):-1}
-    for edge in edges:
-        for rect_edge, rect_orth in rect_orths.items():
-            if isSubedge(rect_edge, edge):
-                edge_orth = orths[edge]
-                assert edge_orth in rect_orths.values()
-                if edge_orth != rect_orth:
-                    return False
+    for e1, e2 in edges:
+        dir = norm(e2 - e1)
+        if dir.real:
+            s, e = min(e1.real, e2.real), max(e1.real, e2.real)
+            if s <= a.real and e >= b.real and a.imag < e1.imag < c.imag:
+                return False
+        else:
+            s, e = min(e1.imag, e2.imag), max(e1.imag, e2.imag)
+            if s <= a.imag and e >= c.imag and a.real < e1.real < b.real:
+                return False
+    corner_dirs = {a: [1j, 1], b: [1j, -1], c: [-1j, -1], d: [-1j, 1]}
+    if any(invalid_dir in dirs for corner, dirs in corner_dirs.items() for invalid_dir in invalid_dirs_from_point[corner]):
+        return False
     return True
 
 for p1,p2 in combinations(points, 2):
