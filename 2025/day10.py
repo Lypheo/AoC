@@ -14,6 +14,9 @@ from functional import seq
 from fn import _ as l
 from pyperclip import copy
 import networkx as nx
+from collections import Counter
+from scipy.optimize import milp, LinearConstraint, Bounds
+import numpy as np
 
 st=time.time()
 
@@ -34,18 +37,14 @@ for line in inp:
     buttons = [tuple(ints(btn)) for btn in parts[1:-1]]
     machines.append((lights, buttons, joltage))
 res = 0
-# probably way overkill since a simple BFS suffices but whatever
 for lights, buttons, joltage in machines:
-    G = nx.Graph()
-    for i in range(2**len(lights)):
-        binary = format(i, f"0{len(lights)}b")
-        node = tuple(c == "1" for c in binary)
-        G.add_node(node)
-        for button in buttons:
-            target = tuple(not node[j] if j in button else node[j] for j in range(len(node)))
-            G.add_edge(node, target)
-    start = tuple(False for _ in range(len(lights)))
-    res += nx.shortest_path_length(G, start, lights)
+    buttons = [[1 if j in btn else 0 for j in range(len(joltage))] for btn in buttons]
+    c = [1 for _ in range(len(buttons))]
+    A = np.array(buttons).transpose()
+    constraints = [LinearConstraint(A, joltage, joltage)]
+    sol = milp(c=c, integrality=c, constraints=constraints, bounds=Bounds(lb=np.zeros(len(buttons)), ub=np.full(len(buttons), np.inf)))
+    assert sol.success
+    res += sol.fun
 
 print(f"Solution: {res}\n")
 copy(res)
