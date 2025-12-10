@@ -18,16 +18,18 @@ st=time.time()
 
 puzzle = Puzzle(year=2025, day=9)
 inp = """
-7,1
-11,1
-11,7
-9,7
-9,5
-2,5
-2,3
-7,3
+0,0
+50,0
+50,50
+0,50
+0,47
+47,47
+47,3
+3,3
+3,46
+0,46
 """.strip()
-inp = puzzle.input_data
+# inp = puzzle.input_data
 
 points = [complex(*ints(line)) for line in lines(inp)]
 res = 0
