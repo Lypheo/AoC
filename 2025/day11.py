@@ -35,26 +35,21 @@ for line in inp:
 # ipx.network(G, nx.layout.bfs_layout(G, "svr"), vertex_labels={k: k if k in ["svr", "dac", "fft", "out", "you"] else "" for k in G.nodes})
 # plot.show()
 
-bfslayers = nx.bfs_layers(G, "svr")
-
-def num_paths_between(start, dest, layers=bfslayers):
-    """Relies on the fact that the dest layer doesn't have any interconnects or any incoming connections from the next layer"""
-    dst_layer = next(layer for layer in layers if dest in layer)
+def num_paths_between(start, dest):
     num_paths = 0
     frontier = {start: 1}
     while frontier:
         newfrontier = dd(int)
         for node, num in frontier.items():
             for conNode in G[node]:
-                if conNode in dst_layer:
-                    if conNode == dest:
-                        num_paths += num
+                if conNode == dest:
+                    num_paths += num
                     continue
                 newfrontier[conNode] += num
         frontier = newfrontier
     return num_paths
 
-p1 = num_paths_between("you", "out", nx.bfs_layers(G, "you"))
+p1 = num_paths_between("you", "out")
 p2 = num_paths_between("svr", "fft") * num_paths_between("fft", "dac") * num_paths_between("dac", "out")
 print(f"Solution: {p1}, {p2}\n")
 copy(p2)
